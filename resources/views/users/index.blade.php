@@ -29,10 +29,10 @@
         <td>{{ $user->id }}</td>
         <td>{{ $user->name }}</td>
         <td>{{ $user->email }}</td>
-        <td>
+        <td class="mx-auto">
             @if(!empty($user->getRoleNames()))
                 @foreach($user->getRoleNames() as $v)
-                    <span class="badge rounded-pill bg-dark">{{ $v }}</span>
+                    <span class="badge rounded-pill bg-primary text-white    p-2 w-50 ">{{ $v }}</span>
                 @endforeach
             @endif
         </td>
