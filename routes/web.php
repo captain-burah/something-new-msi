@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -32,12 +33,16 @@ Route::get('/listing-admin', [MainController::class, 'listing_admin_login'])->mi
 
 Route::get('/financial-admin', [MainController::class, 'financial_admin_login'])->middleware(['auth', 'verified'])->name('financial.admin.login');
 
-
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('projects', ProjectController::class);
+    Route::resource('units', UnitController::class);
+    Route::resource('bookings', BookingController::class);
+    Route::resource('clienteles', ClienteleController::class);
+    Route::resource('meetings', MeetingController::class);
 
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);

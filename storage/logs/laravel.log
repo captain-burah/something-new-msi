@@ -24507,3 +24507,12 @@ Did you mean one of these?
 #57 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(16): require_once('...')
 #58 {main}
 "} 
+[2023-09-04 12:39:48] production.ERROR: There are no commands defined in the "viwe" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"viwe\" namespace. at /var/www/html/vendor/symfony/console/Application.php:657)
+[stacktrace]
+#0 /var/www/html/vendor/symfony/console/Application.php(708): Symfony\\Component\\Console\\Application->findNamespace()
+#1 /var/www/html/vendor/symfony/console/Application.php(262): Symfony\\Component\\Console\\Application->find()
+#2 /var/www/html/vendor/symfony/console/Application.php(174): Symfony\\Component\\Console\\Application->doRun()
+#3 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
+#4 /var/www/html/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
+#5 {main}
+"} 
