@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
@@ -19,9 +24,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/listing-admin', [MainController::class, 'listing_admin_login'])->middleware(['auth', 'verified'])->name('listing.admin.login');
 
@@ -33,6 +38,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('products', ProductController::class);
+
+    Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout.get');
 });
 
 require __DIR__.'/auth.php';

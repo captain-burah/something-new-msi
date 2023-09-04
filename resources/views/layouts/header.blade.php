@@ -175,6 +175,7 @@
                             </div>
                         </div>
 
+                        @if(Auth::user()->id == '1')
                         <div class="dropdown d-none d-lg-inline-block ml-1">
                             <button type="button" class="btn header-item noti-icon waves-effect"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -184,13 +185,13 @@
                                 <div class="px-lg-2">
                                     <div class="row no-gutters">
                                         <div class="col">
-                                            <a class="dropdown-icon-item" href="#">
-                                                <span>GitHub</span>
+                                            <a class="dropdown-icon-item" href="{{ route('roles.index') }}">
+                                                <span>Role Mgt.</span>
                                             </a>
                                         </div>
                                         <div class="col">
-                                            <a class="dropdown-icon-item" href="#">
-                                                <span>Bitbucket</span>
+                                            <a class="dropdown-icon-item" href="{{ route('users.index') }}">
+                                                <span>User Mgt.</span>
                                             </a>
                                         </div>
                                         <div class="col">
@@ -220,6 +221,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                         {{-- <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
@@ -313,7 +315,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="rounded-circle header-profile-user" src="{{ asset('images/users/finance.png')}}"
                                     alt="Header Avatar">
-                                <span class="d-none d-xl-inline-block ml-1">Henry</span>
+                                <span class="d-none d-xl-inline-block ml-1">{{Auth::user()->name}}</span>
                                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
@@ -321,7 +323,9 @@
                                 <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Settings</a>
                                 <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle mr-1"></i> Lock screen</a>
                                 <div class="dropdown-divider"></div> --}}
-                                <a class="dropdown-item text-danger" href="#"><i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Logout</a>
+                                <a class="dropdown-item text-danger" href="{{ route('logout.get') }}">
+                                    <i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Logout
+                                </a>
                             </div>
                         </div>
 

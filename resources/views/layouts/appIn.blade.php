@@ -36,7 +36,7 @@
 
             @include('layouts.header')
 
-            <div class="topnav">
+            <div class="topnav mb-5">
                 <div class="container-fluid">
                     <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
 
@@ -337,7 +337,7 @@
                 </div>
             </div>
 
-            <main class="py-4">
+            <main class="container-fluid" style="padding-top: 20vh;">
                 @yield('content')
             </main>
 
