@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('project_translations', function (Blueprint $table) {
             $table->id();
             $table->string('status')->default('0');
 
+            $table->unsignedBigInteger('project_id')->nullable(true);
+            $table->unsignedBigInteger('language_id')->nullable(true);
             $table->unsignedBigInteger('type_id')->nullable(true);
             $table->unsignedBigInteger('community_id')->nullable(true);
             $table->unsignedBigInteger('created_by')->nullable(true);
@@ -41,6 +43,8 @@ return new class extends Migration
 
             $table->timestamps();
 
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('language_id')->references('id')->on('languages')->onDelete('restrict');
             $table->foreign('type_id')->references('id')->on('project_types')->onDelete('restrict');
             $table->foreign('community_id')->references('id')->on('communities')->onDelete('restrict');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
@@ -52,6 +56,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('project_translations');
     }
 };
