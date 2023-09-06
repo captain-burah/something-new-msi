@@ -11,11 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('unit_paymentplans', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('unit_id')->nullable(true)
-                ->references('id')->on('units')->onDelete('cascade');
-            $table->string('filename');
+                ->references('id')->on('units')->onDelete('restrict');
+
+            $table->unsignedBigInteger('client_id')->nullable(true)
+                ->references('id')->on('clienteles')->onDelete('restrict');
+
+
+            $table->string('payment_status');   // online or bank deposit
+            $table->string('payment_price');
+            $table->string('payment_id');
             $table->timestamps();
         });
     }
@@ -25,7 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unit_paymentplans');
+        Schema::dropIfExists('bookings');
     }
 };
-

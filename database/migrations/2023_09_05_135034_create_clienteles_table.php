@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('unit_paymentplans', function (Blueprint $table) {
+        Schema::create('clienteles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('unit_id')->nullable(true)
-                ->references('id')->on('units')->onDelete('cascade');
-            $table->string('filename');
             $table->timestamps();
         });
     }
@@ -25,7 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unit_paymentplans');
+        Schema::dropIfExists('clienteles');
     }
 };
-
