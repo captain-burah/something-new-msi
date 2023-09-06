@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clientele_documents', function (Blueprint $table) {
+        Schema::create('clientele_meetings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('unit_id')->nullable(true)
-                ->references('id')->on('units')->onDelete('cascade');
-            $table->string('filename');
+            $table->unsignedBigInteger('client_id')->nullable(true)
+                ->references('id')->on('clientele')->onDelete('cascade');
+            $table->date('date');
+            $table->time('time');
+            $table->string('meeting_link');
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clientele_documents');
+        Schema::dropIfExists('clientele_meetings');
     }
 };

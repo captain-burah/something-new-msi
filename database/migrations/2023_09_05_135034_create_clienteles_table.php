@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('clienteles', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('unit_id')->nullable(true)
+                ->references('id')->on('units')->onDelete('cascade');
+            $table->string('name');
+            $table->string('mobile');
+            $table->string('nationality');
+            $table->string('country_of_residence');
+            $table->string('passport');
+            $table->string('passport_expiry');
+            $table->string('address_1');
+            $table->string('address_2');
+            $table->string('address_3');
+            $table->string('address_4');
             $table->timestamps();
         });
     }

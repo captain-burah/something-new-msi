@@ -10,7 +10,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- App favicon -->
-        <link rel="shortcut icon" href="/public/images/favicon.ico">
+        <link rel="shortcut icon" href="{{ asset('/public/ESNAD-FAVICON.png') }}">
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.bunny.net">
