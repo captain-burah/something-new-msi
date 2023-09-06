@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('clientele_meetings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('client_id')->nullable(true)
-                ->references('id')->on('clientele')->onDelete('cascade');
+            $table->unsignedBigInteger('client_id')->nullable(true);
             $table->date('date');
             $table->time('time');
             $table->string('meeting_link');
             $table->timestamps();
+            $table->foreign('client_id')->references('id')->on('clienteles')->onDelete('cascade');
         });
     }
 

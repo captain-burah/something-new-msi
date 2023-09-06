@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('clienteles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('unit_id')->nullable(true)
-                ->references('id')->on('units')->onDelete('cascade');
+            $table->unsignedBigInteger('unit_id')->nullable(true);
             $table->string('name');
             $table->string('mobile');
             $table->string('nationality');
@@ -25,7 +24,9 @@ return new class extends Migration
             $table->string('address_2');
             $table->string('address_3');
             $table->string('address_4');
+            $table->string('po_box');
             $table->timestamps();
+            $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
         });
     }
 

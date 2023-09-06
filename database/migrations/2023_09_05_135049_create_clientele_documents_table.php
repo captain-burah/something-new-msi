@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('clientele_documents', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('unit_id')->nullable(true)
-                ->references('id')->on('units')->onDelete('cascade');
+            $table->unsignedBigInteger('client_id')->nullable(true);
             $table->string('filename');
             $table->timestamps();
+            $table->foreign('client_id')->references('id')->on('clienteles')->onDelete('cascade');
         });
     }
 

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('unit_amenities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('unit_id')->nullable(true)
-                ->references('id')->on('units')->onDelete('cascade');
+            $table->unsignedBigInteger('unit_id')->nullable(true);
             $table->string('filename');
             $table->timestamps();
+            $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
         });
     }
 
