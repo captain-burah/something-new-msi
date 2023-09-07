@@ -26,7 +26,7 @@ class DemoEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'LuXe Properties Dubai - New Lead',
+            subject: 'ESNAAD - Demo Email',
         );
     }
 

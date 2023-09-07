@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('careers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable(true);
+            $table->string('reference_id');
             $table->string('name');
             $table->longText('designation');
             $table->string('description');
             $table->string('status');
+            $table->string('views');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
         });
