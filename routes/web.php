@@ -4,6 +4,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\ClienteleController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 use App\Http\Controllers\ProfileController;

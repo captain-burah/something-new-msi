@@ -11,7 +11,7 @@
                                     <h5 class="font-size-14 mt-0">Amortization</h5>
                                     <ul class="list-unstyled megamenu-list">
                                         <li>
-                                            <a href="javascript:void(0);">Bookings</a>
+                                            <a href="{{ route('bookings.index') }}">Bookings</a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0);">Remittances</a>
@@ -35,7 +35,7 @@
                                     <h5 class="font-size-14 mt-0">Meetings</h5>
                                     <ul class="list-unstyled megamenu-list">
                                         <li>
-                                            <a href="javascript:void(0);">Schedules</a>
+                                            <a href="{{ route('meetings.index') }}">Schedules</a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0);">Attended</a>
@@ -56,7 +56,7 @@
                                     <h5 class="font-size-14 mt-0">Developments</h5>
                                     <ul class="list-unstyled megamenu-list">
                                         <li>
-                                            <a href="javascript:void(0);">Active Projects</a>
+                                            <a href="{{ route('projects.index') }}">Active Projects</a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0);">In-active Projects</a>
@@ -77,7 +77,7 @@
                                     <h5 class="font-size-14 mt-0">Units</h5>
                                     <ul class="list-unstyled megamenu-list">
                                         <li>
-                                            <a href="javascript:void(0);">Active Units</a>
+                                            <a href="{{ route('units.index') }}">Active Units</a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0);">In-active Units</a>
@@ -102,7 +102,7 @@
                                     <h5 class="font-size-14 mt-0">Clientele</h5>
                                     <ul class="list-unstyled megamenu-list">
                                         <li>
-                                            <a href="javascript:void(0);">All Clientele</a>
+                                            <a href="{{ route('clienteles.index') }}">All Clientele</a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0);">Paying Clients</a>

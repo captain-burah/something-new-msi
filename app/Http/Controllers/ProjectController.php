@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -20,7 +21,20 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $projects = Project::where('status', '1')->orderBY('id', 'Desc');
+
+        $check_availability = $projects->get();
+
+        if($check_availability->isEmpty()) {
+            $this->data['count-status'] = 'No projects found. You can create a new project above to start off';
+            $this->data['projects'] = $projects;
+        } else {
+            $this->data['projects'] = $projects->paginate(30);
+            dd($projects);
+        }
+
+
+        return view('projectsActive', $this->data);
     }
 
     /**

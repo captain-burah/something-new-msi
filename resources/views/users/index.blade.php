@@ -1,6 +1,7 @@
 
 @extends('layouts.appIn')
 @section('content')
+<div style="padding-top: 150px;">
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
@@ -47,4 +48,5 @@
 @endforeach
 </table>
 {!! $data->render() !!}
+</div>
 @endsection
