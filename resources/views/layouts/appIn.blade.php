@@ -36,9 +36,9 @@
 
             @include('layouts.header')
 
-            @include('layouts.topNav')
+            {{-- @include('layouts.topNav') --}}
 
-            <main class="container-fluid" style="padding-top: 20vh;">
+            <main class="container-fluid" >
                 @yield('content')
             </main>
 
