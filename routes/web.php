@@ -53,6 +53,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
 
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout.get');
+
+    // PROJECT ROUTES
+    Route::get('projects-drafts', [ProjectController::class, 'index_drafts'])->name('projects.drafts');
+    Route::get('projects-trash', [ProjectController::class, 'index_trash'])->name('projects.trash');
 });
 
 require __DIR__.'/auth.php';

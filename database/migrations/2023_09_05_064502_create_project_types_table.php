@@ -13,7 +13,22 @@ return new class extends Migration
     {
         Schema::create('project_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name_en');
+            $table->string('name_ru');
+            $table->string('name_ar');
+
+            $table->string('meta_title_en');
+            $table->string('meta_title_ru');
+            $table->string('meta_title_ar');
+
+            $table->string('meta_description_en');
+            $table->string('meta_description_ru');
+            $table->string('meta_description_ar');
+
+            $table->string('meta_keywords_en');
+            $table->string('meta_keywords_ru');
+            $table->string('meta_keywords_ar');
+
             $table->longText('description');
 
             $table->unsignedBigInteger('created_by');

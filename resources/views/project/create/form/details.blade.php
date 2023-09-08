@@ -90,11 +90,33 @@
 
 </div>
 
+
+<div class="row mt-5">
+    <div class="col-md-12">
+        <div class="mb-3">
+            <label for="price">Escrow Number</label>
+            <input
+                type="text"
+                name="escrow"
+                class="form-control
+                @error('escrow') border border-solid border-danger  @enderror"
+                id="price"
+                placeholder="123*******789"
+            >
+            @error('escrow')
+                <div class="text-danger text-xs">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+
+</div>
+
+
 <div class="row mt-5">
     <div class="col-md-3">
         <div class="mb-3">
             <label for="basicpill-units-input">No of Units<span></span></label>
-            <input type="number" class="form-control" id="basicpill-units-input" placeholder="50">
+            <input type="number" name="units" class="form-control" id="units" placeholder="50">
         </div>
     </div>
 

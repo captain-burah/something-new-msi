@@ -21,19 +21,19 @@
                                 <div class="row mx-auto text-center">
                                     <div class="col-4">
                                         <div>
-                                            <p class="text-muted text-truncate mb-2">Active Projects</p>
+                                            <a href="{{ route('projects.index') }}" class="btn btn-sm btn-outline-dark text-truncate mb-2">Active Projects</a>
                                             <h5 class="mb-0">7</h5>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div>
-                                            <p class="text-muted text-truncate mb-2">Drafts</p>
+                                            <a href="{{ route('projects.drafts') }}" class="btn btn-sm btn-outline-dark text-truncate mb-2">Drafts</a>
                                             <h5 class="mb-0">3</h5>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div>
-                                            <p class="text-muted text-truncate mb-2">Trash</p>
+                                            <a href="{{ route('projects.trash') }}" class="btn btn-sm btn-outline-dark text-truncate mb-2">Trash</a>
                                             <h5 class="mb-0">5</h5>
                                         </div>
                                     </div>

@@ -7,13 +7,12 @@
             <label for="basicpill-meta_title-input">Description (EN)</label>
             <div class="w-100 ">
                 <div class="my-4">
-                    @error('description_en')
+                    @error('description')
                         <div class="text-danger text-xs" >{{ $message }}</div>
                     @enderror
-                    <textarea name="description_en" id="description_en" class="w-100">{{ old('description_en') }}</textarea>
+                    <textarea name="description" id="description" class="w-100">{{ old('description') }}</textarea>
                 </div>
             </div>
         </div>
     </div>
-
 </div>

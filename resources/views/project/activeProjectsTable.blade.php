@@ -38,6 +38,110 @@
                             <td colspan='11' class="text-muted">{{$count_status}}</td>
                         </tr>
                     @else
+                    @foreach ($projects as $data)
+                        <tr>
+                            <td scope="row">{{ $data->id }}</td>
+                            <td>{{ $data->name }}</td>
+                            <td>Business Bay</td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="bx bx-list-check text-primary" style="font-size: 20px"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Update</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Update</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-list-check text-primary" style="font-size: 20px"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Update</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-list-check text-primary" style="font-size: 20px"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Update</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-list-check text-primary" style="font-size: 20px"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Update</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Update</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Update</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-light rounded dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="mdi mdi-dots-horizontal font-size-18"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-trash text-danger"></i> &nbsp;Remove</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                         <tr>
                             <td scope="row">1</td>
                             <td>Atlas</td>
