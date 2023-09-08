@@ -7,10 +7,11 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'ESNAAD') }}</title>
 
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ asset('/public/ESNAD-FAVICON.png') }}">
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+        <link rel="icon" type="image/png" href="{{ asset('ESNAD-FAVICON.png') }}">
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -27,6 +28,8 @@
 
         <!-- App Css-->
         <link href="{{ asset('css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+
+        @yield('appIn_css')
 
     </head>
     <body data-topbar="dark" data-layout="horizontal">
@@ -94,15 +97,12 @@
 
         <!-- JAVASCRIPT -->
         <script src="{{ asset('js/jquery.min.js') }}"></script>
+        @yield('appIn_js')
         <script src="{{ asset('libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('libs/metismenu/metisMenu.min.js') }}"></script>
         <script src="{{ asset('libs/simplebar/simplebar.min.js') }}"></script>
         <script src="{{ asset('libs/node-waves/waves.min.js') }}"></script>
 
-        <!-- apexcharts -->
-        {{-- <script src="{{ asset('public/libs/apexcharts/apexcharts.min.js') }}"></script> --}}
-
-        {{-- <script src="{{ asset('public/js/pages/dashboard.init.js') }}"></script> --}}
 
         <!-- App js -->
         <script src="{{ asset('public/js/app.js') }}"></script>

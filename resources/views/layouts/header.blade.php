@@ -24,10 +24,32 @@
             </button>
 
             <div class="d-flex flex-row ">
-                <a href="{{ asset('/dashboard')}}" class=" my-auto">
-                    <p class="text-white my-auto">DASHBOARD </p>
+                <a href="{{ route('dashboard')}}" class="mr-5 my-auto">
+                    <span class="text-white font-weight-bold  my-auto ">HOME </span>
                 </a>
+
+                <a href="{{ route('projects.index')}}" class="mr-5 my-auto">
+                    <span class="text-white font-weight-bold  my-auto ">DEVELOPMENTS </span>
+                </a>
+
+                <a href="{{ route('bookings.index')}}" class="mr-5 my-auto">
+                    <span class="text-white font-weight-bold  my-auto ">BOOKINGS </span>
+                </a>
+
+                <a href="{{ route('units.index')}}" class="mr-5 my-auto">
+                    <span class="text-white font-weight-bold  my-auto ">UNITS </span>
+                </a>
+
+                <a href="{{ route('meetings.index')}}" class="mr-5 my-auto">
+                    <span class="text-white font-weight-bold  my-auto ">MEETINGS </span>
+                </a>
+
+                <a href="{{ route('clienteles.index')}}" class="mr-3 my-auto">
+                    <span class="text-white font-weight-bold  my-auto ">CLIENTELE </span>
+                </a>
+
             </div>
+
 
             @include('layouts.megaMenu')
         </div>
@@ -177,11 +199,9 @@
                 </button>
 
                 <div class="dropdown-menu dropdown-menu-right">
-                    {{-- <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle mr-1"></i> My Wallet</a>
-                        <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Settings</a>
-                        <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle mr-1"></i> Lock screen</a>
-                        <div class="dropdown-divider"></div>
-                    --}}
+                    {{-- <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle mr-1"></i> {{Auth::user()->name}}</a>
+                    <div class="dropdown-divider"></div> --}}
+
                     <a class="dropdown-item text-danger" href="{{ route('logout.get') }}">
                         <i class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i> Logout
                     </a>

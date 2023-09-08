@@ -26,7 +26,7 @@ class ProjectController extends Controller
         $check_availability = $projects->get();
 
         if($check_availability->isEmpty()) {
-            $this->data['count-status'] = 'No projects found. You can create a new project above to start off';
+            $this->data['count_status'] = 'No projects found. You can launch a new project above to start-off';
             $this->data['projects'] = $projects;
         } else {
             $this->data['projects'] = $projects->paginate(30);
@@ -42,7 +42,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('project.create.index');
     }
 
     /**
