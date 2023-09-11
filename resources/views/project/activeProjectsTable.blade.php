@@ -9,9 +9,16 @@
 </style>
 
 @if($errors->any())
-<div class="alert alert-danger" role="alert">
-    {{$errors->first()}}
-</div>
+    <div class="alert alert-danger" role="alert">
+        {{$errors->first()}}
+    </div>
+@endif
+
+
+@if(session()->has('message'))
+    <div class="alert alert-success" role="alert">
+        {{ session()->get('message') }}
+    </div>
 @endif
 
 <div class="card w-100">
@@ -53,14 +60,29 @@
                                     <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         @if($data->status == '1')
                                             <i class="bx bx-check-shield text-success" style="font-size: 20px"></i>
-                                        @else
+                                        @elseif($data->status == '2')
                                             <i class="bx bx-cloud-download text-dark" style="font-size: 20px"></i>
+                                        @else
+                                            <i class="bx bx-trash text-danger" style="font-size: 20px"></i>
                                         @endif
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Active</a>
-                                        <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Draft</a>
-                                        <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Trash</a>
+                                        @if($data->status == '1')
+                                            <a class="dropdown-item" href="{{ url('projects-status-change/'.$data->id.'/1') }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
+                                            <a class="dropdown-item" href="{{ url('projects-status-change/'.$data->id.'/2') }}"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
+                                            <a class="dropdown-item" href="{{ url('projects-status-change/'.$data->id.'/3') }}"><i class="bx bx-trash"></i> &nbsp; Trash</a>
+                                        @elseif($data->status == 2)
+                                            <a class="dropdown-item" href="{{ url('projects-status-change/'.$data->id.'/1') }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
+                                            <a class="dropdown-item" href="{{ url('projects-status-change/'.$data->id.'/2') }}"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
+                                            <a class="dropdown-item" href="{{ url('projects-status-change/'.$data->id.'/3') }}"><i class="bx bx-trash"></i> &nbsp; Trash</a>
+                                        @else
+                                            <a class="dropdown-item" href="{{ url('projects-status-change/'.$data->id.'/1') }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
+                                            <a class="dropdown-item" href="{{ url('projects-status-change/'.$data->id.'/2') }}"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
+                                            <a class="dropdown-item" href="{{ url('projects-status-change/'.$data->id.'/3') }}"><i class="bx bx-trash"></i> &nbsp; Trash</a>
+                                        @endif
+                                        {{-- <a class="dropdown-item" href="#"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp; Trash</a> --}}
                                     </div>
                                 </div>
                             </td>

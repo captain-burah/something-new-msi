@@ -7,6 +7,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log; // send notifications via slack or any other means
+use Illuminate\Support\Str;
 
 
 class ProjectController extends Controller
@@ -41,7 +42,7 @@ class ProjectController extends Controller
 
     public function index_drafts()
     {
-        $projects = Project::where('status', '0')->orderBY('id', 'Desc');
+        $projects = Project::where('status', '2')->orderBY('id', 'Desc');
 
         $check_availability = $projects->get();
 
@@ -56,7 +57,7 @@ class ProjectController extends Controller
 
     public function index_trash()
     {
-        $projects = Project::where('is_trash', '1')->orderBY('id', 'Desc');
+        $projects = Project::where('status', '3')->orderBY('id', 'Desc');
 
         $check_availability = $projects->get();
 
@@ -159,7 +160,7 @@ class ProjectController extends Controller
             $project->meta_description = $request->meta_description;
             $project->meta_keywords = $request->meta_keywords;
             $project->slug_link = '0';
-            $project->status = '0';
+            $project->status = '2';
             $project->save();
 
             $this->data['property_id'] = $project->id;
@@ -187,7 +188,11 @@ class ProjectController extends Controller
     {
         try
         {
-            $projects = Project::where('status', '0')->findOrFail($id);
+            $projects = Project::findOrFail($id);
+
+            if($projects->status == '1') {
+                return Redirect::back()->withErrors(['msg' => 'Warning! You cannot edit a live project. Move the project to Draft and make further edits.']);
+            }
         }
         catch(ModelNotFoundException $e)
         {
@@ -314,7 +319,7 @@ class ProjectController extends Controller
                 $project->meta_description = $request->meta_description;
                 $project->meta_keywords = $request->meta_keywords;
                 $project->slug_link = '0';
-                $project->status = '0';
+                $project->status = '2';
                 $project->save();
 
             }
@@ -373,5 +378,78 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function status_change($id, $status)
+    {
+        // dd($status);
+        try
+        {
+            $projects = Project::findOrFail($id);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            // dd(get_class_methods($e));
+            // dd($e);
+
+            // SLACK UPDATE
+
+                //API Url
+                $url = 'https://hooks.slack.com/services/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';
+
+                //Initiate cURL.
+                $ch = curl_init($url);
+
+                //The JSON data.
+                $payload = array(
+                    'text' => 'ESNAAD - MIS | Project Update - Status Change - Project Not Found | Searching id: '.$id
+                );
+
+                //Encode the array into JSON.
+                $jsonDataEncoded = json_encode($payload);
+
+                //Tell cURL that we want to send a POST request.
+                curl_setopt($ch, CURLOPT_POST, 1);
+
+                //Attach our encoded JSON string to the POST fields.
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
+
+                //Set the content type to application/json
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+                //Execute the request
+                $result = curl_exec($ch);
+
+            // SLACK UPDATE
+
+            return Redirect::back()->withErrors(['msg' => 'Could not find project. Please contact developer.']);
+        }
+
+        $projects = Project::findOrFail($id);
+        if($status == '1')
+        {
+            $projects->status = 1;
+            $projects->slug_link = Str::slug($projects->name);
+            $projects->save();
+            return Redirect::back()->with('message', 'Project is now live!');
+
+
+        } elseif ($status == '2') {
+            $projects->status = 2;
+            $projects->slug_link = '0';
+            $projects->save();
+            return Redirect::back()->with('message', 'Project has been drafted');
+
+        } elseif($status == '3') {
+            $projects->status = 3;
+            $projects->slug_link = '0';
+            $projects->save();
+            return Redirect::back()->with('message', 'Project has been moved to trash');
+        } else {
+            return Redirect::back()->withErrors(['msg' => 'Invalid URL. Please contact developer.']);
+        }
+
+        $this->data['project'] = $projects;
+        return Redirect::back()->with('message', 'Project status has been changed');
     }
 }

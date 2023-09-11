@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function () {
     // PROJECT ROUTES
     Route::get('projects-drafts', [ProjectController::class, 'index_drafts'])->name('projects.drafts');
     Route::get('projects-trash', [ProjectController::class, 'index_trash'])->name('projects.trash');
+    Route::get('projects-status-change/{id}/{status}', [ProjectController::class, 'status_change'])->name('projects.status.change');
 });
 
 require __DIR__.'/auth.php';
