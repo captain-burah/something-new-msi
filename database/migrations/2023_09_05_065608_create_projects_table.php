@@ -21,12 +21,12 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->nullable(true);
             $table->unsignedBigInteger('location_id')->nullable(true);
             $table->unsignedBigInteger('emirate_id')->nullable(true);
+            $table->unsignedBigInteger('property_release_id')->nullable(true);
 
             $table->string('slug_link')->nullable(true);
             $table->string('name')->nullable(true);
             $table->string('description')->nullable(true);
 
-            $table->string('property_release')->nullable(true);
             $table->string('ownership')->nullable(true);
             $table->string('handover')->nullable(true);
             $table->string('starting_price')->nullable(true);
@@ -43,7 +43,7 @@ return new class extends Migration
             $table->string('bathrooms')->nullable(true);
             $table->string('floors')->nullable(true);
             $table->string('unit_size_range')->nullable(true);
-            $table->string('outoor_area')->nullable(true);
+            $table->string('outdoor_area')->nullable(true);
             $table->string('terrace_area')->nullable(true);
             $table->string('escrow')->nullable(true);
 

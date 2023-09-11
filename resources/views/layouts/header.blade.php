@@ -28,25 +28,35 @@
                     <span class="text-white font-weight-bold  my-auto ">HOME </span>
                 </a>
 
+                @can('project-list')
                 <a href="{{ route('projects.index')}}" class="mr-5 my-auto">
                     <span class="text-white font-weight-bold  my-auto ">DEVELOPMENTS </span>
                 </a>
+                @endcan
 
+                @can('booking-list')
                 <a href="{{ route('bookings.index')}}" class="mr-5 my-auto">
                     <span class="text-white font-weight-bold  my-auto ">BOOKINGS </span>
                 </a>
+                @endcan
 
+                @can('listing-list')
                 <a href="{{ route('units.index')}}" class="mr-5 my-auto">
                     <span class="text-white font-weight-bold  my-auto ">UNITS </span>
                 </a>
+                @endcan
 
+                @can('meeting-list')
                 <a href="{{ route('meetings.index')}}" class="mr-5 my-auto">
                     <span class="text-white font-weight-bold  my-auto ">MEETINGS </span>
                 </a>
+                @endcan
 
+                @can('clientele-list')
                 <a href="{{ route('clienteles.index')}}" class="mr-3 my-auto">
                     <span class="text-white font-weight-bold  my-auto ">CLIENTELE </span>
                 </a>
+                @endcan
 
             </div>
 

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redirect;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log; // send notifications via slack or any other means
+
 
 class ProjectController extends Controller
 {
@@ -97,7 +101,9 @@ class ProjectController extends Controller
 
             'title_en' => ['required'],
 
-            'project_ownership' => ['required'],
+            'description' => ['required'],
+
+            'ownership' => ['required'],
 
             'handover' => ['required'],
 
@@ -138,6 +144,7 @@ class ProjectController extends Controller
             $project->longitude = $request->longitude;
             $project->latitude = $request->latitude;
             $project->name = $request->title_en;
+            $project->description = $request->description;
             $project->ownership = $request->ownership;
             $project->handover = $request->handover;
             $project->starting_price = $request->price;
@@ -178,7 +185,50 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try
+        {
+            $projects = Project::where('status', '0')->findOrFail($id);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            // dd(get_class_methods($e));
+            // dd($e);
+
+            // SLACK UPDATE
+
+                //API Url
+                $url = 'https://hooks.slack.com/services/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';
+
+                //Initiate cURL.
+                $ch = curl_init($url);
+
+                //The JSON data.
+                $payload = array(
+                    'text' => 'ESNAAD - MIS | Project Update - Read Failed - Project Not Found | Searching id: '.$id
+                );
+
+                //Encode the array into JSON.
+                $jsonDataEncoded = json_encode($payload);
+
+                //Tell cURL that we want to send a POST request.
+                curl_setopt($ch, CURLOPT_POST, 1);
+
+                //Attach our encoded JSON string to the POST fields.
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
+
+                //Set the content type to application/json
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+                //Execute the request
+                $result = curl_exec($ch);
+
+            // SLACK UPDATE
+
+            return Redirect::back()->withErrors(['msg' => 'Could not find project. Please contact developer.']);
+        }
+
+        $this->data['project'] = $projects;
+        return view('project.update.index', $this->data);
     }
 
     /**
@@ -186,7 +236,135 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+
+            // 'property_release' => ['required'],
+
+            // 'community' => ['required'],
+
+            // 'category' => ['required'],
+
+            // 'emirates' => ['required'],
+
+            // 'location' => ['required'],
+
+            'longitude' => ['required'],
+
+            'latitude' => ['required'],
+
+            'title_en' => ['required'],
+
+            'description' => ['required'],
+
+            'ownership' => ['required'],
+
+            'handover' => ['required'],
+
+            'price' => ['required'],
+
+            'units' => ['required'],
+
+            'bedrooms' => ['required'],
+
+            'bathrooms' => ['required'],
+
+            'floors' => ['required'],
+
+            'area_range' => ['required'],
+
+            'outdoor_area_range' => ['required'],
+
+            'terrace_area_range' => ['required'],
+
+            'meta_title' => ['required'],
+
+            'meta_description' => ['required'],
+
+            'meta_keywords' => ['required']
+        ]);
+
+        $bool=0;
+
+
+		if($bool==0)
+		{
+            try
+            {
+                $project = Project::find($id);
+                $project->property_release = $request->property_release;
+                $project->community_id = $request->community;
+                $project->category_id = $request->category;
+                $project->emirate_id = $request->emirates;
+                $project->location_id = $request->location;
+                $project->longitude = $request->longitude;
+                $project->latitude = $request->latitude;
+                $project->name = $request->title_en;
+                $project->description = $request->description;
+                $project->ownership = $request->ownership;
+                $project->handover = $request->handover;
+                $project->starting_price = $request->price;
+                $project->no_of_units = $request->units;
+                $project->bedrooms = $request->bedrooms;
+                $project->bathrooms = $request->bathrooms;
+                $project->floors = $request->floors;
+                $project->unit_size_range = $request->area_range;
+                $project->outdoor_area = $request->outdoor_area_range;
+                $project->terrace_area = $request->terrace_area_range;
+                $project->meta_title = $request->meta_title;
+                $project->meta_description = $request->meta_description;
+                $project->meta_keywords = $request->meta_keywords;
+                $project->slug_link = '0';
+                $project->status = '0';
+                $project->save();
+
+            }
+            catch(ModelNotFoundException $e)
+            {
+                // dd(get_class_methods($e));
+                // dd($e);
+
+                // SLACK UPDATE
+
+                    //API Url
+                    $url = 'https://hooks.slack.com/services/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';
+
+                    //Initiate cURL.
+                    $ch = curl_init($url);
+
+                    //The JSON data.
+                    $payload = array(
+                        'text' => 'ESNAAD MIS | Project Update - Failed | id: '.$id.' | Error : '.$e
+                    );
+
+                    //Encode the array into JSON.
+                    $jsonDataEncoded = json_encode($payload);
+
+                    //Tell cURL that we want to send a POST request.
+                    curl_setopt($ch, CURLOPT_POST, 1);
+
+                    //Attach our encoded JSON string to the POST fields.
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
+
+                    //Set the content type to application/json
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+                    //Execute the request
+                    $result = curl_exec($ch);
+
+                // SLACK UPDATE
+
+                return Redirect::back()->withErrors(['msg' => 'Could not find project. Please contact developer.']);
+            }
+
+
+            $this->data['property_id'] = $project->id;
+            // return $this->index();
+            return redirect()->route('projects.index')->with('success', 'Project information has been updated');
+        }
+        else
+        {   dd('fail');
+            return Redirect::back()->withErrors('Record is already Exist');
+        }
     }
 
     /**

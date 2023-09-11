@@ -7,6 +7,13 @@
 
 
 </style>
+
+@if($errors->any())
+<div class="alert alert-danger" role="alert">
+    {{$errors->first()}}
+</div>
+@endif
+
 <div class="card w-100">
     <div class="card-body">
         <h4 class="card-title">Active Projects Table</h4>
@@ -20,9 +27,9 @@
                 <thead>
                     <tr class="bg-dark text-white">
                         <th>#</th>
+                        <th>Status</th>
                         <th>Project Name</th>
                         <th>Location</th>
-                        <th>Payment Plans</th>
                         <th>Floor Plans</th>
                         <th>Brochures</th>
                         <th>Factsheets</th>
@@ -41,20 +48,24 @@
                     @foreach ($projects as $data)
                         <tr>
                             <td scope="row">{{ $data->id }}</td>
-                            <td>{{ $data->name }}</td>
-                            <td>Business Bay</td>
                             <td>
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="bx bx-list-check text-primary" style="font-size: 20px"></i>
+                                        @if($data->status == '1')
+                                            <i class="bx bx-check-shield text-success" style="font-size: 20px"></i>
+                                        @else
+                                            <i class="bx bx-cloud-download text-dark" style="font-size: 20px"></i>
+                                        @endif
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
-                                        <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Update</a>
-                                        <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Active</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Draft</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Trash</a>
                                     </div>
                                 </div>
                             </td>
+                            <td>{{ $data->name }}</td>
+                            <td>Business Bay</td>
                             <td>
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -135,7 +146,7 @@
                                         <i class="mdi mdi-dots-horizontal font-size-18"></i>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
+                                        <a class="dropdown-item" href="{{ route('projects.edit', ['project' => $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
                                         <a class="dropdown-item" href="#"><i class="bx bx-trash text-danger"></i> &nbsp;Remove</a>
                                     </div>
                                 </div>

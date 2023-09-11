@@ -5,16 +5,10 @@
             <div class="collapse navbar-collapse" id="topnav-menu-content">
                 <ul class="navbar-nav">
 
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link " href="{{ route('projects.create') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
                             <i class="bx bx-bookmark-plus mr-2"></i>Launch Project
-                        </a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link " href="{{ route('dashboard') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
-                            <i class="bx bx-detail mr-2"></i>Payment Plans
                         </a>
                     </li>
 

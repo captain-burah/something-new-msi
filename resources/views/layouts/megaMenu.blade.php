@@ -13,6 +13,7 @@
         <div class="row">
             <div class="col-sm-10">
                 <div class="row">
+                    @can('booking-list')
                     <div class="col-md-3">
                         <h5 class="font-size-16 font-weight-bold mt-0"><u>Amortization</u></h5>
                         <ul class="list-unstyled megamenu-list">
@@ -48,7 +49,9 @@
                             </li>
                         </ul>
                     </div>
+                    @endcan
 
+                    @can('meeting-list')
                     <div class="col-md-3">
                         <h5 class="font-size-16 font-weight-bold mt-0"><u>Meetings</u></h5>
                         <ul class="list-unstyled megamenu-list">
@@ -84,7 +87,9 @@
                             </li>
                         </ul>
                     </div>
+                    @endcan
 
+                    @can('project-list')
                     <div class="col-md-3">
                         <h5 class="font-size-16 font-weight-bold mt-0"><u>Developments</u></h5>
                         <ul class="list-unstyled megamenu-list">
@@ -120,7 +125,9 @@
                             </li>
                         </ul>
                     </div>
+                    @endcan
 
+                    @can('listing-list')
                     <div class="col-md-3">
                         <h5 class="font-size-16 font-weight-bold mt-0"><u>Units</u></h5>
                         <ul class="list-unstyled megamenu-list">
@@ -157,10 +164,12 @@
 
                         </ul>
                     </div>
+                    @endcan
                 </div>
             </div>
             <div class="col-sm-2">
                 <div class="row">
+                    @can('clientele-list')
                     <div class="col-sm-6">
                         <h5 class="font-size-16 font-weight-bold mt-0"><u>Clientele</u></h5>
                         <ul class="list-unstyled megamenu-list">
@@ -190,6 +199,7 @@
                             </li>
                         </ul>
                     </div>
+                    @endcan
 
                     <div class="col-sm-5">
                         <div>

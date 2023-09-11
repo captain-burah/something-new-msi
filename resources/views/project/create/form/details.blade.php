@@ -26,17 +26,17 @@
 
     <div class="col-md-12">
         <div class="mb-3">
-            <label for="project_ownership">Project Ownership</label>
+            <label for="ownership">Project Ownership</label>
             <input
                 type="text"
-                name="project_ownership"
+                name="ownership"
                 class="form-control
-                @error('project_ownership') border border-solid border-danger  @enderror"
+                @error('ownership') border border-solid border-danger  @enderror"
                 id="basicpill-ownership-input"
                 placeholder="Freehold / Leasehold / Fractional"
-                value="{{ old('project_ownership') }}"
+                value="{{ old('ownership') }}"
             >
-            @error('project_ownership')
+            @error('ownership')
                 <div class="text-danger text-xs">{{ $message }}</div>
             @enderror
         </div>
@@ -81,6 +81,7 @@
                 @error('price') border border-solid border-danger  @enderror"
                 id="price"
                 placeholder="2700000"
+                value="{{ old('price') }}"
             >
             @error('price')
                 <div class="text-danger text-xs">{{ $message }}</div>
@@ -102,6 +103,7 @@
                 @error('escrow') border border-solid border-danger  @enderror"
                 id="price"
                 placeholder="123*******789"
+                value="{{ old('escrow') }}"
             >
             @error('escrow')
                 <div class="text-danger text-xs">{{ $message }}</div>
@@ -116,7 +118,19 @@
     <div class="col-md-3">
         <div class="mb-3">
             <label for="basicpill-units-input">No of Units<span></span></label>
-            <input type="number" name="units" class="form-control" id="units" placeholder="50">
+            <input
+                type="number"
+                name="units"
+                class="form-control
+                @error('units') border border-solid border-danger  @enderror"
+                id="units"
+                placeholder="156"
+                value="{{ old('units') }}"
+            >
+            @error('units')
+                <div class="text-danger text-xs">{{ $message }}</div>
+            @enderror
+
         </div>
     </div>
 
@@ -130,6 +144,7 @@
                 @error('bedrooms') border border-solid border-danger  @enderror"
                 id="bedrooms"
                 placeholder="Studio, 1, 2, 3 & 4"
+                value="{{ old('bedrooms') }}"
             >
             @error('bedrooms')
                 <div class="text-danger text-xs">{{ $message }}</div>
@@ -147,6 +162,7 @@
                 @error('bathrooms') border border-solid border-danger  @enderror"
                 id="bathrooms"
                 placeholder="1, 2, 3, 4"
+                value="{{ old('bathrooms') }}"
             >
             @error('bathrooms')
                 <div class="text-danger text-xs">{{ $message }}</div>
@@ -164,6 +180,7 @@
                 @error('floors') border border-solid border-danger  @enderror"
                 id="floors"
                 placeholder="50"
+                value="{{ old('floors') }}"
             >
             @error('floors')
                 <div class="text-danger text-xs">{{ $message }}</div>
@@ -181,6 +198,7 @@
                 @error('area_range') border border-solid border-danger  @enderror"
                 id="area_range"
                 placeholder="1,200 - 1,500"
+                value="{{ old('area_range') }}"
             >
             @error('area_range')
                 <div class="text-danger text-xs">{{ $message }}</div>
@@ -198,6 +216,7 @@
                 @error('outdoor_area_range') border border-solid border-danger  @enderror"
                 id="outdoor_area_range"
                 placeholder="5,200 - 7,500"
+                value="{{ old('outdoor_area_range') }}"
             >
             @error('outdoor_area_range')
                 <div class="text-danger text-xs">{{ $message }}</div>
@@ -215,6 +234,7 @@
                 @error('terrace_area_range') border border-solid border-danger  @enderror"
                 id="terrace_area_range"
                 placeholder="3,200 - 5,500"
+                value="{{ old('terrace_area_range') }}"
             >
             @error('terrace_area_range')
                 <div class="text-danger text-xs">{{ $message }}</div>

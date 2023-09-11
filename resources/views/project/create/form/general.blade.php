@@ -32,11 +32,11 @@
 
             <select
                 class="form-control select2-search-disable select2-hidden-accessible
-                @error('property_release') border border-solid border-danger  @enderror"
+                @error('property_release_id') border border-solid border-danger  @enderror"
                 data-select2-id="basicpill-status-input"
                 tabindex="-1"
                 aria-hidden="true"
-                name="property_release"
+                name="property_release_id"
             >
                 <option selected value="">Choose ...</option>
                 @if(isset($project_status))
@@ -45,7 +45,7 @@
                     @endforeach
                 @endif
             </select>
-            @error('property_release')
+            @error('property_release_id')
                 <div class="text-danger text-xs">{{ $message }}</div>
             @enderror
 
@@ -184,6 +184,7 @@
                 @error('longitude') border border-solid border-danger  @enderror"
                 id="longitude"
                 placeholder="55.**"
+                value="{{ old('longitude') }}"
             >
             @error('longitude')
                 <div class="text-danger text-xs">{{ $message }}</div>
@@ -202,6 +203,7 @@
                 @error('latitude') border border-solid border-danger  @enderror"
                 id="latitude"
                 placeholder="24.**"
+                value="{{ old('latitude') }}"
             >
             @error('latitude')
                 <div class="text-danger text-xs">{{ $message }}</div>
