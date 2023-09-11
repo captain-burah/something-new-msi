@@ -169,7 +169,6 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="{{ route('projects.edit', ['project' => $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
-                                        <a class="dropdown-item" href="#"><i class="bx bx-trash text-danger"></i> &nbsp;Remove</a>
                                     </div>
                                 </div>
                             </td>

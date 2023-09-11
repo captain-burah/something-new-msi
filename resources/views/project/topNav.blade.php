@@ -13,8 +13,14 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link " href="{{ route('dashboard') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
-                            <i class="bx bx-area mr-2"></i>Floor Plans
+                        <a class="nav-link " href="{{ route('projects.index') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
+                            <i class="bx bx-building-house mr-2"></i>Projects
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link " href="{{ route('project-brochures.index') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
+                            <i class="bx bx-folder-open mr-2"></i>Brochures 
                         </a>
                     </li>
 
@@ -30,11 +36,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link " href="{{ route('dashboard') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
-                            <i class="bx bx-folder-open mr-2"></i>Brochures
-                        </a>
-                    </li>
+
 
                     <li class="nav-item dropdown">
                         <a class="nav-link " href="{{ route('dashboard') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
