@@ -14,15 +14,15 @@ class ProjectStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        Property_release::create([
+        Project_status::create([
             'name' => 'Active'
         ]);
 
-        Property_release::create([
+        Project_status::create([
             'name' => 'Draft'
         ]);
 
-        Property_release::create([
+        Project_status::create([
             'name' => 'Trash'
         ]);
     }

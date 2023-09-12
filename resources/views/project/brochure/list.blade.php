@@ -39,7 +39,7 @@
             <div class="col-lg-6 d-none d-lg-block my-auto">
                 <div class="clearfix mt-4 mt-lg-0 my-auto">
                     <div class="my-auto float-right">
-                        <a href="{{ route('projects.create') }}" class="btn btn-dark">
+                        <a href="{{ route('project-brochures.create') }}" class="btn btn-dark">
                             <i class="bx bx-bookmark-plus mr-2"></i>Add New Segment
                         </a>
                     </div>
@@ -68,12 +68,10 @@
                                 <td>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            @if($data->status == '1')
-                                                <i class="bx bx-check-shield text-success" style="font-size: 20px"></i>
-                                            @elseif($data->status == '2')
-                                                <i class="bx bx-cloud-download text-dark" style="font-size: 20px"></i>
+                                            @if($data->project_id == null)
+                                                <i class="bx bx-no-entry text-danger" style="font-size: 20px"></i>
                                             @else
-                                                <i class="bx bx-trash text-danger" style="font-size: 20px"></i>
+                                                <i class="bx bx-check-shield text-success" style="font-size: 20px"></i>
                                             @endif
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -81,23 +79,18 @@
                                                 <a class="dropdown-item" href="#"><i class="bx bx-check-shield "></i> &nbsp; Connect To Project</a>
                                                 <a class="dropdown-item" href="#"><i class="bx bx-cloud-download"></i> &nbsp; Move to Draft</a>
                                                 <a class="dropdown-item" href="#"><i class="bx bx-trash"></i> &nbsp; Move to Trash</a>
-                                            @elseif($data->status == 2)
-                                                <a class="dropdown-item" href="#"><i class="bx bx-check-shield "></i> &nbsp; Connect To Project</a>
-                                                <a class="dropdown-item" href="#"><i class="bx bx-cloud-download"></i> &nbsp; Move to Draft</a>
-                                                <a class="dropdown-item" href="#"><i class="bx bx-trash"></i> &nbsp; Move to Trash</a>
                                             @else
                                                 <a class="dropdown-item" href="#"><i class="bx bx-check-shield "></i> &nbsp; Connect To Project</a>
                                                 <a class="dropdown-item" href="#"><i class="bx bx-cloud-download"></i> &nbsp; Move to Draft</a>
                                                 <a class="dropdown-item" href="#"><i class="bx bx-trash"></i> &nbsp; Move to Trash</a>
                                             @endif
-                                            {{-- <a class="dropdown-item" href="#"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
-                                            <a class="dropdown-item" href="#"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
-                                            <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp; Trash</a> --}}
                                         </div>
                                     </div>
                                 </td>
 
-                                <td>Business Bay</td>
+                                <td>{{$data->name}}</td>
+
+                                <td>{{ $data->project_brochure_files()->count() }}</td>
 
                                 <td>
                                     <div class="dropdown">
@@ -105,7 +98,7 @@
                                             <i class="mdi mdi-dots-horizontal font-size-18"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{{ route('projects.edit', ['project' => $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
+                                            <a class="dropdown-item" href="{{ route('project-brochures.edit', ['project_brochure' => $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
                                             <a class="dropdown-item" href="#"><i class="bx bx-trash text-danger"></i> &nbsp;Remove</a>
                                         </div>
                                     </div>
@@ -136,7 +129,7 @@
                                         <i class="mdi mdi-dots-horizontal font-size-18"></i>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
+                                        <a class="dropdown-item" href="{{ route('project-brochures.edt', ['project-brochures', $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
                                     </div>
                                 </div>
                             </td>
