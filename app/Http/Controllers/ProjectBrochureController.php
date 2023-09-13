@@ -200,6 +200,14 @@ class ProjectBrochureController extends Controller
 
 
     public function project_connect_store(Request $request){
+
+        $project = Project::with('project_brochure')->find($request->project_id);
+
+
+        if($project->project_brochure != null ){
+            return Redirect::back()->withErrors(['The selected project already contains a brochure. Remove it first to reassign.' ]);
+        }
+
         $brochure = Project_brochure::find($request->brochure_id);
         $brochure->project_id = $request->project_id;
         $brochure->save();
