@@ -40,7 +40,7 @@
             <div class="col-lg-6 d-none d-lg-block my-auto">
                 <div class="clearfix mt-4 mt-lg-0 my-auto">
                     <div class="my-auto float-right">
-                        <a href="{{ route('project-brochures.create') }}" class="btn btn-dark">
+                        <a href="{{ route('project-images.create') }}" class="btn btn-dark">
                             <i class="bx bx-bookmark-plus mr-2"></i>Add New Segment
                         </a>
                     </div>
@@ -86,7 +86,7 @@
 
                                 <td>{{$data->name}}</td>
 
-                                <td>{{ $data->project_brochure_files()->count() }}</td>
+                                <td>{{ $data->project_image_files()->count() }}</td>
 
                                 <td>
                                     <div class="dropdown">

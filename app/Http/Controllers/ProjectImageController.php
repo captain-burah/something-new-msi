@@ -34,7 +34,8 @@ class ProjectImageController extends Controller
      */
     public function create()
     {
-        //
+        return view('project.image.create.index');
+
     }
 
     /**
@@ -42,7 +43,51 @@ class ProjectImageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /**
+         * PUBLIC STORAGE
+         * ALL FILES ARE BEING STORED IN THE PUBLIC FOLDER UNDER ROOT/STORAGE
+         * THESE FILES ARE ACCESSSIBLE TO THE PUBLIC
+         *
+         * SECURED FILES WILL BE STORED USING THE BELOW SYNTAX WITHIN THE APP DIRECTORY
+         *
+         * Storage::disk('local')->put('image_name_goes_here', file_variable_should_be_placed_here);
+         *
+         */
+
+        $request->validate([
+            'segment_name' => 'required',
+            'files' => 'required | max: 10 | min: 1',
+            'files.*' => 'max: 400'
+        ]);
+
+
+        try {
+            if($request->hasfile('files'))
+            {
+                $files = [];
+
+                $project_segment = new Project_image();
+                $project_segment->name = $request->segment_name;
+                $project_segment->save();
+                $project_segment_id = $project_segment->id;
+
+                foreach($request->file('files') as $key => $image)
+                {
+                    $image_name = $image->hashName();
+                    $image->storeAs('projects/images/'.$project_segment_id, $image_name, 'public'); //nonsecured storage - has public access
+
+                    $project_segment_file = new Project_image_file();
+                    $project_segment_file->project_image_id = $project_segment_id;
+                    $project_segment_file->name = $image_name;
+                    $project_segment_file->save();
+
+                }
+            }
+        } catch (\Exception $e) {
+            return Redirect::back()->withErrors(['message', $e->getMessage() ]);
+        }
+
+        return redirect()->route('project-images.index');
     }
 
     /**
