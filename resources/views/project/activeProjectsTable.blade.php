@@ -91,12 +91,19 @@
                             <td>
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                        @if($data->project_brochure != null)
+                                            @if($data->project_brochure->project_id == $data->id)
+                                                <i class="bx bx-list-check text-primary" style="font-size: 18px"></i>
+                                            @else
+                                                <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                            @endif
+                                        @else
+                                            <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                        @endif
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
-                                        <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Update</a>
-                                        <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#project-floorplan-connect-{{$data->id}}"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
+                                        <a class="dropdown-item" href="{{ url('project/brochures/disconnect/'.$data->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
                                     </div>
                                 </div>
                             </td>
@@ -173,6 +180,50 @@
                                 </div>
                             </td>
                         </tr>
+
+                        {{-- MODAL FOR PROJECTS --}}
+                        <div class="modal fade" id="project-floorplan-connect-{{$data->id}}" tabindex="-1" aria-labelledby="project-connect-modal-{{$data->id}}" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalScrollableTitle">Floor Plans</h5>
+                                        <button type="button" class="btn btn-outline-secondary p-1 px-2" data-dismiss="modal" aria-label="Close">X</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="contact-form" id="getInTouch" method="post" action="{{ route('project.connect.brochure') }}">
+                                        @csrf
+                                            <input name="project_id" value="{{$data->id}}" hidden>
+                                            <select
+                                                class="form-control select2-search-disable select2-hidden-accessible
+                                                @error('project_id') border border-solid border-danger  @enderror"
+                                                data-select2-id="basicpill-status-input"
+                                                tabindex="-1"
+                                                aria-hidden="true"
+                                                name="brochure_id"
+                                            >
+                                                <option selected value="">Choose ...</option>
+
+                                                @if(isset($brochures))
+                                                    @foreach($brochures as $data)
+                                                        <option selected value="{{$data->id}}">{{ $data->name }}</option>
+                                                    @endforeach
+                                                @endif
+
+                                            </select>
+
+                                            <div class="my-2 w-100 text-right">
+                                                <button class="btn btn-outline-dark text-right  ">
+                                                    Connect
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                         <tr>
                             <td scope="row">1</td>

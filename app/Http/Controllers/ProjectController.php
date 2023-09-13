@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Project;
+use App\Models\Project_brochure;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log; // send notifications via slack or any other means
@@ -26,7 +27,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::where('status', '1')->orderBY('id', 'Desc');
+        $projects = Project::with('project_brochure')->where('status', '1')->orderBY('id', 'Desc');
 
         $check_availability = $projects->get();
 
@@ -34,8 +35,13 @@ class ProjectController extends Controller
             $this->data['count_status'] = 'No projects found. You can launch a new project above to start-off';
             $this->data['projects'] = $projects;
         } else {
-            $this->data['projects'] = $projects->paginate(30);
+            // dd($projects->get() );
+            $this->data['projects'] = $projects->get();
         }
+
+        $this->data['brochures'] = Project_brochure::with('project_brochure_files')->get();
+        // dd(Project_brochure::with('project_brochure_files')->get());
+
         return view('projectsActive', $this->data);
     }
 
@@ -47,11 +53,19 @@ class ProjectController extends Controller
         $check_availability = $projects->get();
 
         if($check_availability->isEmpty()) {
+
             $this->data['count_status'] = 'No projects found. You can launch a new project above to start-off';
+
             $this->data['projects'] = $projects;
+
         } else {
+
             $this->data['projects'] = $projects->paginate(30);
+
         }
+
+        $this->data['brochures'] = Project_brochure::with('project_brochure_files')->get();
+
         return view('projectsActive', $this->data);
     }
 
@@ -451,5 +465,28 @@ class ProjectController extends Controller
 
         $this->data['project'] = $projects;
         return Redirect::back()->with('message', 'Project status has been changed');
+    }
+
+    public function project_connect_store(Request $request) {
+
+        $project = Project::with('project_brochure')->find($request->project_id);
+
+        if($project->project_brochure != null ){
+            return Redirect::back()->withErrors(['The selected project already contains a brochure. Remove it first to reassign.' ]);
+        }
+
+        $brochure = Project_brochure::find($request->brochure_id);
+        $brochure->project_id = $request->project_id;
+        $brochure->save();
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+    public function project_disconnect($id) {
+        $project = Project::with('project_brochure')->find($id);
+        if($project->project_brochure != null) {
+            $project->project_brochure->project_id = null;
+            $project->project_brochure->save();
+        }
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
     }
 }

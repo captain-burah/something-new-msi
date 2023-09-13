@@ -203,7 +203,6 @@ class ProjectBrochureController extends Controller
 
         $project = Project::with('project_brochure')->find($request->project_id);
 
-
         if($project->project_brochure != null ){
             return Redirect::back()->withErrors(['The selected project already contains a brochure. Remove it first to reassign.' ]);
         }

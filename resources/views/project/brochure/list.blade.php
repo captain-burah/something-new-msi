@@ -105,7 +105,7 @@
                                 <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalScrollableTitle">Scrollable Modal</h5>
+                                            <h5 class="modal-title" id="exampleModalScrollableTitle">Projects</h5>
                                             <button type="button" class="btn btn-outline-secondary p-1 px-2" data-dismiss="modal" aria-label="Close">X</button>
                                         </div>
                                         <div class="modal-body">
