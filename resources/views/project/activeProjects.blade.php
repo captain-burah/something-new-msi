@@ -7,7 +7,7 @@
                             <div class="d-flex">
                                 <div class="flex-grow-1 align-self-center">
                                     <div class="text-muted">
-                                        <h3 class="mb-1">Developments</h3>
+                                        <h3 class="mb-1"><i class="bx bx-briefcase text-dark font-size-24"></i> Developments</h3>
                                         <p class="mb-0 text-justify text-muted">
                                             As a project takes shape, it not only brings new homes but also injects vitality and economic growth into the area, fostering a sense of community and prosperity.
                                         </p>

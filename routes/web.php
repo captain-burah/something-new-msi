@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectBrochureController;
+use App\Http\Controllers\ProjectImageController;
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UnitController;
@@ -46,6 +47,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('projects', ProjectController::class);
     Route::resource('project-brochures', ProjectBrochureController::class);
+    Route::resource('project-images', ProjectImageController::class);
     Route::resource('units', UnitController::class);
     Route::resource('bookings', BookingController::class);
     Route::resource('clienteles', ClienteleController::class);

@@ -100,7 +100,7 @@
             @foreach($brochures_files as $data)
                 <div class="grid grid-rows-3 grid-flow-col gap-4">
                     <div class="inline-block align-baseline my-4 text-center">
-                        <form action="{{ route('project-brochures.destroy', ['project_brochure' =>   $data->id]) }}" method="POST">
+                        <form action="{{ route('project-brochures.destroy', ['project_brochure' => $data->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-dark btn-sm">Delete</button>

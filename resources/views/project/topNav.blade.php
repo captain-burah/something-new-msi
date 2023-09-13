@@ -6,11 +6,11 @@
                 <ul class="navbar-nav">
 
 
-                    <li class="nav-item dropdown">
+                    {{-- <li class="nav-item dropdown">
                         <a class="nav-link " href="{{ route('projects.create') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
                             <i class="bx bx-bookmark-plus mr-2"></i>Launch Project
                         </a>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item dropdown">
                         <a class="nav-link " href="{{ route('projects.index') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
@@ -20,12 +20,12 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link " href="{{ route('project-brochures.index') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
-                            <i class="bx bx-folder-open mr-2"></i>Brochures 
+                            <i class="bx bx-folder-open mr-2"></i>Brochures
                         </a>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link " href="{{ route('dashboard') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
+                        <a class="nav-link " href="{{ route('project-images.index') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
                             <i class="bx bx-images mr-2"></i>Images
                         </a>
                     </li>

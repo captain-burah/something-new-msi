@@ -90,10 +90,10 @@
                             <td>Business Bay</td>
                             <td>
                                 <div class="dropdown">
-                                    <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="dropdown-toggle my-auto" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         @if($data->project_brochure != null)
                                             @if($data->project_brochure->project_id == $data->id)
-                                                <i class="bx bx-list-check text-primary" style="font-size: 18px"></i>
+                                                <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $data->project_brochure->name }}
                                             @else
                                                 <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
                                             @endif

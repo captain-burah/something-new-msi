@@ -29,7 +29,7 @@
                 <div class="d-flex">
                     <div class="flex-grow-1 align-self-center">
                         <div class="text-muted">
-                            <h4 class="card-title">Brochure Segments</h4>
+                            <h3><i class="bx bxs-file-pdf text-dark font-size-24"></i> Brochure Segments</h3>
                             <p class="card-title-desc">The table consists of all brochure segments created for projects. This will be displayed only in the specific project page.</p>
                         </div>
                     </div>
