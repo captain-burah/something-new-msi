@@ -64,7 +64,6 @@
                         @foreach ($results as $data)
                             <tr>
                                 <td scope="row">{{ $data->id }}</td>
-
                                 <td>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,14 +74,10 @@
                                             @endif
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if($data->status == '1')
-                                                <a class="dropdown-item" href="#"><i class="bx bx-check-shield "></i> &nbsp; Connect To Project</a>
-                                                <a class="dropdown-item" href="#"><i class="bx bx-cloud-download"></i> &nbsp; Move to Draft</a>
-                                                <a class="dropdown-item" href="#"><i class="bx bx-trash"></i> &nbsp; Move to Trash</a>
+                                            @if($data->project_id != null)
+                                                <a class="dropdown-item" style="cursor: pointer;" href="{{ url('project-brochures/disconnect/'.$data->id)  }}"><i class="bx bx-cloud-download"></i> &nbsp; Disconnect from Project</a>
                                             @else
-                                                <a class="dropdown-item" href="#"><i class="bx bx-check-shield "></i> &nbsp; Connect To Project</a>
-                                                <a class="dropdown-item" href="#"><i class="bx bx-cloud-download"></i> &nbsp; Move to Draft</a>
-                                                <a class="dropdown-item" href="#"><i class="bx bx-trash"></i> &nbsp; Move to Trash</a>
+                                                <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" data-target="#project-connect-{{$data->id}}"><i class="bx bx-check-shield "></i> &nbsp; Connect To Project</a>
                                             @endif
                                         </div>
                                     </div>
@@ -99,11 +94,55 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a class="dropdown-item" href="{{ route('project-brochures.edit', ['project_brochure' => $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
-                                            <a class="dropdown-item" href="#"><i class="bx bx-trash text-danger"></i> &nbsp;Remove</a>
+                                            <a class="dropdown-item" href="{{ route('project-brochures.destroy.segment', ['id' => $data->id]) }}"><i class="bx bx-trash text-danger"></i> &nbsp;Remove</a>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
+
+                            {{-- MODAL FOR PROJECTS --}}
+                            <div class="modal fade" id="project-connect-{{$data->id}}" tabindex="-1" aria-labelledby="project-connect-modal-{{$data->id}}" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalScrollableTitle">Scrollable Modal</h5>
+                                            <button type="button" class="btn btn-outline-secondary p-1 px-2" data-dismiss="modal" aria-label="Close">X</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="contact-form" id="getInTouch" method="post" action="{{ route('project-brochures.connect') }}">
+                                            @csrf
+                                                <input name="brochure_id" value="{{$data->id}}" hidden>
+                                                <select
+                                                    class="form-control select2-search-disable select2-hidden-accessible
+                                                    @error('project_id') border border-solid border-danger  @enderror"
+                                                    data-select2-id="basicpill-status-input"
+                                                    tabindex="-1"
+                                                    aria-hidden="true"
+                                                    name="project_id"
+                                                >
+                                                    <option selected value="">Choose ...</option>
+
+                                                    @if(isset($projects))
+                                                        @foreach($projects as $data)
+                                                            <option selected value="{{$data->id}}">{{ $data->name }}</option>
+                                                        @endforeach
+                                                    @endif
+
+                                                </select>
+
+                                                <div class="my-2 w-100 text-right">
+                                                    <button class="btn btn-outline-dark text-right  ">
+                                                        Connect
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     @else
 

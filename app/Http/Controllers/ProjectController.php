@@ -137,7 +137,7 @@ class ProjectController extends Controller
 		if($bool==0)
 		{
             $project = new Project();
-            $project->property_release = $request->property_release;
+            $project->property_release_id = $request->property_release;
             $project->community_id = $request->community;
             $project->category_id = $request->category;
             $project->emirate_id = $request->emirates;
@@ -154,7 +154,7 @@ class ProjectController extends Controller
             $project->bathrooms = $request->bathrooms;
             $project->floors = $request->floors;
             $project->unit_size_range = $request->area_range;
-            $project->outoor_area = $request->outdoor_area_range;
+            $project->outdoor_area = $request->outdoor_area_range;
             $project->terrace_area = $request->terrace_area_range;
             $project->meta_title = $request->meta_title;
             $project->meta_description = $request->meta_description;
@@ -296,7 +296,7 @@ class ProjectController extends Controller
             try
             {
                 $project = Project::find($id);
-                $project->property_release = $request->property_release;
+                $project->property_release_id = $request->property_release;
                 $project->community_id = $request->community;
                 $project->category_id = $request->category;
                 $project->emirate_id = $request->emirates;

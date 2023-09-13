@@ -3,9 +3,12 @@
         <h3 class="mb-1">Brochure Segment Update</h3>
 
         <div class="my-4">
-            <form class="contact-form" action="{{ route('project-brochures.store')  }}" method="POST" enctype="multipart/form-data" id="dropzone"
+            <form class="contact-form" action="{{ route('project-brochures.update', ['project_brochure' => $brochures->id])  }}" method="POST" enctype="multipart/form-data" id="dropzone"
             >
                 @csrf
+                @method('PATCH')
+
+                <input name="brochure_id" value="{{$brochures->id}}" hidden>
                 <div class="flex-none w-100 my-4 ">
                     <a href="{{ route('project-brochures.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
                         <i class="bx bx-arrow-back"></i>
@@ -66,7 +69,7 @@
                                         placeholder="Riveira - Arabic"
                                         class="form-control @error('segment_name') border border-solid border-danger  @enderror"
 
-                                        value="{{ old('segment_name')}}"
+                                        value="{{ $brochures->name }}"
                                     >
                                     <span class="text-muted font-size-10">Provide a name to refer the brochures you can use to link to any projects</span>
                                     @error('segment_name')
@@ -104,7 +107,7 @@
                         </form>
                     </div>
                     <div class="">
-                        <iframe src="{{ url('storage/projects/brochures/'.$data->project_brochure->name.'/'.$data->name) }}" width="" height="400">
+                        <iframe src="{{ url('storage/projects/brochures/'.$data->project_brochure->id.'/'.$data->name) }}" width="" height="400">
                         </iframe>
                     </div>
                 </div>

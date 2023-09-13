@@ -61,6 +61,10 @@ Route::middleware('auth')->group(function () {
     Route::get('projects-drafts', [ProjectController::class, 'index_drafts'])->name('projects.drafts');
     Route::get('projects-trash', [ProjectController::class, 'index_trash'])->name('projects.trash');
     Route::get('projects-status-change/{id}/{status}', [ProjectController::class, 'status_change'])->name('projects.status.change');
+
+    Route::post('project-brochures/connect', [ProjectBrochureController::class, 'project_connect_store'])->name('project-brochures.connect');
+    Route::get('project-brochures/disconnect/{id}', [ProjectBrochureController::class, 'project_disconnect'])->name('project-brochures.disconnect');
+    Route::get('project-brochures/delete_all/{id}', [ProjectBrochureController::class, 'destroy_segment'])->name('project-brochures.destroy.segment');
 });
 
 require __DIR__.'/auth.php';

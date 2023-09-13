@@ -25,14 +25,8 @@ class ProjectBrochureController extends Controller
     {
         $brochures = Project_brochure::with('project_brochure_files')->get();
 
-        // $brochures_files = Project_brochure::with('project_brochure_files')->get();
-
-        // dd($brochures[10]->project_brochure_files()->count());
-
-
-        // dd($brochures);
-
         $this->data['results'] = $brochures;
+        $this->data['projects'] = Project::select(['id', 'name', 'status'])->where('status', '2')->get();
         $this->data['count_status'] = Project_brochure::count();
 
         return view('project.brochure.index', $this->data);
@@ -82,11 +76,7 @@ class ProjectBrochureController extends Controller
                 foreach($request->file('files') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('projects/brochures/'.$request->segment_name, $image_name, 'public'); //nonsecured storage - has public access
-
-                    // Storage::disk('local')->put($image_name, $image); //secured storage - avoid public access
-
-                    // dd('check');
+                    $image->storeAs('projects/brochures/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
 
                     $project_brochure_file = new Project_brochure_file();
                     $project_brochure_file->project_brochure_id = $project_brochure_id;
@@ -124,7 +114,7 @@ class ProjectBrochureController extends Controller
 
         $this->data['brochures_files'] = $brochures_files;
 
-        $this->data['brochures'] = $brochures;
+        $this->data['brochures'] = $brochures[0];
 
         return view('project.brochure.update.index', $this->data);
     }
@@ -134,7 +124,43 @@ class ProjectBrochureController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'segment_name' => 'required',
+            'files' => 'required | max: 5 | min: 1',
+            'files.*' => 'max: 51200|mimes:pdf'
+        ]);
+
+
+        try {
+            if($request->hasfile('files'))
+            {
+                $files = [];
+
+                $project_brochure = Project_brochure::find($request->brochure_id);
+                $project_brochure->name = $request->segment_name;
+                $project_brochure->save();
+
+                $project_brochure_id = $project_brochure->id;
+
+                foreach($request->file('files') as $key => $image)
+                {
+                    $image_name = $image->hashName();
+                    $image->storeAs('projects/brochures/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
+
+                    $project_brochure_file = new Project_brochure_file();
+                    $project_brochure_file->project_brochure_id = $request->brochure_id;
+                    $project_brochure_file->name = $image_name;
+                    $project_brochure_file->save();
+
+                }
+            }
+
+        } catch (\Exception $e) {
+            // dd($e->getMessage());
+            return Redirect::back()->withErrors(['message', $e->getMessage() ]);
+        }
+
+        return redirect()->route('project-brochures.index');
     }
 
     /**
@@ -154,10 +180,10 @@ class ProjectBrochureController extends Controller
         $brochure_file = Project_brochure_file::with('project_brochure')->find($id);
 
 
-        if(Storage::exists('projects/brochures/'.$brochure_file->project_brochure->name.'/'.$brochure_file->name)){
+        if(Storage::exists('projects/brochures/'.$brochure_file->project_brochure->id.'/'.$brochure_file->name)){
             Project_brochure_file::destroy($id); //DELETE THE DATABASE RECORD
             try {
-                Storage::delete('projects/brochures/'.$brochure_file->project_brochure->name.'/'.$brochure_file->name);  //DELETE THE ACTUAL FILE FROM STORAGE
+                Storage::delete('projects/brochures/'.$brochure_file->project_brochure->id.'/'.$brochure_file->name);  //DELETE THE ACTUAL FILE FROM STORAGE
             }
             catch (\Exception $e)
             {
@@ -170,5 +196,44 @@ class ProjectBrochureController extends Controller
 
 
         return Redirect::back()->with(['msg' => 'Successfully deleted']);
+    }
+
+
+    public function project_connect_store(Request $request){
+        $brochure = Project_brochure::find($request->brochure_id);
+        $brochure->project_id = $request->project_id;
+        $brochure->save();
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+
+    }
+
+    public function project_disconnect($id){
+        $brochure = Project_brochure::find($id);
+        $brochure->project_id = null;
+        $brochure->save();
+        return redirect()->route('project-brochures.index')->with(['msg' => 'Successfully connected']);
+    }
+
+    public function destroy_segment($id) {
+
+        $brochure = Project_brochure::with('project_brochure_files')->find($id);
+
+        if($brochure->project_brochure_files->count() > 0) {
+            try {
+                foreach ($brochure->project_brochure_files as $child)
+                {
+                    Storage::deleteDirectory('projects/brochures/'.$brochure->id);
+                    // Storage::delete('projects/brochures/'.$brochure->id.'/'.$child->name);  //DELETE THE ACTUAL FILE FROM STORAGE
+                    $child->delete();
+                }
+            } catch (\Exception $e) {
+                dd($e->getMessage());
+                return Redirect::back()->withErrors(['message', $e->getMessage() ]);
+            }
+        }
+
+        Project_brochure::destroy($id);
+
+        return redirect()->route('project-brochures.index')->with(['msg' => 'Successfully connected']);
     }
 }
