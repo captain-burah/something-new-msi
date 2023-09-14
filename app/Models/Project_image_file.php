@@ -12,6 +12,6 @@ class Project_image_file extends Model
 
     public function project_image(): BelongsTo
     {
-        return $this->belongsTo(project_image::class);
+        return $this->belongsTo(Project_image::class);
     }
 }

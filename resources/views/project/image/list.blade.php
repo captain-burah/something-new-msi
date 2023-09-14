@@ -94,8 +94,8 @@
                                             <i class="mdi mdi-dots-horizontal font-size-18"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{{ route('project-brochures.edit', ['project_brochure' => $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
-                                            <a class="dropdown-item" href="{{ route('project-brochures.destroy.segment', ['id' => $data->id]) }}"><i class="bx bx-trash text-danger"></i> &nbsp;Remove</a>
+                                            <a class="dropdown-item" href="{{ route('project-images.edit', ['project_image' => $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
+                                            <a class="dropdown-item" href="{{ route('project-images.destroy.segment', ['id' => $data->id]) }}"><i class="bx bx-trash text-danger"></i> &nbsp;Remove</a>
                                         </div>
                                     </div>
                                 </td>

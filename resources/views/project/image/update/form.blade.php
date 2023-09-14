@@ -1,16 +1,16 @@
 <div class="card">
     <div class="card-body">
-        <h3 class="mb-1">Brochure Segment Update</h3>
+        <h3 class="mb-1">Image Segment Update</h3>
 
         <div class="my-4">
-            <form class="contact-form" action="{{ route('project-brochures.update', ['project_brochure' => $brochures->id])  }}" method="POST" enctype="multipart/form-data" id="dropzone"
+            <form class="contact-form" action="{{ route('project-images.update', ['project_image' => $segments->id])  }}" method="POST" enctype="multipart/form-data" id="dropzone"
             >
                 @csrf
                 @method('PATCH')
 
-                <input name="brochure_id" value="{{$brochures->id}}" hidden>
+                <input name="segment_id" value="{{$segments->id}}" hidden>
                 <div class="flex-none w-100 my-4 ">
-                    <a href="{{ route('project-brochures.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
+                    <a href="{{ route('project-images.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
                         <i class="bx bx-arrow-back"></i>
                         Back
                     </a>
@@ -69,9 +69,9 @@
                                         placeholder="Riveira - Arabic"
                                         class="form-control @error('segment_name') border border-solid border-danger  @enderror"
 
-                                        value="{{ $brochures->name }}"
+                                        value="{{ $segments->name }}"
                                     >
-                                    <span class="text-muted font-size-10">Provide a name to refer the brochures you can use to link to any projects</span>
+                                    <span class="text-muted font-size-10">Provide a name to refer the images you can use to link to any projects</span>
                                     @error('segment_name')
                                         <div class="text-danger font-size-10">{{ $message }}</div>
                                     @enderror
@@ -83,7 +83,7 @@
                                     <label class="form-label">
                                         Multiple File Uploader
                                     </label>
-                                    <input type="file" name="files[]" id="inputFile" multiple class="form-control p-1 @error('files') border border-solid border-danger  @enderror" accept="application/pdf">
+                                    <input type="file" name="files[]" id="inputFile" multiple class="form-control p-1 @error('files') border border-solid border-danger  @enderror" accept="image/png, image/jpeg,, image/jpg,   image/webp, image/avif">
                                     <span class="text-muted font-size-10">You may choose multiple files if you wish to upload.</span>
                                     @error('files')
                                         <div class="text-danger font-size-10">{{ $message }}</div>
@@ -97,18 +97,17 @@
         </div>
 
         <div class="row p-4">
-            @foreach($brochures_files as $data)
+            @foreach($segment_files as $data)
                 <div class="grid grid-rows-3 grid-flow-col gap-4">
                     <div class="inline-block align-baseline my-4 text-center">
-                        <form action="{{ route('project-brochures.destroy', ['project_brochure' => $data->id]) }}" method="POST">
+                        <form action="{{ route('project-images.destroy', ['project_image' => $data->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-dark btn-sm">Delete</button>
                         </form>
                     </div>
                     <div class="">
-                        <iframe src="{{ url('storage/projects/brochures/'.$data->project_brochure->id.'/'.$data->name) }}" width="" height="400">
-                        </iframe>
+                        <img src="{{ url('storage/projects/images/'.$data->project_image->id.'/'.$data->name) }}" width="100%" height="200">
                     </div>
                 </div>
                 <div class="row justify-content-center">

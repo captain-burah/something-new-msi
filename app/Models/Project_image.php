@@ -21,3 +21,4 @@ class Project_image extends Model
         return $this->belongsTo(Project::class);
     }
 }
+

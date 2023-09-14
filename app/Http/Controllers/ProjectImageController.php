@@ -15,9 +15,6 @@ use App\Models\Project_image;
 use App\Models\Project_image_file;
 class ProjectImageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $images = Project_image::with('project_image_files')->get();
@@ -29,18 +26,24 @@ class ProjectImageController extends Controller
         return view('project.image.index', $this->data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+
+
+
+
+
     public function create()
     {
         return view('project.image.create.index');
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+
+
+
+
+
     public function store(Request $request)
     {
         /**
@@ -90,35 +93,152 @@ class ProjectImageController extends Controller
         return redirect()->route('project-images.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
+
+
+
+
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
+
+
+
+
+
+
+
     public function edit(string $id)
     {
-        //
+        $segment = Project_image::with('project_image_files')->where('id', $id)->get();
+
+        $segment_files = Project_image_file::with('project_image')->where('project_image_id', $id)->get();
+
+        $this->data['segment_files'] = $segment_files;
+
+        $this->data['segments'] = $segment[0];
+
+        return view('project.image.update.index', $this->data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
+
+
+
+
+
+
+
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'segment_name' => 'required',
+            'files' => 'required | max: 20 | min: 1',
+            'files.*' => 'max: 400'
+        ]);
+
+
+        try {
+            if($request->hasfile('files'))
+            {
+                $files = [];
+
+                $project_segment = Project_image::find($request->segment_id);
+                $project_segment->name = $request->segment_name;
+                $project_segment->save();
+
+                $project_segment_id = $project_segment->id;
+
+                foreach($request->file('files') as $key => $image)
+                {
+                    $image_name = $image->hashName();
+                    $image->storeAs('projects/images/'.$project_segment_id, $image_name, 'public'); //nonsecured storage - has public access
+
+                    $project_segment_file = new Project_image_file();
+                    $project_segment_file->project_image_id = $request->segment_id;
+                    $project_segment_file->name = $image_name;
+                    $project_segment_file->save();
+
+                }
+            }
+
+        } catch (\Exception $e) {
+            // dd($e->getMessage());
+            return Redirect::back()->withErrors(['message', $e->getMessage() ]);
+        }
+
+        return redirect()->route('project-images.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+
+
+
+
+
+
     public function destroy(string $id)
     {
-        //
+        try {
+            Project_image_file::find($id);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return Redirect::back()->withErrors(['msg' => 'Could not find project. Please contact developer.']);
+        }
+
+        $segment_file = Project_image_file::with('project_image')->find($id);
+
+        if(Storage::exists('projects/images/'.$segment_file->project_image->id.'/'.$segment_file->name)){
+
+            Project_image_file::destroy($id);   //DELETE THE DATABASE RECORD
+
+            try {
+                Storage::delete('projects/images/'.$segment_file->project_image->id.'/'.$segment_file->name);  //DELETE THE ACTUAL FILE FROM STORAGE
+            }
+            catch (\Exception $e)
+            {
+                dd($e->getMessage());
+                return Redirect::back()->withErrors(['message', $e->getMessage() ]);
+            }
+
+        }else{
+            dd('File does not exist.');
+        }
+
+        return Redirect::back()->with(['msg' => 'Successfully deleted']);
+    }
+
+
+
+
+
+
+
+
+    public function destroy_segment($id) {
+
+        $segment = Project_image::with('project_image_files')->find($id);
+
+        if($segment->project_image_files->count() > 0) {
+            try {
+                foreach ($segment->project_image_files as $child)
+                {
+                    Storage::deleteDirectory('projects/images/'.$segment->id);
+                    // Storage::delete('projects/brochures/'.$brochure->id.'/'.$child->name);  //DELETE THE ACTUAL FILE FROM STORAGE
+                    $child->delete();
+                }
+            } catch (\Exception $e) {
+                dd($e->getMessage());
+                return Redirect::back()->withErrors(['message', $e->getMessage() ]);
+            }
+        }
+
+        Project_image::destroy($id);
+
+        return redirect()->route('project-images.index')->with(['msg' => 'Successfully connected']);
     }
 }
