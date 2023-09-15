@@ -110,9 +110,9 @@
                                             <button type="button" class="btn btn-outline-secondary p-1 px-2" data-dismiss="modal" aria-label="Close">X</button>
                                         </div>
                                         <div class="modal-body">
-                                            <form class="contact-form" id="getInTouch" method="post" action="{{ route('project-brochures.connect') }}">
+                                            <form class="contact-form" id="getInTouch" method="post" action="{{ route('project-images.connect') }}">
                                             @csrf
-                                                <input name="brochure_id" value="{{$data->id}}" hidden>
+                                                <input name="segment_id" value="{{$data->id}}" hidden>
                                                 <select
                                                     class="form-control select2-search-disable select2-hidden-accessible
                                                     @error('project_id') border border-solid border-danger  @enderror"

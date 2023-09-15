@@ -241,4 +241,38 @@ class ProjectImageController extends Controller
 
         return redirect()->route('project-images.index')->with(['msg' => 'Successfully connected']);
     }
+
+
+
+
+
+
+
+
+    public function project_connect_store(Request $request){
+
+        $project = Project::with('project_image')->find($request->project_id);
+
+        if($project->project_image != null ){
+            return Redirect::back()->withErrors(['The selected project already contains a brochure. Remove it first to reassign.' ]);
+        }
+
+        $segment = Project_image::find($request->segment_id);
+        $segment->project_id = $request->project_id;
+        $segment->save();
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+
+
+
+
+    public function project_disconnect($id){
+        $segment = Project_image::find($id);
+        $segment->project_id = null;
+        $segment->save();
+        return redirect()->route('project-brochures.index')->with(['msg' => 'Successfully connected']);
+    }
 }

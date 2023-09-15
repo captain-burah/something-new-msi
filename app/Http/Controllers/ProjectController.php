@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Project;
 use App\Models\Project_brochure;
+use App\Models\Project_image;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log; // send notifications via slack or any other means
@@ -35,12 +36,11 @@ class ProjectController extends Controller
             $this->data['count_status'] = 'No projects found. You can launch a new project above to start-off';
             $this->data['projects'] = $projects;
         } else {
-            // dd($projects->get() );
             $this->data['projects'] = $projects->get();
         }
 
         $this->data['brochures'] = Project_brochure::with('project_brochure_files')->get();
-        // dd(Project_brochure::with('project_brochure_files')->get());
+        $this->data['images'] = Project_image::with('project_image_files')->get();
 
         return view('projectsActive', $this->data);
     }
@@ -65,6 +65,7 @@ class ProjectController extends Controller
         }
 
         $this->data['brochures'] = Project_brochure::with('project_brochure_files')->get();
+        $this->data['images'] = Project_image::with('project_image_files')->get();
 
         return view('projectsActive', $this->data);
     }
@@ -81,6 +82,10 @@ class ProjectController extends Controller
         } else {
             $this->data['projects'] = $projects->paginate(30);
         }
+
+        $this->data['brochures'] = Project_brochure::with('project_brochure_files')->get();
+        $this->data['images'] = Project_image::with('project_image_files')->get();
+
         return view('projectsActive', $this->data);
     }
 
@@ -394,18 +399,24 @@ class ProjectController extends Controller
         //
     }
 
+
+
+
+
+
+
+
+    /**
+     * BROCHURE SETTINGS
+     */
     public function status_change($id, $status)
     {
-        // dd($status);
         try
         {
             $projects = Project::findOrFail($id);
         }
         catch(ModelNotFoundException $e)
         {
-            // dd(get_class_methods($e));
-            // dd($e);
-
             // SLACK UPDATE
 
                 //API Url
@@ -467,7 +478,10 @@ class ProjectController extends Controller
         return Redirect::back()->with('message', 'Project status has been changed');
     }
 
-    public function project_connect_store(Request $request) {
+
+    public function project_brochure_connect_store(Request $request) {
+
+        // dd($request->project_id);
 
         $project = Project::with('project_brochure')->find($request->project_id);
 
@@ -481,7 +495,9 @@ class ProjectController extends Controller
         return Redirect::back()->with(['msg' => 'Successfully connected']);
     }
 
-    public function project_disconnect($id) {
+
+
+    public function project_brochure_disconnect($id) {
         $project = Project::with('project_brochure')->find($id);
         if($project->project_brochure != null) {
             $project->project_brochure->project_id = null;
@@ -489,4 +505,37 @@ class ProjectController extends Controller
         }
         return Redirect::back()->with(['msg' => 'Successfully connected']);
     }
+
+
+    /**
+     * IMAGE SETTINGS
+     */
+    public function project_image_connect_store(Request $request) {
+
+        $projects = Project::with('project_image')->where('id', $request->project_id)->get();
+        // dd($projects[0]->project_image);
+
+        if($projects[0]->project_image != null ){
+            return Redirect::back()->withErrors(['The selected project already contains a image. Remove it first to reassign.' ]);
+        }
+
+        $segment = Project_image::find($request->image_id);
+        $segment->project_id = $request->project_id;
+        $segment->save();
+        return $this->index();
+    }
+
+
+
+    public function project_image_disconnect($id) {
+        $project = Project::with('project_image')->find($id);
+
+        // dd($project);
+        if($project->project_image != null) {
+            $project->project_image->project_id = null;
+            $project->project_image->save();
+        }
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
 }

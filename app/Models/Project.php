@@ -14,4 +14,9 @@ class Project extends Model
     {
         return $this->hasOne(Project_brochure::class);
     }
+
+    public function project_image(): HasOne
+    {
+        return $this->hasOne(Project_image::class);
+    }
 }

@@ -8,6 +8,6 @@
 
     @include('project.activeProjects')
 
-        @include('project.activeProjectsTable')
+        @include('project.ProjectList')
 </div>
 @endsection
