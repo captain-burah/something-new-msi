@@ -5,6 +5,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectBrochureController;
 use App\Http\Controllers\ProjectImageController;
+use App\Http\Controllers\ProjectFactsheetController;
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UnitController;
@@ -53,6 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects', ProjectController::class);
     Route::resource('project-brochures', ProjectBrochureController::class);
     Route::resource('project-images', ProjectImageController::class);
+    Route::resource('project-factsheet', ProjectFactsheetController::class);
+
     Route::resource('units', UnitController::class);
     Route::resource('bookings', BookingController::class);
     Route::resource('clienteles', ClienteleController::class);
@@ -76,6 +79,13 @@ Route::middleware('auth')->group(function () {
     Route::post('project/connect-image', [ProjectController::class, 'project_image_connect_store'])->name('project.connect.image');
     Route::get('project/images/disconnect/{id}', [ProjectController::class, 'project_image_disconnect'])->name('project.disconnect.image');
 
+    /**PROJECT - FACTSHEET CONNECTION ROUTES */
+    Route::get('projects-factsheet-status-change/{id}/{status}', [ProjectController::class, 'image_status_change'])->name('projects.factsheet.status.change');
+    Route::post('project/connect-factsheet', [ProjectController::class, 'project_factsheet_connect_store'])->name('project.connect.factsheet');
+    Route::get('project/factsheet/disconnect/{id}', [ProjectController::class, 'project_factsheet_disconnect'])->name('project.disconnect.factsheet');
+
+
+
     /**PROJECT - BROCHURE - ROUTES  */
     Route::post('project-brochures/connect', [ProjectBrochureController::class, 'project_connect_store'])->name('project-brochures.connect');
     Route::get('project-brochures/disconnect/{id}', [ProjectBrochureController::class, 'project_disconnect'])->name('project-brochures.disconnect');
@@ -85,6 +95,11 @@ Route::middleware('auth')->group(function () {
     Route::post('project-images/connect', [ProjectImageController::class, 'project_connect_store'])->name('project-images.connect');
     Route::get('project-images/disconnect/{id}', [ProjectImageController::class, 'project_disconnect'])->name('project-images.disconnect');
     Route::get('project-images/delete_all/{id}', [ProjectImageController::class, 'destroy_segment'])->name('project-images.destroy.segment');
+
+    /**PROJECT - FACTSHEET ROUTES */
+    Route::post('project-factsheet/connect', [ProjectFactsheetController::class, 'project_connect_store'])->name('project-factsheet.connect');
+    Route::get('project-factsheet/disconnect/{id}', [ProjectFactsheetController::class, 'project_disconnect'])->name('project-factsheet.disconnect');
+    Route::get('project-factsheet/delete_all/{id}', [ProjectFactsheetController::class, 'destroy_segment'])->name('project-factsheet.destroy.segment');
 });
 
 require __DIR__.'/auth.php';

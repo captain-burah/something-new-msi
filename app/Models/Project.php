@@ -19,4 +19,9 @@ class Project extends Model
     {
         return $this->hasOne(Project_image::class);
     }
+
+    public function project_factsheet(): HasOne
+    {
+        return $this->hasOne(Project_factsheet::class);
+    }
 }

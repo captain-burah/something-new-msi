@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\Project;
 use App\Models\Project_brochure;
 use App\Models\Project_image;
+use App\Models\Project_factsheet;
+
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log; // send notifications via slack or any other means
@@ -41,6 +43,7 @@ class ProjectController extends Controller
 
         $this->data['brochures'] = Project_brochure::with('project_brochure_files')->get();
         $this->data['images'] = Project_image::with('project_image_files')->get();
+        $this->data['factsheets'] = Project_factsheet::with('project_factsheet_files')->get();
 
         return view('projectsActive', $this->data);
     }
@@ -66,6 +69,7 @@ class ProjectController extends Controller
 
         $this->data['brochures'] = Project_brochure::with('project_brochure_files')->get();
         $this->data['images'] = Project_image::with('project_image_files')->get();
+        $this->data['factsheets'] = Project_factsheet::with('project_factsheet_files')->get();
 
         return view('projectsActive', $this->data);
     }
@@ -85,6 +89,7 @@ class ProjectController extends Controller
 
         $this->data['brochures'] = Project_brochure::with('project_brochure_files')->get();
         $this->data['images'] = Project_image::with('project_image_files')->get();
+        $this->data['factsheets'] = Project_factsheet::with('project_factsheet_files')->get();
 
         return view('projectsActive', $this->data);
     }
@@ -399,16 +404,6 @@ class ProjectController extends Controller
         //
     }
 
-
-
-
-
-
-
-
-    /**
-     * BROCHURE SETTINGS
-     */
     public function status_change($id, $status)
     {
         try
@@ -479,6 +474,15 @@ class ProjectController extends Controller
     }
 
 
+
+
+
+
+
+
+    /**
+     * BROCHURE SETTINGS
+     */
     public function project_brochure_connect_store(Request $request) {
 
         // dd($request->project_id);
@@ -505,6 +509,9 @@ class ProjectController extends Controller
         }
         return Redirect::back()->with(['msg' => 'Successfully connected']);
     }
+
+
+
 
 
     /**
@@ -534,6 +541,42 @@ class ProjectController extends Controller
         if($project->project_image != null) {
             $project->project_image->project_id = null;
             $project->project_image->save();
+        }
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+
+
+
+    /**
+     * IMAGE SETTINGS
+     */
+    public function project_factsheet_connect_store(Request $request) {
+
+        $projects = Project::with('project_factsheet')->where('id', $request->project_id)->get();
+        // dd($projects[0]->project_image);
+
+        if($projects[0]->project_factsheet != null ){
+            return Redirect::back()->withErrors(['The selected project already contains a image. Remove it first to reassign.' ]);
+        }
+
+        $segment = Project_factsheet::find($request->factsheet_id);
+        $segment->project_id = $request->project_id;
+        $segment->save();
+        return $this->index();
+    }
+
+
+
+    public function project_factsheet_disconnect($id) {
+        $project = Project::with('project_factsheet')->find($id);
+
+        // dd($project);
+        if($project->project_factsheet != null) {
+            $project->project_factsheet->project_id = null;
+            $project->project_factsheet->save();
         }
         return Redirect::back()->with(['msg' => 'Successfully connected']);
     }

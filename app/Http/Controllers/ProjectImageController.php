@@ -35,7 +35,6 @@ class ProjectImageController extends Controller
     public function create()
     {
         return view('project.image.create.index');
-
     }
 
 

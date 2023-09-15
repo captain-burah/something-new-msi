@@ -25,6 +25,12 @@
                     </li>
 
                     <li class="nav-item dropdown">
+                        <a class="nav-link " href="{{ route('project-factsheet.index') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
+                            <i class="bx bx-spreadsheet mr-2"></i>Factsheets
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
                         <a class="nav-link " href="{{ route('project-images.index') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
                             <i class="bx bx-images mr-2"></i>Images
                         </a>
@@ -38,11 +44,7 @@
 
 
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link " href="{{ route('dashboard') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
-                            <i class="bx bx-spreadsheet mr-2"></i>Factsheets
-                        </a>
-                    </li>
+
 
 
 
