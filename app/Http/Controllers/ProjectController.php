@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Project_brochure;
 use App\Models\Project_image;
 use App\Models\Project_factsheet;
+use App\Models\Project_video;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -32,6 +33,12 @@ class ProjectController extends Controller
     {
         $projects = Project::with('project_brochure')->where('status', '1')->orderBY('id', 'Desc');
 
+
+        $this->data['count_draft'] = $count_draft = Project::where('status', '2')->orderBY('id', 'Desc')->count();
+        $this->data['count_active'] = $count_active = Project::where('status', '1')->orderBY('id', 'Desc')->count();
+        $this->data['count_trash'] = $count_trash = Project::where('status', '3')->orderBY('id', 'Desc')->count();
+
+
         $check_availability = $projects->get();
 
         if($check_availability->isEmpty()) {
@@ -44,6 +51,7 @@ class ProjectController extends Controller
         $this->data['brochures'] = Project_brochure::with('project_brochure_files')->get();
         $this->data['images'] = Project_image::with('project_image_files')->get();
         $this->data['factsheets'] = Project_factsheet::with('project_factsheet_files')->get();
+        $this->data['videos'] = Project_video::with('project_video_files')->get();
 
         return view('projectsActive', $this->data);
     }
@@ -53,6 +61,11 @@ class ProjectController extends Controller
     {
         $projects = Project::where('status', '2')->orderBY('id', 'Desc');
 
+
+        $this->data['count_draft'] = $count_draft = Project::where('status', '2')->orderBY('id', 'Desc')->count();
+        $this->data['count_active'] = $count_active = Project::where('status', '1')->orderBY('id', 'Desc')->count();
+        $this->data['count_trash'] = $count_trash = Project::where('status', '3')->orderBY('id', 'Desc')->count();
+
         $check_availability = $projects->get();
 
         if($check_availability->isEmpty()) {
@@ -70,6 +83,7 @@ class ProjectController extends Controller
         $this->data['brochures'] = Project_brochure::with('project_brochure_files')->get();
         $this->data['images'] = Project_image::with('project_image_files')->get();
         $this->data['factsheets'] = Project_factsheet::with('project_factsheet_files')->get();
+        $this->data['videos'] = Project_video::with('project_video_files')->get();
 
         return view('projectsActive', $this->data);
     }
@@ -78,6 +92,10 @@ class ProjectController extends Controller
     {
         $projects = Project::where('status', '3')->orderBY('id', 'Desc');
 
+        $this->data['count_draft'] = $count_draft = Project::where('status', '2')->orderBY('id', 'Desc')->count();
+        $this->data['count_active'] = $count_active = Project::where('status', '1')->orderBY('id', 'Desc')->count();
+        $this->data['count_trash'] = $count_trash = Project::where('status', '3')->orderBY('id', 'Desc')->count();
+
         $check_availability = $projects->get();
 
         if($check_availability->isEmpty()) {
@@ -90,6 +108,7 @@ class ProjectController extends Controller
         $this->data['brochures'] = Project_brochure::with('project_brochure_files')->get();
         $this->data['images'] = Project_image::with('project_image_files')->get();
         $this->data['factsheets'] = Project_factsheet::with('project_factsheet_files')->get();
+        $this->data['videos'] = Project_video::with('project_video_files')->get();
 
         return view('projectsActive', $this->data);
     }
@@ -577,6 +596,44 @@ class ProjectController extends Controller
         if($project->project_factsheet != null) {
             $project->project_factsheet->project_id = null;
             $project->project_factsheet->save();
+        }
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+
+
+
+
+    /**
+     * VIDEO SETTINGS
+     */
+    public function project_video_connect_store(Request $request) {
+
+        $projects = Project::with('project_video')->where('id', $request->project_id)->get();
+        // dd($projects[0]->project_image);
+
+        if($projects[0]->project_video != null ){
+            return Redirect::back()->withErrors(['The selected project already contains a video. Remove it first to reassign.' ]);
+        }
+
+        $segment = Project_video::find($request->video_id);
+        $segment->project_id = $request->project_id;
+        $segment->save();
+
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+    public function project_video_disconnect($id) {
+        $project = Project::with('project_video')->find($id);
+
+        // dd($project);
+        if($project->project_video != null) {
+            $project->project_video->project_id = null;
+            $project->project_video->save();
         }
         return Redirect::back()->with(['msg' => 'Successfully connected']);
     }

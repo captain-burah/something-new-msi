@@ -5,6 +5,10 @@
     .tableFixHead { overflow: auto; height: 450px; }
     .tableFixHead thead { position: sticky; top: 0; z-index: 1; }
 
+    a.disabled {
+        pointer-events: none;
+        cursor: default;
+    }
 
 </style>
 
@@ -23,7 +27,7 @@
 
 
 
-<div class="card w-100 h-50">
+<div class="card w-100" style="height: 100vh">
     <div class="card-body">
         <h4 class="card-title">Active Projects Table</h4>
         <p class="card-title-desc">The table consists of Active Projects on the ESNAAD website</p>
@@ -48,6 +52,8 @@
 
                     @if(!isset($count_status))
                         @foreach($projects as $key => $value)
+
+                            <?php $status = $value->status; ?>
                             <tr>
                                 <td>{{$value->id}}</td>
                                 <td>
@@ -85,7 +91,7 @@
                                 {{-- BROCHURE --}}
                                 <td>
                                     <div class="dropdown">
-                                        <a class="dropdown-toggle my-auto" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"                                        >
                                             @if($value->project_brochure != null)
                                                 @if($value->project_brochure->project_id == $value->id)
                                                     <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->project_brochure->name }}
@@ -135,7 +141,7 @@
                                 {{-- factsheet --}}
                                 <td>
                                     <div class="dropdown">
-                                        <a class="dropdown-toggle my-auto" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             @if($value->project_factsheet != null)
                                                 @if($value->project_factsheet->project_id == $value->id)
                                                     <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->project_factsheet->name }}
@@ -182,7 +188,7 @@
                                 {{-- images --}}
                                 <td>
                                     <div class="dropdown">
-                                        <a class="dropdown-toggle my-auto" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             @if($value->project_image != null)
                                                 @if($value->project_image->project_id == $value->id)
                                                     <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->project_image->name }}
@@ -229,22 +235,55 @@
                                 {{-- videos --}}
                                 <td>
                                     <div class="dropdown">
-                                        <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                        <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            @if($value->project_video != null)
+                                                @if($value->project_video->project_id == $value->id)
+                                                    <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->project_video->name }}
+                                                @else
+                                                    <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                                @endif
+                                            @else
+                                                <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                            @endif
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
-                                            <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Update</a>
-                                            <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                            <a class="dropdown-item" href="{{ url('project/video/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                            <hr class="my-2">
+                                            <form class="contact-form px-3" method="post" action="{{ route('project.connect.video') }}">
+                                                @csrf
+                                                <input name="project_id" value="{{$value->id}}" hidden >
+                                                <select
+                                                    class="form-control form-control-sm select2-search-disable select2-hidden-accessible
+                                                    @error('brochure_id') border border-solid border-danger @enderror"
+                                                    data-select2-id="basicpill-status-input"
+                                                    tabindex="-1"
+                                                    aria-hidden="true"
+                                                    name="video_id"
+                                                    >
+                                                    <option selected value="">Choose Segment</option>
+
+                                                    @if(isset($videos))
+                                                        @foreach($videos as $data)
+                                                            <option  value="{{$data->id}}">{{ $data->name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+
+                                                <div class="my-2 w-100 text-right">
+                                                    <button class="btn btn-outline-dark text-right  ">
+                                                        Connect
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-
                                 </td>
 
+                                {{-- TRANSLATION --}}
                                 <td>
                                     <div class="dropdown">
-                                        <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                        <a class="dropdown-toggle @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
@@ -267,11 +306,13 @@
                                 </td>
                             </tr>
                         @endforeach
+
+                        <tr>
+                            <td colspan='11' class="text-muted">*** End of the Line ***</td>
+                        </tr>
                     @else
                         <tr>
                             <td colspan='11' class="text-muted">{{$count_status}}</td>
-
-                            </td>
                         </tr>
                     @endif
                 </tbody>

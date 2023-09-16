@@ -24,4 +24,9 @@ class Project extends Model
     {
         return $this->hasOne(Project_factsheet::class);
     }
+
+    public function project_video(): HasOne
+    {
+        return $this->hasOne(Project_video::class);
+    }
 }

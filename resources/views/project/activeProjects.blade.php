@@ -22,19 +22,19 @@
                                     <div class="col-4">
                                         <div>
                                             <a href="{{ route('projects.index') }}" class="btn btn-sm btn-outline-dark text-truncate mb-2">Active Projects</a>
-                                            <h5 class="mb-0">7</h5>
+                                            <h5 class="mb-0">{{$count_active}}</h5>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div>
                                             <a href="{{ route('projects.drafts') }}" class="btn btn-sm btn-outline-dark text-truncate mb-2">Drafts Projects</a>
-                                            <h5 class="mb-0">3</h5>
+                                            <h5 class="mb-0">{{$count_draft}}</h5>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div>
                                             <a href="{{ route('projects.trash') }}" class="btn btn-sm btn-outline-dark text-truncate mb-2">Trash Projects</a>
-                                            <h5 class="mb-0">5</h5>
+                                            <h5 class="mb-0">{{$count_trash}}</h5>
                                         </div>
                                     </div>
                                 </div>

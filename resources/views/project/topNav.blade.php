@@ -37,7 +37,7 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link " href="{{ route('dashboard') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
+                        <a class="nav-link " href="{{ route('project-video.index') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
                             <i class="bx bx-video-recording mr-2"></i>Videos
                         </a>
                     </li>

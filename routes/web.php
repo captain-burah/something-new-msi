@@ -6,6 +6,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectBrochureController;
 use App\Http\Controllers\ProjectImageController;
 use App\Http\Controllers\ProjectFactsheetController;
+use App\Http\Controllers\ProjectVideoController;
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UnitController;
@@ -55,6 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('project-brochures', ProjectBrochureController::class);
     Route::resource('project-images', ProjectImageController::class);
     Route::resource('project-factsheet', ProjectFactsheetController::class);
+    Route::resource('project-video', ProjectVideoController::class);
 
     Route::resource('units', UnitController::class);
     Route::resource('bookings', BookingController::class);
@@ -75,14 +77,18 @@ Route::middleware('auth')->group(function () {
     Route::get('project/brochures/disconnect/{id}', [ProjectController::class, 'project_brochure_disconnect'])->name('project.disconnect.brochure');
 
     /**PROJECT - IMAGE CONNECTION ROUTES */
-    Route::get('projects-image-status-change/{id}/{status}', [ProjectController::class, 'image_status_change'])->name('projects.image.status.change');
     Route::post('project/connect-image', [ProjectController::class, 'project_image_connect_store'])->name('project.connect.image');
     Route::get('project/images/disconnect/{id}', [ProjectController::class, 'project_image_disconnect'])->name('project.disconnect.image');
 
     /**PROJECT - FACTSHEET CONNECTION ROUTES */
-    Route::get('projects-factsheet-status-change/{id}/{status}', [ProjectController::class, 'image_status_change'])->name('projects.factsheet.status.change');
     Route::post('project/connect-factsheet', [ProjectController::class, 'project_factsheet_connect_store'])->name('project.connect.factsheet');
     Route::get('project/factsheet/disconnect/{id}', [ProjectController::class, 'project_factsheet_disconnect'])->name('project.disconnect.factsheet');
+
+    /**PROJECT - VIDEO CONNECTION ROUTES */
+    Route::post('project/connect-video', [ProjectController::class, 'project_video_connect_store'])->name('project.connect.video');
+    Route::get('project/video/disconnect/{id}', [ProjectController::class, 'project_video_disconnect'])->name('project.disconnect.video');
+
+
 
 
 
@@ -100,6 +106,11 @@ Route::middleware('auth')->group(function () {
     Route::post('project-factsheet/connect', [ProjectFactsheetController::class, 'project_connect_store'])->name('project-factsheet.connect');
     Route::get('project-factsheet/disconnect/{id}', [ProjectFactsheetController::class, 'project_disconnect'])->name('project-factsheet.disconnect');
     Route::get('project-factsheet/delete_all/{id}', [ProjectFactsheetController::class, 'destroy_segment'])->name('project-factsheet.destroy.segment');
+
+    /**PROJECT - VIDEO ROUTES */
+    Route::post('project-video/connect', [ProjectVideoController::class, 'project_connect_store'])->name('project-video.connect');
+    Route::get('project-video/disconnect/{id}', [ProjectVideoController::class, 'project_disconnect'])->name('project-video.disconnect');
+    Route::get('project-video/delete_all/{id}', [ProjectVideoController::class, 'destroy_segment'])->name('project-video.destroy.segment');
 });
 
 require __DIR__.'/auth.php';
