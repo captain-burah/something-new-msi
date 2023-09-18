@@ -282,16 +282,48 @@
                                 {{-- TRANSLATION --}}
                                 <td>
                                     <div class="dropdown">
-                                        <a class="dropdown-toggle @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                        <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            @if($value->language != null)
+                                                @if($value->language->project_id == $value->id)
+                                                    <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->project_video->name }}
+                                                @else
+                                                    <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                                @endif
+                                            @else
+                                                <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                            @endif
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#"><i class="bx bx-plus-circle"></i> &nbsp;Add</a>
-                                            <a class="dropdown-item" href="#"><i class="bx bx-redo"></i> &nbsp;Update</a>
-                                            <a class="dropdown-item" href="#"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                            <a class="dropdown-item" href="{{ url('project/video/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                            <hr class="my-2">
+                                            <form class="contact-form px-3" method="post" action="{{ route('project.connect.video') }}">
+                                                @csrf
+                                                <input name="project_id" value="{{$value->id}}" hidden >
+                                                <select
+                                                    class="form-control form-control-sm select2-search-disable select2-hidden-accessible
+                                                    @error('brochure_id') border border-solid border-danger @enderror"
+                                                    data-select2-id="basicpill-status-input"
+                                                    tabindex="-1"
+                                                    aria-hidden="true"
+                                                    name="video_id"
+                                                    >
+                                                    <option selected value="">Choose Segment</option>
+
+                                                    @if(isset($videos))
+                                                        @foreach($videos as $data)
+                                                            <option  value="{{$data->id}}">{{ $data->name }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+
+                                                <div class="my-2 w-100 text-right">
+                                                    <button class="btn btn-outline-dark text-right  ">
+                                                        Connect
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-
                                 </td>
 
                                 <td>

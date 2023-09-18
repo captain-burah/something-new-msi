@@ -108,6 +108,18 @@
                             </div>
                         </div>
 
+                        <div class="row no-gutters">
+                            <div class="col">
+                                <a class="dropdown-icon-item" href="{{ route('languages.index') }}">
+                                    <span>Languages</span>
+                                </a>
+                            </div>
+
+                            <div class="col">
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

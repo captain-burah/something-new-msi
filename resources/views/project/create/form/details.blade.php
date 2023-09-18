@@ -1,5 +1,3 @@
-
-
 <div class="row">
 
     <div class="col-md-12">
@@ -73,7 +71,7 @@
 <div class="row mt-5">
     <div class="col-md-12">
         <div class="mb-3">
-            <label for="price">Pricing in AED  <span class="text-muted font-weight-light">&#40;do not use any number format&#41;</span></label>
+            <label for="price">Starting Pricing in AED  <span class="text-muted font-weight-light">&#40;do not use any number format&#41;</span></label>
             <input
                 type="number"
                 name="price"

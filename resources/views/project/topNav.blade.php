@@ -42,6 +42,12 @@
                         </a>
                     </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link " href="{{ route('project-translation.index') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
+                            <i class="bx bx-video-recording mr-2"></i>Translations
+                        </a>
+                    </li>
+
 
 
 

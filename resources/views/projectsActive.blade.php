@@ -8,6 +8,7 @@
 
     @include('project.activeProjects')
 
-        @include('project.ProjectList')
+    @include('project.ProjectList')
+
 </div>
 @endsection

@@ -7,7 +7,9 @@ use App\Http\Controllers\ProjectBrochureController;
 use App\Http\Controllers\ProjectImageController;
 use App\Http\Controllers\ProjectFactsheetController;
 use App\Http\Controllers\ProjectVideoController;
+use App\Http\Controllers\ProjectTranslationController;
 
+use App\Http\Controllers\Localization;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\BookingController;
@@ -57,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('project-images', ProjectImageController::class);
     Route::resource('project-factsheet', ProjectFactsheetController::class);
     Route::resource('project-video', ProjectVideoController::class);
+    Route::resource('project-translation', ProjectTranslationController::class);
 
     Route::resource('units', UnitController::class);
     Route::resource('bookings', BookingController::class);
@@ -65,6 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('products', ProductController::class);
+    Route::resource('languages', Localization::class);
 
 
     /**PROJECT ROUTES */
@@ -87,6 +91,10 @@ Route::middleware('auth')->group(function () {
     /**PROJECT - VIDEO CONNECTION ROUTES */
     Route::post('project/connect-video', [ProjectController::class, 'project_video_connect_store'])->name('project.connect.video');
     Route::get('project/video/disconnect/{id}', [ProjectController::class, 'project_video_disconnect'])->name('project.disconnect.video');
+
+    /**PROJECT - TRANSLATION CONNECTION ROUTES */
+    Route::post('project/connect-translation', [ProjectController::class, 'project_translation_connect_store'])->name('project.connect.translation');
+    Route::get('project/translation/disconnect/{id}', [ProjectController::class, 'project_translation_disconnect'])->name('project.disconnect.translation');
 
 
 
@@ -111,6 +119,11 @@ Route::middleware('auth')->group(function () {
     Route::post('project-video/connect', [ProjectVideoController::class, 'project_connect_store'])->name('project-video.connect');
     Route::get('project-video/disconnect/{id}', [ProjectVideoController::class, 'project_disconnect'])->name('project-video.disconnect');
     Route::get('project-video/delete_all/{id}', [ProjectVideoController::class, 'destroy_segment'])->name('project-video.destroy.segment');
+
+
+    /**PROJECT - TRANSLATION ROUTES */
+    Route::get('project-translation/status/{id}', [ProjectTranslationController::class, 'project_translation_status'])->name('project-translation.status');
+    Route::get('project-translation/activate/{id}', [ProjectTranslationController::class, 'project_translation_move_active'])->name('project-translation.activate');
 });
 
 require __DIR__.'/auth.php';

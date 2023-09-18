@@ -8,6 +8,7 @@ use App\Models\Project_brochure;
 use App\Models\Project_image;
 use App\Models\Project_factsheet;
 use App\Models\Project_video;
+use App\Models\Language;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -26,18 +27,15 @@ class ProjectController extends Controller
          $this->middleware('permission:project-delete', ['only' => ['destroy']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $projects = Project::with('project_brochure')->where('status', '1')->orderBY('id', 'Desc');
 
-
         $this->data['count_draft'] = $count_draft = Project::where('status', '2')->orderBY('id', 'Desc')->count();
         $this->data['count_active'] = $count_active = Project::where('status', '1')->orderBY('id', 'Desc')->count();
         $this->data['count_trash'] = $count_trash = Project::where('status', '3')->orderBY('id', 'Desc')->count();
-
+        $this->data['project_translated'] = $project_translated = Language::all();
+        $this->data['language'] = $lang = Language::all();
 
         $check_availability = $projects->get();
 
@@ -57,6 +55,9 @@ class ProjectController extends Controller
     }
 
 
+
+
+
     public function index_drafts()
     {
         $projects = Project::where('status', '2')->orderBY('id', 'Desc');
@@ -65,6 +66,7 @@ class ProjectController extends Controller
         $this->data['count_draft'] = $count_draft = Project::where('status', '2')->orderBY('id', 'Desc')->count();
         $this->data['count_active'] = $count_active = Project::where('status', '1')->orderBY('id', 'Desc')->count();
         $this->data['count_trash'] = $count_trash = Project::where('status', '3')->orderBY('id', 'Desc')->count();
+        $this->data['language'] = $lang = Language::all();
 
         $check_availability = $projects->get();
 
@@ -88,6 +90,9 @@ class ProjectController extends Controller
         return view('projectsActive', $this->data);
     }
 
+
+
+
     public function index_trash()
     {
         $projects = Project::where('status', '3')->orderBY('id', 'Desc');
@@ -95,6 +100,7 @@ class ProjectController extends Controller
         $this->data['count_draft'] = $count_draft = Project::where('status', '2')->orderBY('id', 'Desc')->count();
         $this->data['count_active'] = $count_active = Project::where('status', '1')->orderBY('id', 'Desc')->count();
         $this->data['count_trash'] = $count_trash = Project::where('status', '3')->orderBY('id', 'Desc')->count();
+        $this->data['language'] = $lang = Language::all();
 
         $check_availability = $projects->get();
 
@@ -634,6 +640,49 @@ class ProjectController extends Controller
         if($project->project_video != null) {
             $project->project_video->project_id = null;
             $project->project_video->save();
+        }
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+
+
+
+
+
+    /**
+     * TRANSLATION SETTINGS
+     */
+    public function project_translation_connect_store(Request $request) {
+
+        // $projects = Project::with('project_translation')->where('id', $request->project_id)->get();
+        $result = Project_translation::with('project')->where('project_id', $request->project_id)->get();
+        // dd($projects[0]->project_image);
+
+        if($result[0]->project_id != null ){
+            return Redirect::back()->withErrors(['The selected translation is already linked to a project. Remove it first to reassign.' ]);
+        }
+
+        $segment = Project_translation::where('project_id', $request->project_id)->get();
+        $segment[0]->project_id = $request->project_id;
+        $segment[0]->status = '1';
+        $segment[0]->slug_link = Str::slug($segment[0]->name);
+        $segment[0]->save();
+
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+    public function project_translation_disconnect($id) {
+        $result = Project_translation::with('project')->where('project_id', $id)->get();
+
+        if($result->project_id != null) {
+            $result->project_id = null;
+            $result->status = '2';
+            $result->slug_link = '0';
+            $result->save();
         }
         return Redirect::back()->with(['msg' => 'Successfully connected']);
     }

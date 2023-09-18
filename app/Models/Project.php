@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Project extends Model
@@ -28,5 +29,10 @@ class Project extends Model
     public function project_video(): HasOne
     {
         return $this->hasOne(Project_video::class);
+    }
+
+    public function project_translations(): HasMany
+    {
+        return $this->hasMany(Project_translation::class);
     }
 }
