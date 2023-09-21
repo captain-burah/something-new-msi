@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             CreateAdminUserSeeder::class,
             PermissionTableSeeder::class,
             ProjectStatusSeeder::class,
+            UnitStatusSeeder::class,
             PropertyReleaseSeeder::class,
         ]);
     }

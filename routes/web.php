@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectBrochureController;
 use App\Http\Controllers\ProjectImageController;
@@ -9,9 +10,16 @@ use App\Http\Controllers\ProjectFactsheetController;
 use App\Http\Controllers\ProjectVideoController;
 use App\Http\Controllers\ProjectTranslationController;
 
+
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\UnitBrochureController;
+use App\Http\Controllers\UnitImageController;
+use App\Http\Controllers\UnitFactsheetController;
+use App\Http\Controllers\UnitVideoController;
+use App\Http\Controllers\UnitTranslationController;
+
 use App\Http\Controllers\Localization;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UnitController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\ClienteleController;
@@ -47,13 +55,14 @@ Route::get('/financial-admin', [MainController::class, 'financial_admin_login'])
 Route::middleware('auth')->group(function () {
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout.get');
 
+
     /**DEFAULT ROUTES */
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    /**RESOURCE ROUTES */
+    /**RESOURCE PROJECT ROUTES */
     Route::resource('projects', ProjectController::class);
     Route::resource('project-brochures', ProjectBrochureController::class);
     Route::resource('project-images', ProjectImageController::class);
@@ -61,7 +70,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('project-video', ProjectVideoController::class);
     Route::resource('project-translation', ProjectTranslationController::class);
 
+
+    /**RESOURCE UNITS ROUTES */
     Route::resource('units', UnitController::class);
+    Route::resource('unit-brochures', ProjectBrochureController::class);
+    Route::resource('unit-images', ProjectImageController::class);
+    Route::resource('unit-payment-plan', ProjectPaymentPlanController::class);
+    Route::resource('unit-floor-plan', ProjectFloorPlanController::class);
+
+
     Route::resource('bookings', BookingController::class);
     Route::resource('clienteles', ClienteleController::class);
     Route::resource('meetings', MeetingController::class);
@@ -71,6 +88,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('languages', Localization::class);
 
 
+
+/** PROJECTS */
     /**PROJECT ROUTES */
     Route::get('projects-drafts', [ProjectController::class, 'index_drafts'])->name('projects.drafts');
     Route::get('projects-trash', [ProjectController::class, 'index_trash'])->name('projects.trash');
@@ -100,6 +119,8 @@ Route::middleware('auth')->group(function () {
 
 
 
+
+
     /**PROJECT - BROCHURE - ROUTES  */
     Route::post('project-brochures/connect', [ProjectBrochureController::class, 'project_connect_store'])->name('project-brochures.connect');
     Route::get('project-brochures/disconnect/{id}', [ProjectBrochureController::class, 'project_disconnect'])->name('project-brochures.disconnect');
@@ -124,6 +145,75 @@ Route::middleware('auth')->group(function () {
     /**PROJECT - TRANSLATION ROUTES */
     Route::get('project-translation/status/{id}', [ProjectTranslationController::class, 'project_translation_status'])->name('project-translation.status');
     Route::get('project-translation/activate/{id}', [ProjectTranslationController::class, 'project_translation_move_active'])->name('project-translation.activate');
+
+
+/** PROJECTS */
+
+
+
+
+
+/** UNITS */
+    /**UNIT ROUTES */
+    Route::get('units-drafts', [UnitController::class, 'index_drafts'])->name('units.drafts');
+    Route::get('units-trash', [UnitController::class, 'index_trash'])->name('units.trash');
+    Route::get('units-status-change/{id}/{status}', [UnitController::class, 'status_change'])->name('units.status.change');
+
+    /**UNIT - BROCHURE CONNECTION ROUTES */
+    Route::post('project/connect-brochure', [UnitController::class, 'project_brochure_connect_store'])->name('unit.connect.brochure');
+    Route::get('project/brochures/disconnect/{id}', [UnitController::class, 'project_brochure_disconnect'])->name('unit.disconnect.brochure');
+
+    /**UNIT - IMAGE CONNECTION ROUTES */
+    Route::post('project/connect-image', [UnitController::class, 'project_image_connect_store'])->name('unit.connect.image');
+    Route::get('project/images/disconnect/{id}', [UnitController::class, 'project_image_disconnect'])->name('unit.disconnect.image');
+
+    /**UNIT - FACTSHEET CONNECTION ROUTES */
+    Route::post('project/connect-factsheet', [UnitController::class, 'project_factsheet_connect_store'])->name('unit.connect.factsheet');
+    Route::get('project/factsheet/disconnect/{id}', [UnitController::class, 'project_factsheet_disconnect'])->name('unit.disconnect.factsheet');
+
+    /**UNIT - VIDEO CONNECTION ROUTES */
+    Route::post('project/connect-video', [UnitController::class, 'project_video_connect_store'])->name('unit.connect.video');
+    Route::get('project/video/disconnect/{id}', [UnitController::class, 'project_video_disconnect'])->name('unit.disconnect.video');
+
+    /**UNIT - TRANSLATION CONNECTION ROUTES */
+    Route::post('project/connect-translation', [UnitController::class, 'project_translation_connect_store'])->name('unit.connect.translation');
+    Route::get('project/translation/disconnect/{id}', [UnitController::class, 'project_translation_disconnect'])->name('unit.disconnect.translation');
+
+
+
+
+
+    /**UNIT - BROCHURE - ROUTES  */
+    Route::post('unit-brochures/connect', [UnitBrochureController::class, 'unit_connect_store'])->name('unit-brochures.connect');
+    Route::get('unit-brochures/disconnect/{id}', [UnitBrochureController::class, 'unit_disconnect'])->name('unit-brochures.disconnect');
+    Route::get('unit-brochures/delete_all/{id}', [UnitBrochureController::class, 'destroy_segment'])->name('unit-brochures.destroy.segment');
+
+    /**UNIT - IMAGES ROUTES */
+    Route::post('unit-images/connect', [UnitImageController::class, 'unit_connect_store'])->name('unit-images.connect');
+    Route::get('unit-images/disconnect/{id}', [UnitImageController::class, 'unit_disconnect'])->name('unit-images.disconnect');
+    Route::get('unit-images/delete_all/{id}', [UnitImageController::class, 'destroy_segment'])->name('unit-images.destroy.segment');
+
+    /**UNIT - FACTSHEET ROUTES */
+    Route::post('unit-factsheet/connect', [UnitFactsheetController::class, 'unit_connect_store'])->name('unit-factsheet.connect');
+    Route::get('unit-factsheet/disconnect/{id}', [UnitFactsheetController::class, 'unit_disconnect'])->name('unit-factsheet.disconnect');
+    Route::get('unit-factsheet/delete_all/{id}', [UnitFactsheetController::class, 'destroy_segment'])->name('unit-factsheet.destroy.segment');
+
+    /**UNIT - VIDEO ROUTES */
+    Route::post('unit-video/connect', [UnitVideoController::class, 'unit_connect_store'])->name('unit-video.connect');
+    Route::get('unit-video/disconnect/{id}', [UnitVideoController::class, 'unit_disconnect'])->name('unit-video.disconnect');
+    Route::get('unit-video/delete_all/{id}', [UnitVideoController::class, 'destroy_segment'])->name('unit-video.destroy.segment');
+
+
+    /**UNIT - TRANSLATION ROUTES */
+    Route::get('unit-translation/status/{id}', [UnitTranslationController::class, 'unit_translation_status'])->name('unit-translation.status');
+    Route::get('unit-translation/activate/{id}', [UnitTranslationController::class, 'unit_translation_move_active'])->name('unit-translation.activate');
+
+
+/** UNITS */
+
 });
+
+
+
 
 require __DIR__.'/auth.php';

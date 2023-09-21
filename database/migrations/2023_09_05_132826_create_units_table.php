@@ -15,38 +15,27 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('project_id')->nullable(true);
-            $table->unsignedBigInteger('status_id')->nullable(true);
-            $table->unsignedBigInteger('community_id')->nullable(true);
+            $table->unsignedBigInteger('status')->nullable(true);
             $table->unsignedBigInteger('created_by')->nullable(true);
 
             $table->string('name')->nullable(true);
             $table->string('building_name')->nullable(true);
-            $table->string('address')->nullable(true);
-            $table->string('exposure')->nullable(true);
-            $table->string('main_unit_type')->nullable(true);
-            $table->string('land_registration_fee')->nullable(true);
-            $table->string('oqood_amount')->nullable(true);
-            $table->string('dld_fees')->nullable(true);
-            $table->string('usage')->nullable(true);
-            $table->string('bedroom')->nullable(true);
-            $table->string('bathroom')->nullable(true);
+            $table->integer('land_reg_fee')->nullable(true);
+            $table->integer('oqood_amount')->nullable(true);
+            $table->integer('dld_fees')->nullable(true);
+            $table->integer('bedroom')->nullable(true);
+            $table->integer('bathroom')->nullable(true);
+            $table->integer('floor')->nullable(true);
             $table->string('unit_price')->nullable(true);
-            $table->string('unit_area')->nullable(true);
+            $table->string('unit_size_range')->nullable(true);
             $table->string('outdoor_area')->nullable(true);
             $table->string('terrace_area')->nullable(true);
-            $table->string('is_floorplans')->nullable(true);
-            $table->string('is_images')->nullable(true);
-            $table->string('is_paymentplans')->nullable(true);
-            $table->string('is_amenities')->nullable(true);
-            $table->string('is_factsheet')->nullable(true);
-            $table->string('is_brochure')->nullable(true);
 
 
             $table->timestamps();
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('restrict');
-            $table->foreign('status_id')->references('id')->on('unit_statuses')->onDelete('restrict');
-            $table->foreign('community_id')->references('id')->on('communities')->onDelete('restrict');
+            $table->foreign('status')->references('id')->on('unit_statuses')->onDelete('restrict');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
         });
     }

@@ -10,7 +10,6 @@ return new class extends Migration
     {
         Schema::create('project_translations', function (Blueprint $table) {
             $table->id();
-            $table->string('status')->nullable(true);
 
             $table->unsignedBigInteger('language_id')->nullable(true);
             $table->unsignedBigInteger('project_id')->nullable(true);
