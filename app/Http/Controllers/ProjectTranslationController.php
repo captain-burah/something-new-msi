@@ -21,7 +21,7 @@ class ProjectTranslationController extends Controller
         $segments = Project_translation::with('language')->get();
 
         $this->data['results'] = $segments;
-        $this->data['projects'] = $projects = Project::select(['id', 'name', 'status'])->where('status', '2')->get();
+        $this->data['projects'] = $projects = Project::with('project_translations')->select(['id', 'name', 'status'])->where('status', '2')->get();
         $this->data['count_status'] = Project_translation::count();
 
         return view('project.translation.index', $this->data);
@@ -226,17 +226,46 @@ class ProjectTranslationController extends Controller
 
     public function project_translation_status($id){
 
-        $segment = Project_translation::find($id);
+        // GET THE TRANSLATION TUPLE
+        $segment = Project_translation::with('project')->find($id);
 
+        // GET THE PROJECT ID
+        $project_id = $segment->project->id;
+
+        // GET THE PROJECT TUPLE
+        $project = Project::with('project_translations')->find($project_id);
+
+        // CHECK IF TRANSLATION TUPPLE IS IN DRAFT
         if($segment->status == 2) {
+
+            // LOOP THROUGH ALL TRANSLATIONS UNDER THE PROJECT TUPLE
+            foreach($project->project_translations as $data){
+
+                // PICK ONLY THE TUPLES WHO ARE IN ACTIVE STATUS
+                if($data->status == 1) {
+
+                    // CHECK THE LANGUAGE ID ARE THE SAME COMPARING THE CURRENT TUPLE WITH LOOPING TUPLE
+                    if($segment->language_id == $data->language_id){
+
+                        // IF SAME, RETURN AS AN ERROR
+                        return Redirect::back()->withErrors(['msg' => 'The project already contains the language selected. Deactive that first to reasign.']);
+                    }
+                }
+            }
+
+            // CHANGE THE STATUS AND CREATE THE SLUG LINK FOR TRANSLATION
             $segment->status = '1';
             $segment->slug_link = Str::slug($segment->name);
             $segment->save();
+
         } elseif($segment->status == 1) {
+
+            // CHANGE THE STATUS AND REMOVE THE SLUG LINK FOR TRANSLATION
             $segment->status = '2';
             $segment->slug_link = '0';
             $segment->save();
         }
+
         return Redirect::back()->with(['msg' => 'Successfully connected']);
     }
 

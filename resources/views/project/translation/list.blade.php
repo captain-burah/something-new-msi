@@ -55,6 +55,7 @@
                     <tr class="bg-dark text-white">
                         <th>#</th>
                         <th>Status</th>
+                        <th>Language</th>
                         <th>Project Connected</th>
                         <th>Project ID</th>
                         <th>Project Name Translated</th>
@@ -87,13 +88,15 @@
                                 </td>
 
                                 <td>
-                                    <a class="dropdown-toggle" type="button" id="dropdownMenuButton" >
-                                        @if($data->project_id == null)
-                                            <i class="bx bx-no-entry text-danger" style="font-size: 20px"></i>
-                                        @else
-                                            {{$data->project->name}}
-                                        @endif
-                                    </a>
+                                    {{$data->language->name}}
+                                </td>
+
+                                <td>
+                                    @if($data->project_id == null)
+                                        <i class="bx bx-no-entry text-danger" style="font-size: 20px"></i>
+                                    @else
+                                        {{$data->project->name}}
+                                    @endif
                                 </td>
 
                                 <td>
