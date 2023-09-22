@@ -168,12 +168,12 @@ Route::middleware('auth')->group(function () {
     Route::get('project/images/disconnect/{id}', [UnitController::class, 'project_image_disconnect'])->name('unit.disconnect.image');
 
     /**UNIT - FACTSHEET CONNECTION ROUTES */
-    Route::post('project/connect-factsheet', [UnitController::class, 'project_factsheet_connect_store'])->name('unit.connect.factsheet');
-    Route::get('project/factsheet/disconnect/{id}', [UnitController::class, 'project_factsheet_disconnect'])->name('unit.disconnect.factsheet');
+    Route::post('project/connect-floorplan', [UnitController::class, 'project_floorplan_connect_store'])->name('unit.connect.floorplan');
+    Route::get('project/floorplan/disconnect/{id}', [UnitController::class, 'project_floorplan_disconnect'])->name('unit.disconnect.floorplan');
 
     /**UNIT - VIDEO CONNECTION ROUTES */
-    Route::post('project/connect-video', [UnitController::class, 'project_video_connect_store'])->name('unit.connect.video');
-    Route::get('project/video/disconnect/{id}', [UnitController::class, 'project_video_disconnect'])->name('unit.disconnect.video');
+    Route::post('project/connect-paymentplan', [UnitController::class, 'project_paymentplan_connect_store'])->name('unit.connect.paymentplan');
+    Route::get('project/paymentplan/disconnect/{id}', [UnitController::class, 'project_paymentplan_disconnect'])->name('unit.disconnect.paymentplan');
 
     /**UNIT - TRANSLATION CONNECTION ROUTES */
     Route::post('project/connect-translation', [UnitController::class, 'project_translation_connect_store'])->name('unit.connect.translation');
@@ -193,15 +193,15 @@ Route::middleware('auth')->group(function () {
     Route::get('unit-images/disconnect/{id}', [UnitImageController::class, 'unit_disconnect'])->name('unit-images.disconnect');
     Route::get('unit-images/delete_all/{id}', [UnitImageController::class, 'destroy_segment'])->name('unit-images.destroy.segment');
 
-    /**UNIT - FACTSHEET ROUTES */
-    Route::post('unit-factsheet/connect', [UnitFactsheetController::class, 'unit_connect_store'])->name('unit-factsheet.connect');
-    Route::get('unit-factsheet/disconnect/{id}', [UnitFactsheetController::class, 'unit_disconnect'])->name('unit-factsheet.disconnect');
-    Route::get('unit-factsheet/delete_all/{id}', [UnitFactsheetController::class, 'destroy_segment'])->name('unit-factsheet.destroy.segment');
+    /**UNIT - FLOORPLANS ROUTES */
+    Route::post('unit-floorplan/connect', [UnitFloorplanController::class, 'unit_connect_store'])->name('unit-floorplan.connect');
+    Route::get('unit-floorplan/disconnect/{id}', [UnitFloorplanController::class, 'unit_disconnect'])->name('unit-floorplan.disconnect');
+    Route::get('unit-floorplan/delete_all/{id}', [UnitFloorplanController::class, 'destroy_segment'])->name('unit-floorplan.destroy.segment');
 
-    /**UNIT - VIDEO ROUTES */
-    Route::post('unit-video/connect', [UnitVideoController::class, 'unit_connect_store'])->name('unit-video.connect');
-    Route::get('unit-video/disconnect/{id}', [UnitVideoController::class, 'unit_disconnect'])->name('unit-video.disconnect');
-    Route::get('unit-video/delete_all/{id}', [UnitVideoController::class, 'destroy_segment'])->name('unit-video.destroy.segment');
+    /**UNIT - PAYMENTPLAN ROUTES */
+    Route::post('unit-paymentplan/connect', [UnitPaymentplanController::class, 'unit_connect_store'])->name('unit-paymentplan.connect');
+    Route::get('unit-paymentplan/disconnect/{id}', [UnitPaymentplanController::class, 'unit_disconnect'])->name('unit-paymentplan.disconnect');
+    Route::get('unit-paymentplan/delete_all/{id}', [UnitPaymentplanController::class, 'destroy_segment'])->name('unit-paymentplan.destroy.segment');
 
 
     /**UNIT - TRANSLATION ROUTES */

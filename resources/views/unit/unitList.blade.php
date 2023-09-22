@@ -26,7 +26,6 @@
 @endif
 
 
-
 <div class="card w-100" style="height: 100vh">
     <div class="card-body">
         <h4 class="card-title">Active Units Table</h4>
@@ -103,9 +102,9 @@
                                         </a>
                                         <div class="dropdown-menu w-100 " aria-labelledby="dropdownMenuButton">
                                             {{-- <button class="dropdown-item" data-toggle="modal" data-target="#project-brochure-connect"><i class="bx bx-plus-circle"></i> &nbsp;Add</button> --}}
-                                            <a class="dropdown-item" href="{{ url('project/brochures/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                            <a class="dropdown-item" href="{{ url('unit/brochures/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
                                             <hr class="my-2">
-                                            <form class="contact-form px-3" id="getInTouch" method="post" action="{{ route('project.connect.brochure') }}">
+                                            <form class="contact-form px-3" id="getInTouch" method="post" action="{{ route('unit.connect.brochure') }}">
                                             @csrf
                                                 <input name="project_id" value="{{$value->id}}" hidden>
                                                 <select
@@ -137,7 +136,7 @@
                                     </div>
                                 </td>
 
-                                {{-- factsheet --}}
+                                {{-- FLOOR PLANS --}}
                                 <td>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -152,9 +151,9 @@
                                             @endif
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{{ url('project/factsheet/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                            <a class="dropdown-item" href="{{ url('unit/floorplan/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
                                             <hr class="my-2">
-                                            <form class="contact-form px-3" method="post" action="{{ route('project.connect.factsheet') }}">
+                                            <form class="contact-form px-3" method="post" action="{{ route('unit.connect.floorplan') }}">
                                                 @csrf
                                                 <input name="project_id" value="{{$value->id}}" hidden >
                                                 <select
@@ -163,12 +162,12 @@
                                                     data-select2-id="basicpill-status-input"
                                                     tabindex="-1"
                                                     aria-hidden="true"
-                                                    name="factsheet_id"
+                                                    name="floorplan_id"
                                                     >
                                                     <option selected value="">Choose Segment</option>
 
-                                                    @if(isset($factsheets))
-                                                        @foreach($factsheets as $data)
+                                                    @if(isset($floorplans))
+                                                        @foreach($floorplans as $data)
                                                             <option  value="{{$data->id}}">{{ $data->name }}</option>
                                                         @endforeach
                                                     @endif
@@ -184,7 +183,7 @@
                                     </div>
                                 </td>
 
-                                {{-- images --}}
+                                {{-- IMAGES --}}
                                 <td>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -199,9 +198,9 @@
                                             @endif
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{{ url('project/images/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                            <a class="dropdown-item" href="{{ url('unit/images/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
                                             <hr class="my-2">
-                                            <form class="contact-form px-3" method="post" action="{{ route('project.connect.image') }}">
+                                            <form class="contact-form px-3" method="post" action="{{ route('unit.connect.image') }}">
                                                 @csrf
                                                 <input name="project_id" value="{{$value->id}}" hidden >
                                                 <select
@@ -231,7 +230,7 @@
                                     </div>
                                 </td>
 
-                                {{-- videos --}}
+                                {{-- PAYMENT PLANS --}}
                                 <td>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -246,9 +245,9 @@
                                             @endif
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{{ url('project/video/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                            <a class="dropdown-item" href="{{ url('unit/paymentplan/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
                                             <hr class="my-2">
-                                            <form class="contact-form px-3" method="post" action="{{ route('project.connect.video') }}">
+                                            <form class="contact-form px-3" method="post" action="{{ route('unit.connect.paymentplan') }}">
                                                 @csrf
                                                 <input name="project_id" value="{{$value->id}}" hidden >
                                                 <select
@@ -257,12 +256,12 @@
                                                     data-select2-id="basicpill-status-input"
                                                     tabindex="-1"
                                                     aria-hidden="true"
-                                                    name="video_id"
+                                                    name="paymentplan_id"
                                                     >
                                                     <option selected value="">Choose Segment</option>
 
-                                                    @if(isset($videos))
-                                                        @foreach($videos as $data)
+                                                    @if(isset($paymentplans))
+                                                        @foreach($paymentplans as $data)
                                                             <option  value="{{$data->id}}">{{ $data->name }}</option>
                                                         @endforeach
                                                     @endif
@@ -278,52 +277,6 @@
                                     </div>
                                 </td>
 
-                                {{-- TRANSLATION --}}
-                                <td>
-                                    <div class="dropdown">
-                                        <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            @if($value->language != null)
-                                                @if($value->language->project_id == $value->id)
-                                                    <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->project_video->name }}
-                                                @else
-                                                    <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
-                                                @endif
-                                            @else
-                                                <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
-                                            @endif
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{{ url('project/video/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
-                                            <hr class="my-2">
-                                            <form class="contact-form px-3" method="post" action="{{ route('project.connect.video') }}">
-                                                @csrf
-                                                <input name="project_id" value="{{$value->id}}" hidden >
-                                                <select
-                                                    class="form-control form-control-sm select2-search-disable select2-hidden-accessible
-                                                    @error('brochure_id') border border-solid border-danger @enderror"
-                                                    data-select2-id="basicpill-status-input"
-                                                    tabindex="-1"
-                                                    aria-hidden="true"
-                                                    name="video_id"
-                                                    >
-                                                    <option selected value="">Choose Segment</option>
-
-                                                    @if(isset($videos))
-                                                        @foreach($videos as $data)
-                                                            <option  value="{{$data->id}}">{{ $data->name }}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-
-                                                <div class="my-2 w-100 text-right">
-                                                    <button class="btn btn-outline-dark text-right  ">
-                                                        Connect
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
 
                                 <td>
                                     <div class="dropdown">
@@ -331,7 +284,7 @@
                                             <i class="mdi mdi-dots-horizontal font-size-18"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{{ route('projects.edit', ['project' => $value->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
+                                            <a class="dropdown-item" href="{{ route('units.edit', ['unit' => $value->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
                                         </div>
                                     </div>
                                 </td>

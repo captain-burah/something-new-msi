@@ -10,7 +10,7 @@
                     @error('description')
                         <div class="text-danger text-xs" >{{ $message }}</div>
                     @enderror
-                    <textarea name="description" id="description" class="w-100">{{ $project->description }}</textarea>
+                    <textarea name="description" id="description" class="w-100">{{ $unit->description }}</textarea>
                 </div>
             </div>
         </div>

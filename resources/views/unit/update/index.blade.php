@@ -7,13 +7,12 @@
 
 @section('content')
 
-@include('project.topNav')
+@include('unit.topNav')
 
 <div style="padding-top: 150px;">
 
-    @include('project.update.form')
+    @include('unit.update.form')
 
-    {{-- @include('project.activeProjectsTable') --}}
 </div>
 @endsection
 

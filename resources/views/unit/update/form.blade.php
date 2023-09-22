@@ -1,28 +1,23 @@
-
-@if($errors->any())
-<div class="alert alert-danger" role="alert">
-    {{$errors->first()}}
-</div>
-@endif
 <div class="card">
     <div class="card-body">
-        <h3 class="mb-1">Project Update</h3>
+        <h3 class="mb-1">Unit Launch</h3>
         <p class="mb-0 text-justify text-muted">
-            When you embark on a new real estate project, you're not just building structures; you're creating opportunities, shaping communities, and crafting dreams into reality.
+            When you embark on a new real estate project, you're not just building structures; you're creating opportunities, shaping communities and crafting dreams into reality.
         </p>
 
-        <form class="contact-form" id="getInTouch" method="post" action="{{ route('projects.update', ['project' => $project->id]) }}" enctype="multipart/form-data">
+
+        <form class="contact-form" id="getInTouch" method="post" action="{{ route('units.update', ['unit' => $unit->id]) }}">
             @csrf
             @method('PATCH')
             <div class="flex-none w-100 mt-3 ">
-                <a href="{{ route('projects.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
+                <a href="{{ route('units.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
                     <i class="bx bx-arrow-back"></i>
                     Back
                 </a>
                 <button
                     type="submit"
                     class="btn btn-sm btn-dark my-auto">
-                    Update to Draft
+                    Submit to Draft
                 </button>
             </div>
             <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
@@ -45,19 +40,19 @@
 
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active p-4" id="general" role="tabpanel" aria-labelledby="home-tab">
-                    @include('project.update.form.general')
+                    @include('unit.update.form.general')
                 </div>
 
                 <div class="tab-pane fade p-4" id="details" role="tabpanel" aria-labelledby="details-tab">
-                    @include('project.update.form.details')
+                    @include('unit.update.form.details')
                 </div>
 
                 <div class="tab-pane fade p-4" id="description" role="tabpanel" aria-labelledby="description-tab">
-                    @include('project.update.form.description')
+                    @include('unit.update.form.description')
                 </div>
 
                 <div class="tab-pane fade p-4" id="seo" role="tabpanel" aria-labelledby="seo-tab">
-                    @include('project.update.form.seo')
+                    @include('unit.update.form.seo')
                 </div>
             </div>
         </form>

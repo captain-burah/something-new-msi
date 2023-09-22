@@ -18,7 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('status')->nullable(true);
             $table->unsignedBigInteger('created_by')->nullable(true);
 
+            $table->string('slug_link')->nullable(true);
             $table->string('name')->nullable(true);
+            $table->longText('description')->nullable(true);
             $table->string('building_name')->nullable(true);
             $table->integer('land_reg_fee')->nullable(true);
             $table->integer('oqood_amount')->nullable(true);
@@ -31,6 +33,9 @@ return new class extends Migration
             $table->string('outdoor_area')->nullable(true);
             $table->string('terrace_area')->nullable(true);
 
+            $table->string('meta_title')->nullable(true);
+            $table->string('meta_description')->nullable(true);
+            $table->string('meta_keywords')->nullable(true);
 
             $table->timestamps();
 

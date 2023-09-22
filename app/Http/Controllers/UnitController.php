@@ -7,8 +7,8 @@ use App\Models\Project;
 use App\Models\Unit;
 use App\Models\Unit_brochure;
 use App\Models\Unit_image;
-use App\Models\Unit_factsheet;
-use App\Models\Unit_video;
+use App\Models\Unit_paymentplan;
+use App\Models\Unit_floorplan;
 use App\Models\Language;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -17,13 +17,13 @@ use Illuminate\Support\Str;
 
 class UnitController extends Controller
 {
-    function __construct()
-    {
-         $this->middleware('permission:listing-list|project-create|project-edit|project-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:listing-create', ['only' => ['create','store']]);
-         $this->middleware('permission:listing-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:listing-delete', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //      $this->middleware('permission:listing-list|project-create|project-edit|project-delete', ['only' => ['index','show']]);
+    //      $this->middleware('permission:listing-create', ['only' => ['create','store']]);
+    //      $this->middleware('permission:listing-edit', ['only' => ['edit','update']]);
+    //      $this->middleware('permission:listing-delete', ['only' => ['destroy']]);
+    // }
 
 
     public function index()
@@ -47,8 +47,9 @@ class UnitController extends Controller
 
         $this->data['brochures'] = Unit_brochure::with('project_brochure_files')->get();
         $this->data['images'] = Unit_image::with('project_image_files')->get();
-        $this->data['factsheets'] = Unit_factsheet::with('project_factsheet_files')->get();
-        $this->data['videos'] = Unit_video::with('project_video_files')->get();
+        $this->data['images'] = Unit_image::with('project_image_files')->get();
+        $this->data['floorplans'] = Unit_floorplan::with('project_floorplan_files')->get();
+        $this->data['paymentplans'] = Unit_paymentplan::with('project_paymentplan_files')->get();
 
         return view('unitsActive', $this->data);
     }
@@ -81,10 +82,11 @@ class UnitController extends Controller
 
         }
 
-        $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
-        $this->data['images'] = Unit_image::with('unit_image_files')->get();
-        $this->data['factsheets'] = Unit_factsheet::with('unit_factsheet_files')->get();
-        $this->data['videos'] = Unit_video::with('unit_video_files')->get();
+        $this->data['brochures'] = Unit_brochure::with('project_brochure_files')->get();
+        $this->data['images'] = Unit_image::with('project_image_files')->get();
+        $this->data['images'] = Unit_image::with('project_image_files')->get();
+        $this->data['floorplans'] = Unit_floorplan::with('project_floorplan_files')->get();
+        $this->data['paymentplans'] = Unit_paymentplan::with('project_paymentplan_files')->get();
 
         return view('unitsActive', $this->data);
     }
@@ -110,10 +112,11 @@ class UnitController extends Controller
             $this->data['units'] = $units->paginate(30);
         }
 
-        $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
-        $this->data['images'] = Unit_image::with('unit_image_files')->get();
-        $this->data['factsheets'] = Unit_factsheet::with('unit_factsheet_files')->get();
-        $this->data['videos'] = Unit_video::with('unit_video_files')->get();
+        $this->data['brochures'] = Unit_brochure::with('project_brochure_files')->get();
+        $this->data['images'] = Unit_image::with('project_image_files')->get();
+        $this->data['images'] = Unit_image::with('project_image_files')->get();
+        $this->data['floorplans'] = Unit_floorplan::with('project_floorplan_files')->get();
+        $this->data['paymentplans'] = Unit_paymentplan::with('project_paymentplan_files')->get();
 
         return view('unitsActive', $this->data);
     }
@@ -141,7 +144,7 @@ class UnitController extends Controller
 
             'unit_size' => ['required'],
 
-            'unit_price' => ['required'],
+            'price' => ['required'],
 
             'land_reg_fee' => ['required'],
 
@@ -170,32 +173,34 @@ class UnitController extends Controller
 
         $bool=0;
 
+        // dd($request);
+
 
 		if($bool==0)
 		{
-            $project = new Unit();
-            $project->project_id = $request->project_id;
-            $project->unit_name = $request->unit_name;
-            $project->description = $request->description;
-            $project->unit_size = $request->unit_size;
-            $project->unit_price = $request->unit_price;
-            $project->land_reg_fee = $request->land_reg_fee;
-            $project->oqood = $request->oqood;
-            $project->dld_fees = $request->dld_fees;
-            $project->bedrooms = $request->bedrooms;
-            $project->bathrooms = $request->bathrooms;
-            $project->floor = $request->floor;
-            $project->unit_size_range = $request->area_range;
-            $project->outdoor_area = $request->outdoor_area_range;
-            $project->terrace_area = $request->terrace_area_range;
-            $project->meta_title = $request->meta_title;
-            $project->meta_description = $request->meta_description;
-            $project->meta_keywords = $request->meta_keywords;
-            $project->slug_link = '0';
-            $project->status = '2';
-            $project->save();
+            $unit = new Unit();
+            $unit->project_id = $request->project;
+            $unit->name = $request->unit_name;
+            $unit->building_name = $request->building_name;
+            $unit->description = $request->description;
+            $unit->unit_price = $request->price;
+            $unit->land_reg_fee = $request->land_reg_fee;
+            $unit->oqood_amount = $request->oqood;
+            $unit->dld_fees = $request->dld_fees;
+            $unit->bedroom = $request->bedrooms;
+            $unit->bathroom = $request->bathrooms;
+            $unit->floor = $request->floor;
+            $unit->unit_size_range = $request->area_range;
+            $unit->outdoor_area = $request->outdoor_area_range;
+            $unit->terrace_area = $request->terrace_area_range;
+            $unit->meta_title = $request->meta_title;
+            $unit->meta_description = $request->meta_description;
+            $unit->meta_keywords = $request->meta_keywords;
+            $unit->slug_link = '0';
+            $unit->status = '2';
+            $unit->save();
 
-            $this->data['property_id'] = $project->id;
+            $this->data['property_id'] = $unit->id;
 
             return $this->index();
         }
@@ -220,7 +225,11 @@ class UnitController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $this->data['projects'] = $projects = Project::where('status', '1')->get();
+        $this->data['unit'] = $unit = Unit::where('status', '2')->find($id);
+
+        // dd($unit);
+        return view('unit.update.index', $this->data);
     }
 
     /**
@@ -228,7 +237,79 @@ class UnitController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request);
+        $validatedData = $request->validate([
+
+            'unit_name' => ['required'],
+
+            'description' => ['required'],
+
+            'unit_size' => ['required'],
+
+            'price' => ['required'],
+
+            'land_reg_fee' => ['required'],
+
+            'oqood' => ['required'],
+
+            'dld_fees' => ['required'],
+
+            'bathrooms' => ['required'],
+
+            'bedrooms' => ['required'],
+
+            'area_range' => ['required'],
+
+            'floor' => ['required'],
+
+            'outdoor_area_range' => ['required'],
+
+            'terrace_area_range' => ['required'],
+
+            'meta_title' => ['required'],
+
+            'meta_description' => ['required'],
+
+            'meta_keywords' => ['required']
+        ]);
+
+        $bool=0;
+
+        // dd($request);
+
+
+		if($bool==0)
+		{
+            $unit = Unit::find($id);
+            $unit->project_id = $request->project;
+            $unit->name = $request->unit_name;
+            $unit->building_name = $request->building_name;
+            $unit->description = $request->description;
+            $unit->unit_price = $request->price;
+            $unit->land_reg_fee = $request->land_reg_fee;
+            $unit->oqood_amount = $request->oqood;
+            $unit->dld_fees = $request->dld_fees;
+            $unit->bedroom = $request->bedrooms;
+            $unit->bathroom = $request->bathrooms;
+            $unit->floor = $request->floor;
+            $unit->unit_size_range = $request->area_range;
+            $unit->outdoor_area = $request->outdoor_area_range;
+            $unit->terrace_area = $request->terrace_area_range;
+            $unit->meta_title = $request->meta_title;
+            $unit->meta_description = $request->meta_description;
+            $unit->meta_keywords = $request->meta_keywords;
+            $unit->slug_link = '0';
+            $unit->status = '2';
+            $unit->save();
+
+            $this->data['property_id'] = $unit->id;
+
+            return $this->index();
+        }
+        else
+        {
+            return Redirect::back()->withErrors('Record is already Exist');
+        }
     }
 
     /**
