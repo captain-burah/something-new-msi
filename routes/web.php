@@ -14,8 +14,8 @@ use App\Http\Controllers\ProjectTranslationController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UnitBrochureController;
 use App\Http\Controllers\UnitImageController;
-use App\Http\Controllers\UnitFactsheetController;
-use App\Http\Controllers\UnitVideoController;
+use App\Http\Controllers\UnitFloorplanController;
+use App\Http\Controllers\UnitPaymentPlanController;
 use App\Http\Controllers\UnitTranslationController;
 
 use App\Http\Controllers\Localization;
@@ -73,10 +73,10 @@ Route::middleware('auth')->group(function () {
 
     /**RESOURCE UNITS ROUTES */
     Route::resource('units', UnitController::class);
-    Route::resource('unit-brochures', ProjectBrochureController::class);
-    Route::resource('unit-images', ProjectImageController::class);
-    Route::resource('unit-payment-plan', ProjectPaymentPlanController::class);
-    Route::resource('unit-floor-plan', ProjectFloorPlanController::class);
+    Route::resource('unit-brochures', UnitBrochureController::class);
+    Route::resource('unit-images', UnitImageController::class);
+    Route::resource('unit-payment-plan', UnitPaymentPlanController::class);
+    Route::resource('unit-floor-plan', UnitFloorplanController::class);
 
 
     Route::resource('bookings', BookingController::class);
@@ -160,24 +160,25 @@ Route::middleware('auth')->group(function () {
     Route::get('units-status-change/{id}/{status}', [UnitController::class, 'status_change'])->name('units.status.change');
 
     /**UNIT - BROCHURE CONNECTION ROUTES */
-    Route::post('project/connect-brochure', [UnitController::class, 'project_brochure_connect_store'])->name('unit.connect.brochure');
-    Route::get('project/brochures/disconnect/{id}', [UnitController::class, 'project_brochure_disconnect'])->name('unit.disconnect.brochure');
+    Route::post('unit/connect-brochure', [UnitController::class, 'unit_brochure_connect_store'])->name('unit.connect.brochure');
+    Route::get('unit/brochures/disconnect/{id}', [UnitController::class, 'unit_brochure_disconnect'])->name('unit.disconnect.brochure');
 
     /**UNIT - IMAGE CONNECTION ROUTES */
-    Route::post('project/connect-image', [UnitController::class, 'project_image_connect_store'])->name('unit.connect.image');
-    Route::get('project/images/disconnect/{id}', [UnitController::class, 'project_image_disconnect'])->name('unit.disconnect.image');
+    Route::post('unit/connect-image', [UnitController::class, 'unit_image_connect_store'])->name('unit.connect.image');
+    Route::get('unit/images/disconnect/{id}', [UnitController::class, 'unit_image_disconnect'])->name('unit.disconnect.image');
 
     /**UNIT - FACTSHEET CONNECTION ROUTES */
-    Route::post('project/connect-floorplan', [UnitController::class, 'project_floorplan_connect_store'])->name('unit.connect.floorplan');
-    Route::get('project/floorplan/disconnect/{id}', [UnitController::class, 'project_floorplan_disconnect'])->name('unit.disconnect.floorplan');
+    Route::post('unit/connect-floorplan', [UnitController::class, 'unit_floorplan_connect_store'])->name('unit.connect.floorplan');
+    Route::get('unit/floorplan/disconnect/{id}', [UnitController::class, 'unit_floorplan_disconnect'])->name('unit.disconnect.floorplan');
 
     /**UNIT - VIDEO CONNECTION ROUTES */
-    Route::post('project/connect-paymentplan', [UnitController::class, 'project_paymentplan_connect_store'])->name('unit.connect.paymentplan');
-    Route::get('project/paymentplan/disconnect/{id}', [UnitController::class, 'project_paymentplan_disconnect'])->name('unit.disconnect.paymentplan');
+    Route::post('unit/connect-paymentplan', [UnitController::class, 'unit_paymentplan_connect_store'])->name('unit.connect.paymentplan');
+    Route::get('unit/paymentplan/disconnect/{id}', [UnitController::class, 'unit_paymentplan_disconnect'])->name('unit.disconnect.paymentplan');
 
     /**UNIT - TRANSLATION CONNECTION ROUTES */
-    Route::post('project/connect-translation', [UnitController::class, 'project_translation_connect_store'])->name('unit.connect.translation');
-    Route::get('project/translation/disconnect/{id}', [UnitController::class, 'project_translation_disconnect'])->name('unit.disconnect.translation');
+    Route::post('unit/connect-translation', [UnitController::class, 'unit_translation_connect_store'])->name('unit.connect.translation');
+    Route::get('unit/translation/disconnect/{id}', [UnitController::class, 'unit_translation_disconnect'])->name('unit.disconnect.translation');
+
 
 
 

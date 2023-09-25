@@ -6,11 +6,11 @@
 
 @section('content')
 
-@include('project.topNav')
+@include('unit.topNav')
 
     <div style="padding-top: 150px;">
 
-        @include('project.brochure.list')
+        @include('unit.brochure.list')
 
     </div>
 @endsection

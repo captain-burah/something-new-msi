@@ -31,7 +31,7 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link " href="{{ route('unit-floor-plan.index') }}" id="topnav-dashboard" aria-label="admin-dashboard" role="button">
-                            <i class="bx bx-video-recording mr-2"></i>Videos
+                            <i class="bx bx-video-recording mr-2"></i>Floor Plans
                         </a>
                     </li>
 

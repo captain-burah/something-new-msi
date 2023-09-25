@@ -90,9 +90,9 @@
                                 <td>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"                                        >
-                                            @if($value->project_brochure != null)
-                                                @if($value->project_brochure->project_id == $value->id)
-                                                    <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->project_brochure->name }}
+                                            @if($value->unit_brochure != null)
+                                                @if($value->unit_brochure->unit_id == $value->id)
+                                                    <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->unit_brochure->name }}
                                                 @else
                                                     <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
                                                 @endif
@@ -102,7 +102,7 @@
                                         </a>
                                         <div class="dropdown-menu w-100 " aria-labelledby="dropdownMenuButton">
                                             {{-- <button class="dropdown-item" data-toggle="modal" data-target="#project-brochure-connect"><i class="bx bx-plus-circle"></i> &nbsp;Add</button> --}}
-                                            <a class="dropdown-item" href="{{ url('unit/brochures/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                            <a class="dropdown-item" href="{{ url('unit/floorplans/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
                                             <hr class="my-2">
                                             <form class="contact-form px-3" id="getInTouch" method="post" action="{{ route('unit.connect.brochure') }}">
                                             @csrf

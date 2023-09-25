@@ -14,7 +14,6 @@
     </div>
 @endif
 
-
 @if(session()->has('message'))
     <div class="alert alert-success" role="alert">
         {{ session()->get('message') }}
@@ -30,7 +29,7 @@
                     <div class="flex-grow-1 align-self-center">
                         <div class="text-muted">
                             <h3><i class="bx bxs-file-pdf text-dark font-size-24"></i> Brochure Segments</h3>
-                            <p class="card-title-desc">The table consists of all brochure segments created for projects. This will be displayed only in the specific project page.</p>
+                            <p class="card-title-desc">The table consists of all brochure segments created for units. This will be displayed only in the specific unit page.</p>
                         </div>
                     </div>
                 </div>
@@ -39,7 +38,7 @@
             <div class="col-lg-6 d-none d-lg-block my-auto">
                 <div class="clearfix mt-4 mt-lg-0 my-auto">
                     <div class="my-auto float-right">
-                        <a href="{{ route('project-brochures.create') }}" class="btn btn-dark">
+                        <a href="{{ route('unit-brochures.create') }}" class="btn btn-dark">
                             <i class="bx bx-bookmark-plus mr-2"></i>Add New Segment
                         </a>
                     </div>
@@ -53,7 +52,7 @@
                 <thead>
                     <tr class="bg-dark text-white">
                         <th>#</th>
-                        <th>Project Connected</th>
+                        <th>Unit Connected</th>
                         <th>Segment Name</th>
                         <th>Number of Files</th>
                         <th>Action</th>
@@ -67,17 +66,17 @@
                                 <td>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            @if($data->project_id == null)
+                                            @if($data->unit_id == null)
                                                 <i class="bx bx-no-entry text-danger" style="font-size: 20px"></i>
                                             @else
                                                 <i class="bx bx-check-shield text-success" style="font-size: 20px"></i>
                                             @endif
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if($data->project_id != null)
-                                                <a class="dropdown-item" style="cursor: pointer;" href="{{ url('project-brochures/disconnect/'.$data->id)  }}"><i class="bx bx-cloud-download"></i> &nbsp; Disconnect from Project</a>
+                                            @if($data->unit_id != null)
+                                                <a class="dropdown-item" style="cursor: pointer;" href="{{ url('unit-brochures/disconnect/'.$data->id)  }}"><i class="bx bx-cloud-download"></i> &nbsp; Disconnect from Unit</a>
                                             @else
-                                                <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" data-target="#project-connect-{{$data->id}}"><i class="bx bx-check-shield "></i> &nbsp; Connect To Project</a>
+                                                <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" data-target="#project-connect-{{$data->id}}"><i class="bx bx-check-shield "></i> &nbsp; Connect To Unit</a>
                                             @endif
                                         </div>
                                     </div>
@@ -85,7 +84,7 @@
 
                                 <td>{{$data->name}}</td>
 
-                                <td>{{ $data->project_brochure_files()->count() }}</td>
+                                <td>{{ $data->unit_brochure_files()->count() }}</td>
 
                                 <td>
                                     <div class="dropdown">
@@ -93,8 +92,8 @@
                                             <i class="mdi mdi-dots-horizontal font-size-18"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{{ route('project-brochures.edit', ['project_brochure' => $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
-                                            <a class="dropdown-item" href="{{ route('project-brochures.destroy.segment', ['id' => $data->id]) }}"><i class="bx bx-trash text-danger"></i> &nbsp;Remove</a>
+                                            <a class="dropdown-item" href="{{ route('unit-brochures.edit', ['unit_brochure' => $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
+                                            <a class="dropdown-item" href="{{ route('unit-brochures.destroy.segment', ['id' => $data->id]) }}"><i class="bx bx-trash text-danger"></i> &nbsp;Remove</a>
                                         </div>
                                     </div>
                                 </td>
@@ -105,25 +104,25 @@
                                 <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalScrollableTitle">Projects</h5>
+                                            <h5 class="modal-title" id="exampleModalScrollableTitle">Units</h5>
                                             <button type="button" class="btn btn-outline-secondary p-1 px-2" data-dismiss="modal" aria-label="Close">X</button>
                                         </div>
                                         <div class="modal-body">
-                                            <form class="contact-form" id="getInTouch" method="post" action="{{ route('project-brochures.connect') }}">
+                                            <form class="contact-form" id="getInTouch" method="post" action="{{ route('unit-brochures.connect') }}">
                                             @csrf
                                                 <input name="brochure_id" value="{{$data->id}}" hidden>
                                                 <select
                                                     class="form-control select2-search-disable select2-hidden-accessible
-                                                    @error('project_id') border border-solid border-danger  @enderror"
+                                                    @error('unit_id') border border-solid border-danger  @enderror"
                                                     data-select2-id="basicpill-status-input"
                                                     tabindex="-1"
                                                     aria-hidden="true"
-                                                    name="project_id"
+                                                    name="unit_id"
                                                 >
                                                     <option selected value="">Choose ...</option>
 
-                                                    @if(isset($projects))
-                                                        @foreach($projects as $data)
+                                                    @if(isset($units))
+                                                        @foreach($units as $data)
                                                             <option selected value="{{$data->id}}">{{ $data->name }}</option>
                                                         @endforeach
                                                     @endif
@@ -151,16 +150,16 @@
                             <td>
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="bx bx-check-shield text-success" style="font-size: 20px"></i>
+                                        <i class="bx bx-check-shield text-success" style="font-size: 20px"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#"><i class="bx bx-check-shield "></i> &nbsp; Connect To Project</a>
+                                        <a class="dropdown-item" href="#"><i class="bx bx-check-shield "></i> &nbsp; Connect To Unit</a>
                                         <a class="dropdown-item" href="#"><i class="bx bx-cloud-download"></i> &nbsp; Move to Draft</a>
                                         <a class="dropdown-item" href="#"><i class="bx bx-trash"></i> &nbsp; Move to Trash</a>
                                     </div>
                                 </div>
                             </td>
-                            <td>Business Bay</td>
+                            <td>Business    </td>
                             <td>4</td>
                             <td>
                                 <div class="dropdown">
@@ -168,7 +167,7 @@
                                         <i class="mdi mdi-dots-horizontal font-size-18"></i>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="{{ route('project-brochures.edt', ['project-brochures', $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
+                                        <a class="dropdown-item" href="{{ route('unit-brochures.edt', ['project-brochures', $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
                                     </div>
                                 </div>
                             </td>

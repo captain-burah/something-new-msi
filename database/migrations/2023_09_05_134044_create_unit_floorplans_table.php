@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('unit_floorplans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('unit_id')->nullable(true);
-            $table->string('filename');
+            $table->string('name');
             $table->timestamps();
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
         });

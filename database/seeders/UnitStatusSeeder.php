@@ -25,5 +25,17 @@ class UnitStatusSeeder extends Seeder
         Unit_status::create([
             'name' => 'Trash'
         ]);
+
+        Unit_status::create([
+            'name' => 'Booked'
+        ]);
+
+        Unit_status::create([
+            'name' => 'Paying'
+        ]);
+
+        Unit_status::create([
+            'name' => 'Sold'
+        ]);
     }
 }

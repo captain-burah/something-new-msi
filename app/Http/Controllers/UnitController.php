@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Redirect;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Unit;
 use App\Models\Unit_brochure;
 use App\Models\Unit_image;
-use App\Models\Unit_paymentplan;
-use App\Models\Unit_floorplan;
+use App\Models\UnitPaymentPlanController;
+use App\Models\UnitFloorPlanController;
 use App\Models\Language;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -45,7 +46,7 @@ class UnitController extends Controller
             $this->data['units'] = $units->get();
         }
 
-        $this->data['brochures'] = Unit_brochure::with('project_brochure_files')->get();
+        $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
         $this->data['images'] = Unit_image::with('project_image_files')->get();
         $this->data['images'] = Unit_image::with('project_image_files')->get();
         $this->data['floorplans'] = Unit_floorplan::with('project_floorplan_files')->get();
@@ -82,7 +83,7 @@ class UnitController extends Controller
 
         }
 
-        $this->data['brochures'] = Unit_brochure::with('project_brochure_files')->get();
+        $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
         $this->data['images'] = Unit_image::with('project_image_files')->get();
         $this->data['images'] = Unit_image::with('project_image_files')->get();
         $this->data['floorplans'] = Unit_floorplan::with('project_floorplan_files')->get();
@@ -112,7 +113,7 @@ class UnitController extends Controller
             $this->data['units'] = $units->paginate(30);
         }
 
-        $this->data['brochures'] = Unit_brochure::with('project_brochure_files')->get();
+        $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
         $this->data['images'] = Unit_image::with('project_image_files')->get();
         $this->data['images'] = Unit_image::with('project_image_files')->get();
         $this->data['floorplans'] = Unit_floorplan::with('project_floorplan_files')->get();
@@ -319,4 +320,47 @@ class UnitController extends Controller
     {
         //
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * BROCHURE SETTINGS
+     */
+    public function unit_brochure_connect_store(Request $request) {
+
+        // dd($request->project_id);
+
+        $project = Unit::with('unit_brochure')->find($request->project_id);
+
+        if($project->unit_brochure != null ){
+            return Redirect::back()->withErrors(['The selected project already contains a brochure. Remove it first to reassign.' ]);
+        }
+
+        $brochure = Unit_brochure::find($request->brochure_id);
+        $brochure->unit_id = $request->project_id;
+        $brochure->save();
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+    public function unit_brochure_disconnect($id) {
+        $project = Unit::with('unit_brochure')->find($id);
+        if($project->unit_brochure != null) {
+            $project->unit_brochure->unit_id = null;
+            $project->unit_brochure->save();
+        }
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
 }

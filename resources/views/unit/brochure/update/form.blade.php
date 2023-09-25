@@ -3,14 +3,14 @@
         <h3 class="mb-1">Brochure Segment Update</h3>
 
         <div class="my-4">
-            <form class="contact-form" action="{{ route('project-brochures.update', ['project_brochure' => $brochures->id])  }}" method="POST" enctype="multipart/form-data" id="dropzone"
+            <form class="contact-form" action="{{ route('unit-brochures.update', ['unit_brochure' => $brochures->id])  }}" method="POST" enctype="multipart/form-data" id="dropzone"
             >
                 @csrf
                 @method('PATCH')
 
                 <input name="brochure_id" value="{{$brochures->id}}" hidden>
                 <div class="flex-none w-100 my-4 ">
-                    <a href="{{ route('project-brochures.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
+                    <a href="{{ route('unit-brochures.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
                         <i class="bx bx-arrow-back"></i>
                         Back
                     </a>
@@ -100,14 +100,14 @@
             @foreach($brochures_files as $data)
                 <div class="grid grid-rows-3 grid-flow-col gap-4">
                     <div class="inline-block align-baseline my-4 text-center">
-                        <form action="{{ route('project-brochures.destroy', ['project_brochure' => $data->id]) }}" method="POST">
+                        <form action="{{ route('unit-brochures.destroy', ['unit_brochure' => $data->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-dark btn-sm">Delete</button>
                         </form>
                     </div>
                     <div class="">
-                        <iframe src="{{ url('storage/projects/brochures/'.$data->project_brochure->id.'/'.$data->name) }}" width="" height="400">
+                        <iframe src="{{ url('storage/units/brochures/'.$data->unit_brochure->id.'/'.$data->name) }}" width="" height="400">
                         </iframe>
                     </div>
                 </div>
