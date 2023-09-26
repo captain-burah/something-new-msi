@@ -4,8 +4,6 @@
     }
     .tableFixHead          { overflow: auto; height: 450px; }
     .tableFixHead thead { position: sticky; top: 0; z-index: 1; }
-
-
 </style>
 
 @if($errors->any())
@@ -13,7 +11,6 @@
         {{$errors->first()}}
     </div>
 @endif
-
 
 @if(session()->has('message'))
     <div class="alert alert-success" role="alert">
@@ -40,7 +37,7 @@
             <div class="col-lg-6 d-none d-lg-block my-auto">
                 <div class="clearfix mt-4 mt-lg-0 my-auto">
                     <div class="my-auto float-right">
-                        <a href="{{ route('project-images.create') }}" class="btn btn-dark">
+                        <a href="{{ route('unit-images.create') }}" class="btn btn-dark">
                             <i class="bx bx-bookmark-plus mr-2"></i>Add New Segment
                         </a>
                     </div>
@@ -68,15 +65,15 @@
                                 <td>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            @if($data->project_id == null)
+                                            @if($data->unit_id == null)
                                                 <i class="bx bx-no-entry text-danger" style="font-size: 20px"></i>
                                             @else
                                                 <i class="bx bx-check-shield text-success" style="font-size: 20px"></i>
                                             @endif
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if($data->project_id != null)
-                                                <a class="dropdown-item" style="cursor: pointer;" href="{{ url('project-brochures/disconnect/'.$data->id)  }}"><i class="bx bx-cloud-download"></i> &nbsp; Disconnect from Project</a>
+                                            @if($data->unit_id != null)
+                                                <a class="dropdown-item" style="cursor: pointer;" href="{{ url('unit-images/disconnect/'.$data->id)  }}"><i class="bx bx-cloud-download"></i> &nbsp; Disconnect from Project</a>
                                             @else
                                                 <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" data-target="#project-connect-{{$data->id}}"><i class="bx bx-check-shield "></i> &nbsp; Connect To Project</a>
                                             @endif
@@ -86,7 +83,7 @@
 
                                 <td>{{$data->name}}</td>
 
-                                <td>{{ $data->project_image_files()->count() }}</td>
+                                <td>{{ $data->unit_image_files()->count() }}</td>
 
                                 <td>
                                     <div class="dropdown">
@@ -94,8 +91,8 @@
                                             <i class="mdi mdi-dots-horizontal font-size-18"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{{ route('project-images.edit', ['project_image' => $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
-                                            <a class="dropdown-item" href="{{ route('project-images.destroy.segment', ['id' => $data->id]) }}"><i class="bx bx-trash text-danger"></i> &nbsp;Remove</a>
+                                            <a class="dropdown-item" href="{{ route('unit-images.edit', ['unit_image' => $data->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
+                                            <a class="dropdown-item" href="{{ route('unit-images.destroy.segment', ['id' => $data->id]) }}"><i class="bx bx-trash text-danger"></i> &nbsp;Remove</a>
                                         </div>
                                     </div>
                                 </td>
@@ -106,25 +103,25 @@
                                 <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalScrollableTitle">Projects</h5>
+                                            <h5 class="modal-title" id="exampleModalScrollableTitle">Units</h5>
                                             <button type="button" class="btn btn-outline-secondary p-1 px-2" data-dismiss="modal" aria-label="Close">X</button>
                                         </div>
                                         <div class="modal-body">
-                                            <form class="contact-form" id="getInTouch" method="post" action="{{ route('project-images.connect') }}">
+                                            <form class="contact-form" id="getInTouch" method="post" action="{{ route('unit-images.connect') }}">
                                             @csrf
                                                 <input name="segment_id" value="{{$data->id}}" hidden>
                                                 <select
                                                     class="form-control select2-search-disable select2-hidden-accessible
-                                                    @error('project_id') border border-solid border-danger  @enderror"
+                                                    @error('unit_id') border border-solid border-danger  @enderror"
                                                     data-select2-id="basicpill-status-input"
                                                     tabindex="-1"
                                                     aria-hidden="true"
-                                                    name="project_id"
+                                                    name="unit_id"
                                                 >
                                                     <option selected value="">Choose ...</option>
 
-                                                    @if(isset($projects))
-                                                        @foreach($projects as $data)
+                                                    @if(isset($units))
+                                                        @foreach($units as $data)
                                                             <option selected value="{{$data->id}}">{{ $data->name }}</option>
                                                         @endforeach
                                                     @endif

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Unit;
 use App\Models\Unit_brochure;
+use App\Models\Unit_floorplan;
+use App\Models\Unit_paymentplan;
 use App\Models\Unit_image;
 use App\Models\UnitPaymentPlanController;
 use App\Models\UnitFloorPlanController;
@@ -47,10 +49,9 @@ class UnitController extends Controller
         }
 
         $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
-        $this->data['images'] = Unit_image::with('project_image_files')->get();
-        $this->data['images'] = Unit_image::with('project_image_files')->get();
-        $this->data['floorplans'] = Unit_floorplan::with('project_floorplan_files')->get();
-        $this->data['paymentplans'] = Unit_paymentplan::with('project_paymentplan_files')->get();
+        $this->data['images'] = Unit_image::with('unit_image_files')->get();
+        $this->data['floorplans'] = Unit_floorplan::with('unit_floorplan_files')->get();
+        $this->data['payme  ntplans'] = Unit_paymentplan::with('unit_paymentplan_files')->get();
 
         return view('unitsActive', $this->data);
     }
@@ -84,10 +85,9 @@ class UnitController extends Controller
         }
 
         $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
-        $this->data['images'] = Unit_image::with('project_image_files')->get();
-        $this->data['images'] = Unit_image::with('project_image_files')->get();
-        $this->data['floorplans'] = Unit_floorplan::with('project_floorplan_files')->get();
-        $this->data['paymentplans'] = Unit_paymentplan::with('project_paymentplan_files')->get();
+        $this->data['images'] = Unit_image::with('unit_image_files')->get();
+        $this->data['floorplans'] = Unit_floorplan::with('unit_floorplan_files')->get();
+        $this->data['paymentplans'] = Unit_paymentplan::with('unit_paymentplan_files')->get();
 
         return view('unitsActive', $this->data);
     }
@@ -114,10 +114,9 @@ class UnitController extends Controller
         }
 
         $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
-        $this->data['images'] = Unit_image::with('project_image_files')->get();
-        $this->data['images'] = Unit_image::with('project_image_files')->get();
-        $this->data['floorplans'] = Unit_floorplan::with('project_floorplan_files')->get();
-        $this->data['paymentplans'] = Unit_paymentplan::with('project_paymentplan_files')->get();
+        $this->data['images'] = Unit_image::with('unit_image_files')->get();
+        $this->data['floorplans'] = Unit_floorplan::with('unit_floorplan_files')->get();
+        $this->data['paymentplans'] = Unit_paymentplan::with('unit_paymentplan_files')->get();
 
         return view('unitsActive', $this->data);
     }
@@ -359,6 +358,76 @@ class UnitController extends Controller
         if($project->unit_brochure != null) {
             $project->unit_brochure->unit_id = null;
             $project->unit_brochure->save();
+        }
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+
+
+
+
+
+    /**
+     * FLOORPLAN SETTINGS
+     */
+    public function unit_floorplan_connect_store(Request $request) {
+
+        // dd($request->project_id);
+
+        $project = Unit::with('unit_floorplan')->find($request->project_id);
+
+        if($project->unit_brochure != null ){
+            return Redirect::back()->withErrors(['The selected project already contains a brochure. Remove it first to reassign.' ]);
+        }
+
+        $brochure = Unit_floorplan::find($request->floorplan_id);
+        $brochure->unit_id = $request->project_id;
+        $brochure->save();
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+    public function unit_floorplan_disconnect($id) {
+        $project = Unit::with('unit_floorplan')->find($id);
+        if($project->unit_floorplan != null) {
+            $project->unit_floorplan->unit_id = null;
+            $project->unit_floorplan->save();
+        }
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+
+
+
+    /**
+     * IMAGE SETTINGS
+     */
+    public function unit_image_connect_store(Request $request) {
+
+        $project = Unit::with('unit_image')->find($request->project_id);
+
+        if($project->unit_image != null ){
+            return Redirect::back()->withErrors(['The selected project already contains a image. Remove it first to reassign.' ]);
+        }
+
+        $brochure = Unit_image::find($request->image_id);
+        $brochure->unit_id = $request->project_id;
+        $brochure->save();
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+    public function unit_image_disconnect($id) {
+        $project = Unit::with('unit_image')->find($id);
+        if($project->unit_image != null) {
+            $project->unit_image->unit_id = null;
+            $project->unit_image->save();
         }
         return Redirect::back()->with(['msg' => 'Successfully connected']);
     }

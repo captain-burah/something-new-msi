@@ -102,7 +102,7 @@
                                         </a>
                                         <div class="dropdown-menu w-100 " aria-labelledby="dropdownMenuButton">
                                             {{-- <button class="dropdown-item" data-toggle="modal" data-target="#project-brochure-connect"><i class="bx bx-plus-circle"></i> &nbsp;Add</button> --}}
-                                            <a class="dropdown-item" href="{{ url('unit/floorplans/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                            <a class="dropdown-item" href="{{ url('unit/brochures/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
                                             <hr class="my-2">
                                             <form class="contact-form px-3" id="getInTouch" method="post" action="{{ route('unit.connect.brochure') }}">
                                             @csrf
@@ -140,9 +140,9 @@
                                 <td>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            @if($value->project_factsheet != null)
-                                                @if($value->project_factsheet->project_id == $value->id)
-                                                    <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->project_factsheet->name }}
+                                            @if($value->unit_floorplan != null)
+                                                @if($value->unit_floorplan->unit_id == $value->id)
+                                                    <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->unit_floorplan->name }}
                                                 @else
                                                     <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
                                                 @endif
@@ -187,9 +187,9 @@
                                 <td>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            @if($value->project_image != null)
-                                                @if($value->project_image->project_id == $value->id)
-                                                    <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->project_image->name }}
+                                            @if($value->unit_image != null)
+                                                @if($value->unit_image->unit_id == $value->id)
+                                                    <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->unit_image->name }}
                                                 @else
                                                     <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
                                                 @endif

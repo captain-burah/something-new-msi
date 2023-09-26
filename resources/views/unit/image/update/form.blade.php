@@ -3,14 +3,14 @@
         <h3 class="mb-1">Image Segment Update</h3>
 
         <div class="my-4">
-            <form class="contact-form" action="{{ route('project-images.update', ['project_image' => $segments->id])  }}" method="POST" enctype="multipart/form-data" id="dropzone"
+            <form class="contact-form" action="{{ route('unit-images.update', ['unit_image' => $segments->id])  }}" method="POST" enctype="multipart/form-data" id="dropzone"
             >
                 @csrf
                 @method('PATCH')
 
                 <input name="segment_id" value="{{$segments->id}}" hidden>
                 <div class="flex-none w-100 my-4 ">
-                    <a href="{{ route('project-images.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
+                    <a href="{{ route('unit-images.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
                         <i class="bx bx-arrow-back"></i>
                         Back
                     </a>
@@ -100,14 +100,14 @@
             @foreach($segment_files as $data)
                 <div class="grid grid-rows-3 grid-flow-col gap-4">
                     <div class="inline-block align-baseline my-4 text-center">
-                        <form action="{{ route('project-images.destroy', ['project_image' => $data->id]) }}" method="POST">
+                        <form action="{{ route('unit-images.destroy', ['unit_image' => $data->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-dark btn-sm">Delete</button>
                         </form>
                     </div>
                     <div class="">
-                        <img src="{{ url('storage/projects/images/'.$data->project_image->id.'/'.$data->name) }}" width="100%" height="200">
+                        <img src="{{ url('storage/units/images/'.$data->unit_image->id.'/'.$data->name) }}" width="100%" height="200">
                     </div>
                 </div>
                 <div class="row justify-content-center">

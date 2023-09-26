@@ -8,11 +8,11 @@
 
 
         <div class="my-4">
-            <form class="contact-form" action="{{ route('project-images.store')  }}" method="POST" enctype="multipart/form-data" id="dropzone"
+            <form class="contact-form" action="{{ route('unit-images.store')  }}" method="POST" enctype="multipart/form-data" id="dropzone"
             >
                 @csrf
                 <div class="flex-none w-100 my-4 ">
-                    <a href="{{ route('project-images.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
+                    <a href="{{ route('unit-images.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
                         <i class="bx bx-arrow-back"></i>
                         Back
                     </a>
