@@ -86,7 +86,14 @@
                                     </div>
                                 </td>
                                 <td>{{ $value->name }}</td>
-                                <td>0</td>
+                                <td>
+                                    <div class="my-auto" style="font-size: 16px" >
+                                        0
+                                        <a href="#" class="text-dark my-auto">
+                                            <i class="bx bx-menu " ></i>
+                                        </a>
+                                    </div>
+                                </td>
 
                                 {{-- BROCHURE --}}
                                 <td>

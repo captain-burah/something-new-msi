@@ -7,7 +7,7 @@
 
 
 
-        <form class="contact-form" id="getInTouch" method="post" action="{{ route('units.store') }}">
+        <form class="contact-form repeater" id="getInTouch" method="post" action="{{ route('units.store') }}">
             @csrf
             <div class="flex-none w-100 mt-3 ">
                 <a href="{{ route('units.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
@@ -36,6 +36,14 @@
                 <li class="nav-item" role="presentation">
                     <button style="width: auto" class="nav-link" id="location-tab" data-toggle="tab" data-target="#seo" type="button" role="tab" aria-controls="contact" aria-selected="false">SEO</button>
                 </li>
+
+                <li class="nav-item" role="presentation">
+                    <button style="width: auto" class="nav-link" id="location-tab" data-toggle="tab" data-target="#paymentplan" type="button" role="tab" aria-controls="contact" aria-selected="false">Payment Plan</button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button style="width: auto" class="nav-link" id="fees-tab" data-toggle="tab" data-target="#fees" type="button" role="tab" aria-controls="contact" aria-selected="false">Additional Fees</button>
+                </li>
             </ul>
 
             <div class="tab-content" id="myTabContent">
@@ -53,6 +61,14 @@
 
                 <div class="tab-pane fade p-4" id="seo" role="tabpanel" aria-labelledby="seo-tab">
                     @include('unit.create.form.seo')
+                </div>
+
+                <div class="tab-pane fade  p-4" id="paymentplan" role="tabpanel" aria-labelledby="paymentplan-tab">
+                    @include('unit.create.form.paymentplan')
+                </div>
+
+                <div class="tab-pane fade  p-4" id="fees" role="tabpanel" aria-labelledby="fees-tab">
+                    @include('unit.create.form.fees')
                 </div>
             </div>
         </form>

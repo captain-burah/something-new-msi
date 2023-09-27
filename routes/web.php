@@ -15,7 +15,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UnitBrochureController;
 use App\Http\Controllers\UnitImageController;
 use App\Http\Controllers\UnitFloorplanController;
-use App\Http\Controllers\UnitPaymentPlanController;
+use App\Http\Controllers\UnitPaymentplanController;
 use App\Http\Controllers\UnitTranslationController;
 
 use App\Http\Controllers\Localization;
@@ -75,7 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('units', UnitController::class);
     Route::resource('unit-brochures', UnitBrochureController::class);
     Route::resource('unit-images', UnitImageController::class);
-    Route::resource('unit-payment-plan', UnitPaymentPlanController::class);
+    Route::resource('unit-payment-plan', UnitPaymentplanController::class);
     Route::resource('unit-floor-plan', UnitFloorplanController::class);
 
 

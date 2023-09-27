@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('unit_paymentplan_id')->nullable(true);
             $table->string('name');
+            $table->unsignedBigInteger('percentage');
+            $table->unsignedBigInteger('amount');
             $table->timestamps();
             $table->foreign('unit_paymentplan_id')->references('id')->on('unit_paymentplans')->onDelete('cascade');
         });
