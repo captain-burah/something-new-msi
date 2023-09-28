@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class Unit extends Model
 {
@@ -26,11 +28,14 @@ class Unit extends Model
         return $this->hasOne(Unit_paymentplan::class);
     }
 
-
     public function unit_floorplan(): HasOne
     {
         return $this->hasOne(Unit_floorplan::class);
     }
 
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
+    }
 
 }

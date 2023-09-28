@@ -30,9 +30,14 @@ class UnitController extends Controller
     // }
 
 
+
+    /**
+     * OVERALL PROJECTS
+     */
+
     public function index()
     {
-        $units = Unit::with('unit_brochure')->where('status', '1')->orderBY('id', 'Desc');
+        $units = Unit::with('project')->with('unit_brochure')->where('status', '1')->orderBY('id', 'Desc');
 
         $this->data['count_draft'] = $count_draft = Unit::where('status', '2')->orderBY('id', 'Desc')->count();
         $this->data['count_active'] = $count_active = Unit::where('status', '1')->orderBY('id', 'Desc')->count();
@@ -53,6 +58,7 @@ class UnitController extends Controller
         $this->data['images'] = Unit_image::with('unit_image_files')->get();
         $this->data['floorplans'] = Unit_floorplan::with('unit_floorplan_files')->get();
         $this->data['paymentplans'] = Unit_paymentplan::with('unit_paymentplan_files')->get();
+        $this->data['project_unit'] = '0';
 
         return view('unitsActive', $this->data);
     }
@@ -63,7 +69,7 @@ class UnitController extends Controller
 
     public function index_drafts()
     {
-        $units = Unit::where('status', '2')->orderBY('id', 'Desc');
+        $units = Unit::with('project')->where('status', '2')->orderBY('id', 'Desc');
 
 
         $this->data['count_draft'] = $count_draft = Unit::where('status', '2')->orderBY('id', 'Desc')->count();
@@ -85,10 +91,13 @@ class UnitController extends Controller
 
         }
 
+        $projects = Project::where('status', '1')->orWhere('status', '2')->get();
+        $this->data['projects'] = $projects;
         $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
         $this->data['images'] = Unit_image::with('unit_image_files')->get();
         $this->data['floorplans'] = Unit_floorplan::with('unit_floorplan_files')->get();
         $this->data['paymentplans'] = Unit_paymentplan::with('unit_paymentplan_files')->get();
+        $this->data['project_unit'] = '0';
 
         return view('unitsActive', $this->data);
     }
@@ -98,7 +107,7 @@ class UnitController extends Controller
 
     public function index_trash()
     {
-        $units = Unit::where('status', '3')->orderBY('id', 'Desc');
+        $units = Unit::with('project    ')->where('status', '3')->orderBY('id', 'Desc');
 
         $this->data['count_draft'] = $count_draft = Unit::where('status', '2')->orderBY('id', 'Desc')->count();
         $this->data['count_active'] = $count_active = Unit::where('status', '1')->orderBY('id', 'Desc')->count();
@@ -113,11 +122,125 @@ class UnitController extends Controller
         } else {
             $this->data['units'] = $units->paginate(30);
         }
-
+        $projects = Project::where('status', '1')->orWhere('status', '2')->get();
+        $this->data['projects'] = $projects;
         $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
         $this->data['images'] = Unit_image::with('unit_image_files')->get();
         $this->data['floorplans'] = Unit_floorplan::with('unit_floorplan_files')->get();
         $this->data['paymentplans'] = Unit_paymentplan::with('unit_paymentplan_files')->get();
+        $this->data['project_unit'] = '0';
+
+        return view('unitsActive', $this->data);
+    }
+
+
+
+
+
+    /**
+     * UNITS SCOPED UNDER PROJECTS ID
+     */
+
+    public function project_units_active($id){
+        $units = Unit::with('project')->where('id', $id)->where('project_id', $id)->where('status', '1')->orderBY('id', 'Desc');
+
+        $this->data['count_draft'] = $count_draft = Unit::where('project_id', $id)->where('status', '2')->orderBY('id', 'Desc')->count();
+        $this->data['count_active'] = $count_active = Unit::where('project_id', $id)->where('status', '1')->orderBY('id', 'Desc')->count();
+        $this->data['count_trash'] = $count_trash = Unit::where('project_id', $id)->where('status', '3')->orderBY('id', 'Desc')->count();
+        $this->data['unit_translated'] = $unit_translated = Language::all();
+        $this->data['language'] = $lang = Language::all();
+
+        $check_availability = $units->get();
+
+        if($check_availability->isEmpty()) {
+            $this->data['count_status'] = 'No units found. You can launch a new unit above to start-off';
+            $this->data['units'] = $units;
+        } else {
+            $this->data['units'] = $units->get();
+        }
+
+        $projects = Project::where('status', '1')->orWhere('status', '2')->get();
+        $this->data['projects'] = $projects;
+        $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
+        $this->data['images'] = Unit_image::with('unit_image_files')->get();
+        $this->data['floorplans'] = Unit_floorplan::with('unit_floorplan_files')->get();
+        $this->data['project_unit'] = '1';
+        $this->data['project_id'] = $id;
+
+
+        return view('unitsActive', $this->data);
+    }
+
+
+
+
+    public function project_units_draft($id)
+    {
+        $units = Unit::with('project')->where('status', '2')->where('project_id', $id)->orderBY('id', 'Desc');
+
+        $this->data['count_draft'] = $count_draft = Unit::where('project_id', $id)->where('status', '2')->orderBY('id', 'Desc')->count();
+        $this->data['count_active'] = $count_active = Unit::where('project_id', $id)->where('status', '1')->orderBY('id', 'Desc')->count();
+        $this->data['count_trash'] = $count_trash = Unit::where('project_id', $id)->where('status', '3')->orderBY('id', 'Desc')->count();
+        $this->data['language'] = $lang = Language::all();
+
+        $check_availability = $units->get();
+
+        if($check_availability->isEmpty()) {
+
+            $this->data['count_status'] = 'No units found. You can launch a new unit above to start-off';
+
+            $this->data['units'] = $units;
+
+        } else {
+
+            $this->data['units'] = $units->paginate(30);
+
+        }
+
+        $projects = Project::where('status', '1')->orWhere('status', '2')->get();
+        // dd($projects[0]);
+        $this->data['projects'] = $projects;
+        $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
+        $this->data['images'] = Unit_image::with('unit_image_files')->get();
+        $this->data['floorplans'] = Unit_floorplan::with('unit_floorplan_files')->get();
+        $this->data['paymentplans'] = Unit_paymentplan::with('unit_paymentplan_files')->get();
+        $this->data['project_unit'] = '1';
+        $this->data['project_id'] = $id;
+        // dd($units);
+
+        return view('unitsActive', $this->data);
+    }
+
+
+
+
+    public function project_units_trash($id)
+    {
+        $units = Unit::with('project')->where('id', $id)->where('status', '3')->where('project_id', $id)->orderBY('id', 'Desc');
+
+
+        $this->data['count_draft'] = $count_draft = Unit::where('project_id', $id)->where('status', '2')->orderBY('id', 'Desc')->count();
+        $this->data['count_active'] = $count_active = Unit::where('project_id', $id)->where('status', '1')->orderBY('id', 'Desc')->count();
+        $this->data['count_trash'] = $count_trash = Unit::where('project_id', $id)->where('status', '3')->orderBY('id', 'Desc')->count();
+        $this->data['language'] = $lang = Language::all();
+
+        $check_availability = $units->get();
+
+        if($check_availability->isEmpty()) {
+            $this->data['count_status'] = 'No units found. You can launch a new unit above to start-off';
+            $this->data['projects'] = $units;
+        } else {
+            $this->data['units'] = $units->paginate(30);
+        }
+
+        $projects = Project::where('status', '1')->orWhere('status', '2')->get();
+        $this->data['projects'] = $projects;
+        $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
+        $this->data['images'] = Unit_image::with('unit_image_files')->get();
+        $this->data['floorplans'] = Unit_floorplan::with('unit_floorplan_files')->get();
+        $this->data['paymentplans'] = Unit_paymentplan::with('unit_paymentplan_files')->get();
+        $this->data['project_unit'] = '1';
+        $this->data['project_id'] = $id;
 
         return view('unitsActive', $this->data);
     }
@@ -128,8 +251,9 @@ class UnitController extends Controller
 
     public function create()
     {
-        $projects = Project::where('status', '1')->get();
-        return view('unit.create.index');
+        $this->data['projects'] = $projects = Project::select(['id', 'name'])->where('status', '2')->orWhere('status', '1')->get();
+        // dd($projects);
+        return view('unit.create.index', $this->data);
     }
 
 
@@ -146,8 +270,6 @@ class UnitController extends Controller
             'unit_size' => ['required'],
 
             'price' => ['required'],
-
-            'land_reg_fee' => ['required'],
 
             'oqood' => ['required'],
 
@@ -241,7 +363,7 @@ class UnitController extends Controller
      */
     public function edit(string $id)
     {
-        $this->data['projects'] = $projects = Project::where('status', '1')->get();
+        $this->data['projects'] = $projects = Project::select(['id', 'name'])->where('status', '2')->orWhere('status', '1')->get();
         $this->data['unit'] = $unit = Unit::with('unit_paymentplan')->where('status', '2')->find($id);
         // dd($unit->unit_paymentplan->unit_paymentplan_files[0]->);
 
@@ -255,40 +377,38 @@ class UnitController extends Controller
     public function update(Request $request, string $id)
     {
         // dd($request);
-        // $validatedData = $request->validate([
+        $validatedData = $request->validate([
 
-        //     'unit_name' => ['required'],
+            'unit_name' => ['required'],
 
-        //     'description' => ['required'],
+            'description' => ['required'],
 
-        //     'unit_size' => ['required'],
+            'unit_size' => ['required'],
 
-        //     'price' => ['required'],
+            'price' => ['required'],
 
-        //     'land_reg_fee' => ['required'],
+            'oqood' => ['required'],
 
-        //     'oqood' => ['required'],
+            'dld_fees' => ['required'],
 
-        //     'dld_fees' => ['required'],
+            'bathrooms' => ['required'],
 
-        //     'bathrooms' => ['required'],
+            'bedrooms' => ['required'],
 
-        //     'bedrooms' => ['required'],
+            'area_range' => ['required'],
 
-        //     'area_range' => ['required'],
+            'floor' => ['required'],
 
-        //     'floor' => ['required'],
+            'outdoor_area_range' => ['required'],
 
-        //     'outdoor_area_range' => ['required'],
+            'terrace_area_range' => ['required'],
 
-        //     'terrace_area_range' => ['required'],
+            'meta_title' => ['required'],
 
-        //     'meta_title' => ['required'],
+            'meta_description' => ['required'],
 
-        //     'meta_description' => ['required'],
-
-        //     'meta_keywords' => ['required']
-        // ]);
+            'meta_keywords' => ['required']
+        ]);
 
         $bool=0;
 
@@ -380,6 +500,77 @@ class UnitController extends Controller
 
 
 
+    public function status_change($id, $status)
+    {
+        try
+        {
+            $units = Unit::findOrFail($id);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            // SLACK UPDATE
+
+                //API Url
+                $url = 'https://hooks.slack.com/services/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';
+
+                //Initiate cURL.
+                $ch = curl_init($url);
+
+                //The JSON data.
+                $payload = array(
+                    'text' => 'ESNAAD - MIS | Unit Update - Status Change - Unit Not Found | Searching id: '.$id
+                );
+
+                //Encode the array into JSON.
+                $jsonDataEncoded = json_encode($payload);
+
+                //Tell cURL that we want to send a POST request.
+                curl_setopt($ch, CURLOPT_POST, 1);
+
+                //Attach our encoded JSON string to the POST fields.
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
+
+                //Set the content type to application/json
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+                //Execute the request
+                $result = curl_exec($ch);
+
+            // SLACK UPDATE
+
+            return Redirect::back()->withErrors(['msg' => 'Could not find project. Please contact developer.']);
+        }
+
+        $projects = Unit::findOrFail($id);
+        if($status == '1')
+        {
+            $projects->status = 1;
+            $projects->slug_link = Str::slug($projects->name);
+            $projects->save();
+            return Redirect::back()->with('message', 'Unit is now live!');
+
+        } elseif ($status == '2') {
+            $projects->status = 2;
+            $projects->slug_link = '0';
+            $projects->save();
+            return Redirect::back()->with('message', 'Unit has been drafted');
+
+        } elseif($status == '3') {
+            $projects->status = 3;
+            $projects->slug_link = '0';
+            $projects->save();
+            return Redirect::back()->with('message', 'Unit has been trashed');
+        } else {
+            return Redirect::back()->withErrors(['msg' => 'Invalid URL. Please contact developer.']);
+        }
+
+        $this->data['unit'] = $projects;
+        return Redirect::back()->with('message', 'Project status has been changed');
+    }
+
+
+
+
 
 
 
@@ -435,8 +626,9 @@ class UnitController extends Controller
 
         $project = Unit::with('unit_floorplan')->find($request->project_id);
 
-        if($project->unit_brochure != null ){
-            return Redirect::back()->withErrors(['The selected project already contains a brochure. Remove it first to reassign.' ]);
+
+        if($project->unit_floorplan != null ){
+            return Redirect::back()->withErrors(['The selected unit already contains a floorplan or the floorplan is assigned to another unit. Remove it first to reassign.' ]);
         }
 
         $brochure = Unit_floorplan::find($request->floorplan_id);
@@ -469,7 +661,7 @@ class UnitController extends Controller
         $project = Unit::with('unit_image')->find($request->project_id);
 
         if($project->unit_image != null ){
-            return Redirect::back()->withErrors(['The selected project already contains a image. Remove it first to reassign.' ]);
+            return Redirect::back()->withErrors(['The selected unit already contains a image or the image is assigned to another unit. Remove it first to reassign.' ]);
         }
 
         $brochure = Unit_image::find($request->image_id);
@@ -485,6 +677,39 @@ class UnitController extends Controller
         if($project->unit_image != null) {
             $project->unit_image->unit_id = null;
             $project->unit_image->save();
+        }
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+
+    /**
+     * PROJECT SETTINGS
+     */
+    public function unit_project_connect_store(Request $request) {
+
+        $units = Unit::with('project')->find($request->unit_id);
+
+        if($units->unit_project != null ){
+            return Redirect::back()->withErrors(['The selected project already contains a unit or the unit is assigned to another project. Remove it first to reassign.' ]);
+        }
+
+
+        $brochure = Unit::with('project')->find($request->unit_id);
+        $brochure->project_id = $request->project_id;
+        $brochure->save();
+        return Redirect::back()->with(['msg' => 'Successfully connected']);
+    }
+
+
+
+    public function unit_project_disconnect($id) {
+        $unit = Unit::with('project')->find($id);
+
+        if($unit != null) {
+            $unit->project_id = null;
+            $unit->save();
         }
         return Redirect::back()->with(['msg' => 'Successfully connected']);
     }

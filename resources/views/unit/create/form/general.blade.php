@@ -74,6 +74,7 @@
         <div data-select2-id="15">
             <label class="form-label">Project</label>
 
+
             <select
                 class="form-control select2-search-disable select2-hidden-accessible
                 @error('emirates') border border-solid border-danger  @enderror"

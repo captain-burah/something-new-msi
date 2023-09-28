@@ -53,6 +53,7 @@
                             <?php $status = $value->status; ?>
                             <tr>
                                 <td>{{$value->id}}</td>
+
                                 <td>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -67,23 +68,81 @@
 
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             @if($value->status == '1')
-                                                <a class="dropdown-item" href="{{ url('projects-status-change/'.$value->id.'/1') }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
-                                                <a class="dropdown-item" href="{{ url('projects-status-change/'.$value->id.'/2') }}"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
-                                                <a class="dropdown-item" href="{{ url('projects-status-change/'.$value->id.'/3') }}"><i class="bx bx-trash"></i> &nbsp; Trash</a>
+                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/1') }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
+                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/2') }}"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
+                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/3') }}"><i class="bx bx-trash"></i> &nbsp; Trash</a>
                                             @elseif($value->status == 2)
-                                                <a class="dropdown-item" href="{{ url('projects-status-change/'.$value->id.'/1') }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
-                                                <a class="dropdown-item" href="{{ url('projects-status-change/'.$value->id.'/2') }}"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
-                                                <a class="dropdown-item" href="{{ url('projects-status-change/'.$value->id.'/3') }}"><i class="bx bx-trash"></i> &nbsp; Trash</a>
+                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/1') }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
+                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/2') }}"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
+                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/3') }}"><i class="bx bx-trash"></i> &nbsp; Trash</a>
                                             @else
-                                                <a class="dropdown-item" href="{{ url('projects-status-change/'.$value->id.'/1') }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
-                                                <a class="dropdown-item" href="{{ url('projects-status-change/'.$value->id.'/2') }}"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
-                                                <a class="dropdown-item" href="{{ url('projects-status-change/'.$value->id.'/3') }}"><i class="bx bx-trash"></i> &nbsp; Trash</a>
+                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/1') }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
+                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/2') }}"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
+                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/3') }}"><i class="bx bx-trash"></i> &nbsp; Trash</a>
                                             @endif
                                         </div>
                                     </div>
                                 </td>
                                 <td>{{ $value->name }}</td>
-                                <td>0</td>
+
+
+
+
+                                {{-- PROJECT --}}
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle my-auto @if($status != '2') disabled @endif" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"                                        >
+                                            {{-- {{$value->project_id}} --}}
+                                            @if($value->project != null)
+                                                @if($value->project->id == $value->project_id)
+                                                    <i class="bx bx-check-circle text-success   " style="font-size: 18px"></i> {{ $value->project->name }}
+                                                @else
+                                                    <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                                @endif
+                                            @else
+                                                <i class="bx bx-no-entry text-danger" style="font-size: 18px"></i>
+                                            @endif
+                                        </a>
+                                        {{-- {{$projects}} --}}
+                                        <div class="dropdown-menu w-100 " aria-labelledby="dropdownMenuButton">
+                                            {{-- <button class="dropdown-item" data-toggle="modal" data-target="#project-brochure-connect"><i class="bx bx-plus-circle"></i> &nbsp;Add</button> --}}
+                                            <a class="dropdown-item" href="{{ url('unit-project/disconnect/'.$value->id)  }}"><i class="bx bx-minus-circle"></i> &nbsp;Remove</a>
+                                            <hr class="my-2">
+                                            <form class="contact-form px-3" id="getInTouch" method="post" action="{{ route('unit-project.connect') }}">
+                                            @csrf
+                                                <input name="unit_id" value="{{$value->id}}" hidden>
+                                                <select
+                                                    class="form-control form-control-sm select2-search-disable select2-hidden-accessible
+                                                    @error('project_id') border border-solid border-danger  @enderror"
+                                                    data-select2-id="basicpill-status-input"
+                                                    tabindex="-1"
+                                                    aria-hidden="true"
+                                                    name="project_id"
+                                                    >
+                                                    <option selected value="">Choose Segment...</option>
+
+                                                    @if(isset($projects))
+                                                        @foreach($projects as $data)
+                                                            <option  value="{{$data->id}}">{{ $data->name }}</option>
+                                                        @endforeach
+                                                    @endif
+
+                                                </select>
+
+                                                <div class="my-2 w-100 text-right">
+                                                    <button class="btn btn-outline-dark btn-sm btn-block  ">
+                                                        Connect
+                                                    </button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </td>
+
+
+
+
 
                                 {{-- BROCHURE --}}
                                 <td>

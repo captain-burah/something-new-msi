@@ -87,9 +87,11 @@
                                 </td>
                                 <td>{{ $value->name }}</td>
                                 <td>
-                                    <div class="my-auto" style="font-size: 16px" >
-                                        0
-                                        <a href="#" class="text-dark my-auto">
+                                    <div class="my-auto"  >
+                                        @if($value->units)
+                                            {{ $value->units->count() }} Units
+                                        @endif
+                                        <a href="{{ route('project.units.active', ['id' => $value->id]) }}" class="text-dark my-auto" style="font-size: 16px">
                                             <i class="bx bx-menu " ></i>
                                         </a>
                                     </div>

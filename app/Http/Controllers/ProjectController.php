@@ -60,7 +60,7 @@ class ProjectController extends Controller
 
     public function index_drafts()
     {
-        $projects = Project::where('status', '2')->orderBY('id', 'Desc');
+        $projects = Project::with('units')->where('status', '2')->orderBY('id', 'Desc');
 
 
         $this->data['count_draft'] = $count_draft = Project::where('status', '2')->orderBY('id', 'Desc')->count();
@@ -81,6 +81,7 @@ class ProjectController extends Controller
             $this->data['projects'] = $projects->paginate(30);
 
         }
+
 
         $this->data['brochures'] = Project_brochure::with('project_brochure_files')->get();
         $this->data['images'] = Project_image::with('project_image_files')->get();

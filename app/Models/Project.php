@@ -35,4 +35,9 @@ class Project extends Model
     {
         return $this->hasMany(Project_translation::class);
     }
+
+    public function units(): HasMany
+    {
+        return $this->hasMany(Unit::class);
+    }
 }

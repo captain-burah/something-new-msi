@@ -14,7 +14,13 @@
                             <div class="d-flex">
                                 <div class="flex-grow-1 align-self-center">
                                     <div class="text-muted">
-                                        <h3 class="mb-1"><i class="bx bx-briefcase text-dark font-size-24"></i> Units</h3>
+                                        <h3 class="mb-1">
+                                            @if($project_unit == '1')
+                                                <i class="bx bx-briefcase text-dark font-size-24"></i> Units of Project - {{$projects[0]->name}}
+                                            @elseif($project_unit == '0')
+                                                <i class="bx bx-briefcase text-dark font-size-24"></i> Units
+                                            @endif
+                                        </h3>
                                         <p class="mb-0 text-justify text-muted">
                                             Units are an essential concept in real estate transactions, management, and development.
                                             They are bought, sold, rented, or leased by individuals or businesses, making them an integral
@@ -31,22 +37,41 @@
                                 <div class="row mx-auto text-center">
                                     <div class="col-4">
                                         <div>
-                                            <a href="{{ route('units.index') }}" class="btn btn-sm btn-outline-dark text-truncate mb-2">Active Units</a>
+                                            <a
+                                                @if($project_unit == '1')
+                                                    href="{{ route('project.units.active', ['id' => $project_id]) }}"
+                                                @elseif($project_unit == '0')
+                                                    href="{{ route('units.index') }}"
+                                                @endif
+                                                class="btn btn-sm btn-outline-dark text-truncate mb-2">Active Units</a>
                                             <h5 class="mb-0">{{$count_active}}</h5>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div>
-                                            <a href="{{ route('units.drafts') }}" class="btn btn-sm btn-outline-dark text-truncate mb-2">Drafts Units</a>
+                                            <a
+                                                @if($project_unit == '1')
+                                                    href="{{ route('project.units.draft', ['id' => $project_id]) }}"
+                                                @elseif($project_unit == '0')
+                                                    href="{{ route('units.drafts') }}"
+                                                @endif
+                                                class="btn btn-sm btn-outline-dark text-truncate mb-2">Drafts Units</a>
                                             <h5 class="mb-0">{{$count_draft}}</h5>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div>
-                                            <a href="{{ route('units.trash') }}" class="btn btn-sm btn-outline-dark text-truncate mb-2">Trash Units</a>
+                                            <a
+                                                @if($project_unit == '1')
+                                                    href="{{ route('project.units.trash', ['id' => $project_id]) }}"
+                                                @elseif($project_unit == '0')
+                                                    href="{{ route('units.trash') }}"
+                                                @endif
+                                                class="btn btn-sm btn-outline-dark text-truncate mb-2">Trash Units</a>
                                             <h5 class="mb-0">{{$count_trash}}</h5>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -64,10 +89,14 @@
                                     </a>
 
                                     <div class="dropdown-menu" id="dropdown-menu-duplicate-unit" aria-labelledby="dropdownMenuButton">
-                                        @if($units->count() > 0)
-                                            @foreach($units as $data)
-                                                <a class="dropdown-item" href="{{ url('unit-duplicate/'.$data->id) }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
-                                            @endforeach
+                                        @if(!isset($count_status))
+                                            @if($units->count() > 0)
+                                                @foreach($units as $data)
+                                                    <a class="dropdown-item" href="{{ url('unit-duplicate/'.$data->id) }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
+                                                @endforeach
+                                            @else
+                                                <span class="px-3 text-muted">No units found</span>
+                                            @endif
                                         @else
                                             <span class="px-3 text-muted">No units found</span>
                                         @endif

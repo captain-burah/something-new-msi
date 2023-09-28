@@ -159,6 +159,12 @@ Route::middleware('auth')->group(function () {
     Route::get('units-trash', [UnitController::class, 'index_trash'])->name('units.trash');
     Route::get('units-status-change/{id}/{status}', [UnitController::class, 'status_change'])->name('units.status.change');
 
+    Route::get('project-units-active/{id}', [UnitController::class, 'project_units_active'])->name('project.units.active');
+    Route::get('project-units-draft/{id}', [UnitController::class, 'project_units_draft'])->name('project.units.draft');
+    Route::get('project-units-trash/{id}', [UnitController::class, 'project_units_trash'])->name('project.units.trash');
+
+
+
     /**UNIT - BROCHURE CONNECTION ROUTES */
     Route::post('unit/connect-brochure', [UnitController::class, 'unit_brochure_connect_store'])->name('unit.connect.brochure');
     Route::get('unit/brochures/disconnect/{id}', [UnitController::class, 'unit_brochure_disconnect'])->name('unit.disconnect.brochure');
@@ -175,13 +181,14 @@ Route::middleware('auth')->group(function () {
     Route::post('unit/connect-paymentplan', [UnitController::class, 'unit_paymentplan_connect_store'])->name('unit.connect.paymentplan');
     Route::get('unit/paymentplan/disconnect/{id}', [UnitController::class, 'unit_paymentplan_disconnect'])->name('unit.disconnect.paymentplan');
 
-    /**UNIT - TRANSLATION CONNECTION ROUTES */
-    Route::post('unit/connect-translation', [UnitController::class, 'unit_translation_connect_store'])->name('unit.connect.translation');
-    Route::get('unit/translation/disconnect/{id}', [UnitController::class, 'unit_translation_disconnect'])->name('unit.disconnect.translation');
 
 
 
 
+    /**UNIT - PROJECT - ROUTES  */
+    Route::post('unit-project/connect', [UnitController::class, 'unit_project_connect_store'])->name('unit-project.connect');
+    Route::get('unit-project/disconnect/{id}', [UnitController::class, 'unit_project_disconnect'])->name('unit-project.disconnect');
+    Route::get('unit-project/delete_all/{id}', [UnitController::class, 'destroy_project_segment'])->name('unit-project.destroy.segment');
 
 
     /**UNIT - BROCHURE - ROUTES  */
