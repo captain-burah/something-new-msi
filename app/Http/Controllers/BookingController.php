@@ -3,15 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Booking;
+use App\Models\Project_brochure;
+use App\Models\Project_image;
+use App\Models\Project_factsheet;
+use App\Models\Project_video;
+use App\Models\Language;
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log; // send notifications via slack or any other means
+use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    function __construct()
+    {
+         $this->middleware('permission:booking-list|booking-create|booking-edit|booking-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:booking-create', ['only' => ['create','store']]);
+         $this->middleware('permission:booking-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:booking-delete', ['only' => ['destroy']]);
+    }
+
+
     public function index()
     {
-        //
+        $this->data['result'] = $result = Booking::all();
+        $this->data['count_active'] = $result = Booking::all();
+
+        return view('booking', $this->data);
     }
 
     /**
