@@ -7,11 +7,11 @@
 
 @section('content')
 
-@include('project.topNav')
+{{-- @include('booking.topNav') --}}
 
-<div style="padding-top: 150px;">
+<div style="padding-top: 100px;">
 
-    @include('project.create.form')
+    @include('booking.create.form')
 
     {{-- @include('project.activeProjectsTable') --}}
 </div>

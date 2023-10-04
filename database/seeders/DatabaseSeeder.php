@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             ProjectStatusSeeder::class,
             UnitStatusSeeder::class,
             PropertyReleaseSeeder::class,
+            HonorificSeeder::class,
+            CountryCodeSeeder::class,
         ]);
     }
 }

@@ -47,7 +47,7 @@
             <div class="col-lg-6 d-none d-lg-block my-auto">
                 <div class="clearfix mt-4 mt-lg-0 my-auto">
                     <div class="my-auto float-right">
-                        <a href="{{ route('projects.create') }}" class="btn btn-dark">
+                        <a href="{{ route('bookings.create') }}" class="btn btn-dark">
                             <i class="bx bx-bookmark-plus mr-2"></i>New Booking
                         </a>
                     </div>

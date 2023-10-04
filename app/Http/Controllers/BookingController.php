@@ -7,15 +7,19 @@ use App\Models\Booking;
 use App\Models\Project_brochure;
 use App\Models\Project_image;
 use App\Models\Project_factsheet;
-use App\Models\Project_video;
+use App\Models\Honorific;
+use App\Models\CountryCode;
 use App\Models\Language;
-
+// use Illuminate\Support\include;
+// $country = include('data_stores/country_data.php');
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log; // send notifications via slack or any other means
 use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
+
+
     function __construct()
     {
          $this->middleware('permission:booking-list|booking-create|booking-edit|booking-delete', ['only' => ['index','show']]);
@@ -29,7 +33,6 @@ class BookingController extends Controller
     {
         $this->data['result'] = $result = Booking::all();
         $this->data['count_active'] = $result = Booking::all();
-
         return view('booking', $this->data);
     }
 
@@ -38,7 +41,14 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+
+
+        $this->data['results'] = $bookings = Booking::select(['id'])->get();
+        $this->data['honorifics'] = $honorifics = Honorific::all();
+        $this->data['country'] = $country = CountryCode::all();
+        // $this->data['country'] = $country;
+
+        return view('booking.create.index', $this->data );
     }
 
     /**

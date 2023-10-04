@@ -1,16 +1,16 @@
 <div class="card">
     <div class="card-body">
-        <h3 class="mb-1">Project Launch</h3>
-        <p class="mb-0 text-justify text-muted">
-            When you embark on a new real estate project, you're not just building structures; you're creating opportunities, shaping communities, and crafting dreams into reality.
+        <h3 class="mb-1">New Booking</h3>
+        <p class="mb-0 text-justify text-muted font-italic">
+            "Real estate booking is the key that opens the door to your future home or investment   "
         </p>
 
 
 
-        <form class="contact-form" id="getInTouch" method="post" action="{{ route('projects.store') }}">
+        <form class="contact-form" id="getInTouch" method="post" action="{{ route('bookings.store') }}">
             @csrf
             <div class="flex-none w-100 mt-3 ">
-                <a href="{{ route('projects.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
+                <a href="{{ route('bookings.index') }}" class="btn btn-sm btn-outline-dark mt-3 my-auto">
                     <i class="bx bx-arrow-back"></i>
                     Back
                 </a>
@@ -22,11 +22,11 @@
             </div>
             <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button style="width: auto" class="nav-link active" id="home-tab" data-toggle="tab" data-target="#general" type="button" role="tab" aria-controls="home" aria-selected="true">General</button>
+                    <button style="width: auto" class="nav-link active" id="home-tab" data-toggle="tab" data-target="#clientele" type="button" role="tab" aria-controls="home" aria-selected="true">Clientele</button>
                 </li>
 
                 <li class="nav-item" role="presentation">
-                    <button style="width: auto" class="nav-link" id="details-tab" data-toggle="tab" data-target="#details" type="button" role="tab" aria-controls="profile" aria-selected="false">Details</button>
+                    <button style="width: auto" class="nav-link" id="details-tab" data-toggle="tab" data-target="#reservation_agreement" type="button" role="tab" aria-controls="profile" aria-selected="false">Reservation Agreement</button>
                 </li>
 
                 <li class="nav-item" role="presentation">
@@ -39,20 +39,20 @@
             </ul>
 
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active p-4" id="general" role="tabpanel" aria-labelledby="home-tab">
-                    @include('project.create.form.general')
+                <div class="tab-pane fade show active p-4" id="clientele" role="tabpanel" aria-labelledby="home-tab">
+                    @include('booking.create.form.clientele')
                 </div>
 
-                <div class="tab-pane fade p-4" id="details" role="tabpanel" aria-labelledby="details-tab">
-                    @include('project.create.form.details')
+                <div class="tab-pane fade p-4" id="reservation_agreement    " role="tabpanel" aria-labelledby="details-tab">
+                    @include('booking.create.form.ra')
                 </div>
 
                 <div class="tab-pane fade p-4" id="description" role="tabpanel" aria-labelledby="description-tab">
-                    @include('project.create.form.description')
+                    @include('booking.create.form.description')
                 </div>
 
                 <div class="tab-pane fade p-4" id="seo" role="tabpanel" aria-labelledby="seo-tab">
-                    @include('project.create.form.seo')
+                    @include('booking.create.form.seo')
                 </div>
             </div>
         </form>
