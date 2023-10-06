@@ -50,9 +50,21 @@ class ProjectImageController extends Controller
          * ALL FILES ARE BEING STORED IN THE PUBLIC FOLDER UNDER ROOT/STORAGE
          * THESE FILES ARE ACCESSSIBLE TO THE PUBLIC
          *
-         * SECURED FILES WILL BE STORED USING THE BELOW SYNTAX WITHIN THE APP DIRECTORY
-         *
+         * SECURED FILES
+         * =============
          * Storage::disk('local')->put('image_name_goes_here', file_variable_should_be_placed_here);
+         *
+         * EXAMPLE
+         * -----------
+         * $pathname = 'clientele/'.$client_id.'/'.$unit_id.'/eid';
+         * Storage::disk('local')->put($pathname, $file-variable-or-content);
+         * -----------
+         *
+         *
+         * DELETE DIRECTORIES
+         * ====================
+         * Storage::disk('local')->deleteDirectory('directory-name-here');
+         *
          *
          */
 
@@ -77,7 +89,6 @@ class ProjectImageController extends Controller
                 {
                     $image_name = $image->hashName();
                     $image->storeAs('projects/images/'.$project_segment_id, $image_name, 'public'); //nonsecured storage - has public access
-
                     $project_segment_file = new Project_image_file();
                     $project_segment_file->project_image_id = $project_segment_id;
                     $project_segment_file->name = $image_name;
@@ -133,6 +144,8 @@ class ProjectImageController extends Controller
 
     public function update(Request $request, string $id)
     {
+
+        dd($request);
         $request->validate([
             'segment_name' => 'required',
             'files' => 'required | max: 20 | min: 1',

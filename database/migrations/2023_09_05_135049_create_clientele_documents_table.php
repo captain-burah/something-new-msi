@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('clientele_documents', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable(true);
+            $table->unsignedBigInteger('unit_id')->nullable(true);
             $table->unsignedBigInteger('client_id')->nullable(true);
-            $table->string('filename');
+            $table->string('filename')->nullable(true);
             $table->timestamps();
             $table->foreign('client_id')->references('id')->on('clienteles')->onDelete('cascade');
+            $table->foreign('unit_id')->references('id')->on('clienteles')->onDelete('restrict');
         });
     }
 
