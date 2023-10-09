@@ -3,14 +3,15 @@
         <h3 class="text-muted">Booking Application</h3>
         <nav aria-label="breadcrumb " >
             <ol class="breadcrumb m-0">
-                <li class="breadcrumb-item"><a>Client Information</a></li>
-                <li class="breadcrumb-item"><a>Client Documents</a></li>
-                <li class="breadcrumb-item"><a>Reservation Agreement Form</a></li>
+                <li class="breadcrumb-item"><a>project selection</a></li>
+                <li class="breadcrumb-item"><a>unit selection</a></li>
+                <li class="breadcrumb-item"><a>client details</a></li>
+                <li class="breadcrumb-item"><a>client documents</a></li>
+                <li class="breadcrumb-item"><a>reservation agreement</a></li>
             </ol>
         </nav>
     </div>
 </div>
-
 <div class="card shadow-sm">
     <div class="card-body">
 

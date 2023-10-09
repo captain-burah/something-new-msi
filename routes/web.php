@@ -222,10 +222,10 @@ Route::middleware('auth')->group(function () {
 
 
 /**BOOKINGS */
-    Route::post('booking-form-two', [BookingController::class, 'store_form1'])->name('bookings.store.form1');
     Route::post('booking-form-one', [BookingController::class, 'store_form0'])->name('bookings.store.form0');
     Route::post('booking-form-one-projects', [BookingController::class, 'store_form0_projects'])->name('bookings.store.form0.projects');
     Route::post('booking-form-one-units', [BookingController::class, 'store_form0_units'])->name('bookings.store.form0.units');
+    Route::post('booking-form-two', [BookingController::class, 'store_form1'])->name('bookings.store.form1');
     Route::post('booking-form-three', [BookingController::class, 'store_form2'])->name('bookings.store.form2');
     Route::post('booking-form-four', [BookingController::class, 'store_form3'])->name('bookings.store.form3');
 

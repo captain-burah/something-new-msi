@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
 use Cookie;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BookingController extends Controller
 {
@@ -174,6 +174,19 @@ class BookingController extends Controller
 
             // dd($request->files);
             // Storage::disk('local')->deleteDirectory('clientele');
+            $this->data['unit'] = $unit = Unit::with('project', 'unit_paymentplan')->find($request->unit_id);
+            $project_id = $unit->project->id;
+
+            $this->data['project'] = $project = Project::find($project_id);
+            $this->data['client'] = $client = Clientele::find($request->client_id);
+            $this->data['form_type'] = 'form3';
+            $this->data['request'] = $request;
+
+            // dd($project_id);
+
+
+            //REDIRECT TO RESERVATION AGREEMENT
+            return view('booking.create.index', $this->data );
 
             // dd('ddss');
             /** EMIRATES ID  */
@@ -304,6 +317,17 @@ class BookingController extends Controller
 
 
         public function store_form3(Request $request) {
+
+            // $clientele = Clientele::find($request->client_id);
+            // $project = Project::find($request->project_id);
+            // $unit = Unit::with('unit_paymentplan')->find($request->unit_id);
+            // $booking = Booking::find($request->booking_id);
+
+            // PDF::loadView('booking.reservationAgreement')->save(storage_path('invoice.pdf'));
+
+            $pdf = PDF::loadView('booking.reservationAgreement');
+            return $pdf->setPaper('a4', 'portrait')->download('reservation-agreement.pdf');
+
             $this->data['form_type'] = 'form4';
             return view('booking.create.index', $this->data );
         }
