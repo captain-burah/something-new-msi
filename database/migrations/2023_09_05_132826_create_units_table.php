@@ -40,7 +40,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('status')->references('id')->on('unit_statuses')->onDelete('restrict');
+            // $table->foreign('status')->references('id')->on('unit_statuses')->onDelete('restrict');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
         });
     }

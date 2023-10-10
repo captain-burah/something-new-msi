@@ -142,7 +142,8 @@ class UnitController extends Controller
      */
 
     public function project_units_active($id){
-        $units = Unit::with('project')->where('id', $id)->where('project_id', $id)->where('status', '1')->orderBY('id', 'Desc');
+        $units = Unit::with('project')->where('project_id', $id)->where('status', '1')->orderBY('id', 'Desc');
+
 
         $this->data['count_draft'] = $count_draft = Unit::where('project_id', $id)->where('status', '2')->orderBY('id', 'Desc')->count();
         $this->data['count_active'] = $count_active = Unit::where('project_id', $id)->where('status', '1')->orderBY('id', 'Desc')->count();
@@ -160,12 +161,14 @@ class UnitController extends Controller
         }
 
         $projects = Project::where('status', '1')->orWhere('status', '2')->get();
+        $project = Project::find($id);
         $this->data['projects'] = $projects;
         $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
         $this->data['images'] = Unit_image::with('unit_image_files')->get();
         $this->data['floorplans'] = Unit_floorplan::with('unit_floorplan_files')->get();
         $this->data['project_unit'] = '1';
         $this->data['project_id'] = $id;
+        $this->data['project'] = $project;
 
 
         return view('unitsActive', $this->data);

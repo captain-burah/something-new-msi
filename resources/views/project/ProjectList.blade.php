@@ -27,7 +27,7 @@
 
 
 
-<div class="card w-100" style="height: 100vh">
+<div class="card w-100" style="min-height: 100vh">
     <div class="card-body">
         <h4 class="card-title">Active Projects Table</h4>
         <p class="card-title-desc">The table consists of Active Projects on the ESNAAD website</p>

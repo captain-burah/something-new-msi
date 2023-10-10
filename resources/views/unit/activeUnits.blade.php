@@ -16,7 +16,7 @@
                                     <div class="text-muted">
                                         <h3 class="mb-1">
                                             @if($project_unit == '1')
-                                                <i class="bx bx-briefcase text-dark font-size-24"></i> Units of Project - {{$projects[0]->name}}
+                                                <i class="bx bx-briefcase text-dark font-size-24"></i> Units of {{$project->name}}
                                             @elseif($project_unit == '0')
                                                 <i class="bx bx-briefcase text-dark font-size-24"></i> Units
                                             @endif

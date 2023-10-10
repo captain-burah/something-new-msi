@@ -15,14 +15,17 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('unit_id')->nullable(true);
-            $table->unsignedBigInteger('client_id')->nullable(true);
 
-            $table->string('payment_status')->nullable(true);   // online or bank deposit
+            $table->string('payment_status')->nullable(true);   // online or cheque or bank deposit
             $table->string('payment_price')->nullable(true);
-            $table->string('payment_id')->nullable(true);
+            $table->string('description')->nullable(true);
+            $table->string('is_reservation_agreement_emailed')->nullable(true);
+            $table->string('is_first_installment_notified')->nullable(true);
+            $table->string('is_first_installment_paid')->nullable(true);
+            $table->string('first_installment_date')->nullable(true);
             $table->timestamps();
+
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('restrict');
-            $table->foreign('client_id')->references('id')->on('clienteles')->onDelete('restrict');
         });
     }
 

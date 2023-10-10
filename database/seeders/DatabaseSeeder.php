@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,9 +20,20 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        // \App\Models\Project::factory(10)->create();
+        // \App\Models\Unit::factory(10)->create();
+
+        // \App\Models\Project::factory(10)->create()->each(function ($unit) {
+        //     $unit->units()->saveMany(\App\Models\Unit::factory(10)->make());
+        // });
+
+        \App\Models\Project::factory(10)->create()->each(function($user) {
+            \App\Models\Unit::factory(10)->create(['project_id' => $user->id ]);
+        });
+
         $this->call([
-            CreateAdminUserSeeder::class,
             PermissionTableSeeder::class,
+            CreateAdminUserSeeder::class,
             ProjectStatusSeeder::class,
             UnitStatusSeeder::class,
             PropertyReleaseSeeder::class,
