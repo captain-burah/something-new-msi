@@ -1,7 +1,10 @@
 <?php
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AuthKey;
+use App\Http\Controllers\BookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +22,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-// Route::group([
-//     'prefix' => 'v1',
-//     'as' => 'api.',
-//     'namespace' => 'Api\V1\Admin',
-//     'middleware' => ['auth:sanctum']
+Route::middleware('authkey')->prefix('v1/esnaad')->namespace('App\Http\Controllers') ->group(function () {
+    Route::post('/booking-payment-secured', 'BookingController@booking_payment_secured');
+    Route::post('/booking-payment-failed', 'BookingController@booking_payment_failed');
+});
 
-// ], function() {
-//     Route::apiResource('projects', 'ProjectsController');
-// });
+
+Route::group([
+    'prefix' => 'v1',
+    'as' => 'api.',
+    'namespace' => 'Api\V1\Admin',
+    'middleware' => ['auth:sanctum']
+
+], function() {
+    // Route::apiResource('projects', 'ProjectsController');
+});
+

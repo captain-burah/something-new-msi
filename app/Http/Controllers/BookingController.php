@@ -27,7 +27,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class BookingController extends Controller
 {
 
-
     // function __construct()
     // {
     //      $this->middleware('permission:booking-list|booking-create|booking-edit|booking-delete', ['only' => ['index','show']]);
@@ -35,7 +34,6 @@ class BookingController extends Controller
     //      $this->middleware('permission:booking-edit', ['only' => ['edit','update']]);
     //      $this->middleware('permission:booking-delete', ['only' => ['destroy']]);
     // }
-
 
     public function index()
     {
@@ -58,46 +56,42 @@ class BookingController extends Controller
         return view('booking.create.index', $this->data );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    public function clientele_store(Request $request) {
+        try {
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+            $contact1 = $request->country_code1 . $request->contact1;
+            $contact2 = $request->country_code2 . $request->contact2;
+            $contact3 = $request->country_code3 . $request->contact3;
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+            $client = new Clientele();
+            $client->unit_id = $request->unit_id;
+            $client->prefix = $request->title;
+            $client->name = $request->name;
+            $client->email = $request->email;
+            $client->contact1 = $request->contact1;
+            $client->contact2 = $request->contact2;
+            $client->contact3 = $request->contact3;
+            $client->country_of_residence = $request->country;
+            $client->nationality = $request->nationality;
+            $client->address1 = $request->address1;
+            $client->address2 = $request->address2;
+            $client->passport = $request->passport;
+            $client->passport_expiry = $request->pp_expiry;
+            $client->save();
 
+            $this->data['form_type'] = 'form2';
+            $this->data['client_id'] = $client->id;
+            $this->data['request'] = $request;
+
+        } catch (\Exception $e) {
+
+            return $e->getMessage();
+        }
+
+        return true;
+    }
 
 
 
@@ -327,8 +321,30 @@ class BookingController extends Controller
 
             $pdf = PDF::loadView('booking.reservationAgreement');
             return $pdf->setPaper('a4', 'portrait')->download('reservation-agreement.pdf');
+            
 
             $this->data['form_type'] = 'form4';
             return view('booking.create.index', $this->data );
+        }
+
+        public function booking_payment_secured(Request $request){
+
+            /**SAVE THE CLIENT INFORMATION USING OOM ABOVE */
+            $clientele_store = $this->clientele_store($request);
+
+            if($clientele_store) {
+                dd('stored');
+
+                /**IF TRUE, CREATE OFFER PURCHASE */
+
+            } else {
+                dd($clientele_store);
+            }
+
+
+        }
+
+        public function booking_payment_failed(Request $request){
+            dd('hello it works');
         }
 }

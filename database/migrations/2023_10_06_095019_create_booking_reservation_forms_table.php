@@ -80,8 +80,8 @@ return new class extends Migration
 
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('restrict');
             $table->foreign('client_id')->references('id')->on('clienteles')->onDelete('restrict');
-            $table->foreign('project_id')->references('id')->on('project')->onDelete('restrict');
-            $table->foreign('booking_id')->references('id')->on('booking')->onDelete('cascade');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('restrict');
+            $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('cascade');
         });
     }
 
