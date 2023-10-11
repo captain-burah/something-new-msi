@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\BookingClient;
+use App\Models\BookingPaymentPlan;
+use App\Models\BookingPaymentSlips;
+use App\Models\BookingReservationForm;
 use App\Models\Clientele;
 use App\Models\Clientele_document;
 use App\Models\Project;
@@ -14,8 +18,6 @@ use App\Models\Project_factsheet;
 use App\Models\Honorific;
 use App\Models\CountryCode;
 use App\Models\Language;
-// use Illuminate\Support\include;
-// $country = include('data_stores/country_data.php');
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log; // send notifications via slack or any other means
 use Illuminate\Support\Str;
@@ -111,7 +113,13 @@ class BookingController extends Controller
 
 
         public function store_form0_units(Request $request) {
+
             $unit_id = intval($request->unit_id);
+
+            $unit = Unit::find($unit_id);
+
+            // dd($unit);
+
             $booking = new Booking();
             $booking->unit_id = $unit_id;
             $booking->save();
@@ -136,8 +144,6 @@ class BookingController extends Controller
             $contact2 = $request->country_code2 . $request->contact2;
             $contact3 = $request->country_code3 . $request->contact3;
 
-            // dd($request->title);
-
             $client = new Clientele();
             $client->unit_id = $request->unit_id;
             $client->prefix = $request->title;
@@ -153,6 +159,14 @@ class BookingController extends Controller
             $client->passport = $request->passport;
             $client->passport_expiry = $request->pp_expiry;
             $client->save();
+
+            $client_id = $client->id;
+            $booking_id = $request->booking_id;
+
+            $booking_client = new BookingClient();
+            $booking_client->client_id = $client_id;
+            $booking_client->booking_id = $booking_id;
+            $booking_client->save();
 
             $this->data['form_type'] = 'form2';
             $this->data['client_id'] = $client->id;
@@ -303,7 +317,6 @@ class BookingController extends Controller
             $this->data['form_type'] = 'form3';
             $this->data['request'] = $request;
 
-
             //REDIRECT TO RESERVATION AGREEMENT
             return view('booking.create.index', $this->data );
         }
@@ -321,7 +334,7 @@ class BookingController extends Controller
 
             $pdf = PDF::loadView('booking.reservationAgreement');
             return $pdf->setPaper('a4', 'portrait')->download('reservation-agreement.pdf');
-            
+
 
             $this->data['form_type'] = 'form4';
             return view('booking.create.index', $this->data );

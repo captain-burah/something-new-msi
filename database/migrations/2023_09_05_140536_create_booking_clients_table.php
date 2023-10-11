@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('booking_clients', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('client_id')->nullable(true);
+            $table->unsignedBigInteger('booking_id')->nullable(true);
+            $table->foreign('client_id')->references('id')->on('clienteles')->onDelete('restrict');
+            $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('restrict');
             $table->timestamps();
         });
     }

@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Clientele extends Model
+class BookingClient extends Model
 {
     use HasFactory;
 
-    public function clientele_documents(): HasMany
+    public function booking(): BelongsTo
     {
-        return $this->hasMany(Clientele_document::class);
+        return $this->belongsTo(Booking::class);
     }
 
-    public function bookingclients(): HasMany
+    public function client(): BelongsTo
     {
-        return $this->hasMany(BookingClient::class);
+        return $this->belongsTo(Clientele::class);
     }
-
 }
