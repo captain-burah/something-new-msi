@@ -18,6 +18,8 @@ class UnitPaymentplanFileFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
+            'date' => $this->faker->date(),
+            'percentage' => $this->faker->randomNumber(2),
             'percentage' => $this->faker->randomNumber(2),
             'amount' => $this->faker->randomNumber(2),
         ];

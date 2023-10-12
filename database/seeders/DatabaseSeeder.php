@@ -28,21 +28,21 @@ class DatabaseSeeder extends Seeder
         // });
 
         \App\Models\Project::factory(10)->create()->each(function($project) {
-            \App\Models\Unit::factory(10)->create(['project_id' => $project->id ])->each(function($unit) {
-                \App\Models\Unit_paymentplan::factory(10)->create(['unit_id' => $unit->id ])->each(function($plan) {
-                    \App\Models\UnitPaymentplanFile::factory(10)->create(['unit_paymentplan_id' => $plan->id ]);
+            \App\Models\Unit::factory(2)->create(['project_id' => $project->id ])->each(function($unit) {
+                \App\Models\Unit_paymentplan::factory(1)->create(['unit_id' => $unit->id ])->each(function($plan) {
+                    \App\Models\UnitPaymentplanFile::factory(5)->create(['unit_paymentplan_id' => $plan->id ]);
                 });
             });
         });
 
-        // $this->call([
-        //     PermissionTableSeeder::class,
-        //     CreateAdminUserSeeder::class,
-        //     ProjectStatusSeeder::class,
-        //     UnitStatusSeeder::class,
-        //     PropertyReleaseSeeder::class,
-        //     HonorificSeeder::class,
-        //     CountryCodeSeeder::class,
-        // ]);
+        $this->call([
+            PermissionTableSeeder::class,
+            CreateAdminUserSeeder::class,
+            ProjectStatusSeeder::class,
+            UnitStatusSeeder::class,
+            PropertyReleaseSeeder::class,
+            HonorificSeeder::class,
+            CountryCodeSeeder::class,
+        ]);
     }
 }

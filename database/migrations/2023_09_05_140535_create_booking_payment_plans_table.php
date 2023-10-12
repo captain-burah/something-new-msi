@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('booking_id')->nullable(true);
             $table->string('name');
+            $table->date('date');
             $table->unsignedBigInteger('percentage');
             $table->unsignedBigInteger('amount');
-            $table->date('due_date');
             $table->timestamps();
             $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('restrict');
         });

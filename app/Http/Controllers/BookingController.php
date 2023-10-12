@@ -116,13 +116,31 @@ class BookingController extends Controller
 
             $unit_id = intval($request->unit_id);
 
-            $unit = Unit::find($unit_id);
+            $unit = Unit::with('unit_paymentplan')->find($unit_id);
 
             // dd($unit);
 
             $booking = new Booking();
             $booking->unit_id = $unit_id;
             $booking->save();
+
+            $booking_id = $booking->id;
+
+            $payment_plans = $unit->unit_paymentplan->unit_paymentplan_files;
+
+            foreach($payment_plans as $plans) {
+                $bookingplan = new BookingPaymentPlan();
+                $bookingplan->booking_id = $booking_id;
+                $bookingplan->name = $plans->name;
+                $bookingplan->date = $plans->date;
+                $bookingplan->percentage = $plans->percentage;
+                $bookingplan->amount = $plans->amount;
+                $bookingplan->save();
+            }
+
+            // dd($unit->unit_paymentplan->unit_paymentplan_files);
+
+
 
             $this->data['results'] = $bookings = Booking::select(['id'])->get();
             $this->data['honorifics'] = $honorifics = Honorific::all();

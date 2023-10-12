@@ -83,6 +83,9 @@
 
                             <?php $status = $value->status; ?>
                             <tr>
+                                {{-- <td>{{$value->id}}</td>
+                                <td>{{$value->status}}</td>
+                                <td>{{$value->}}</td> --}}
                             </tr>
                         @endforeach
 

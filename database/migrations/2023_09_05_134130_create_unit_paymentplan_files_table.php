@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('unit_paymentplan_id')->nullable(true);
             $table->string('name');
+            $table->date('date');
             $table->unsignedBigInteger('percentage');
             $table->unsignedBigInteger('amount');
             $table->timestamps();
