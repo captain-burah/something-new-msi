@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AuthKey;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\API\CommunityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('authkey')->prefix('v1/esnaad')->namespace('App\Http\Controllers') ->group(function () {
     Route::post('/booking-payment-secured', 'BookingController@booking_payment_secured');
     Route::post('/booking-payment-failed', 'BookingController@booking_payment_failed');
+    Route::get('/communities-index', 'API\CommunityController@index');
+    Route::get('/communities-index-admin', 'API\CommunityController@index_admin');
 });
 
 

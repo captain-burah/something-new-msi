@@ -35,6 +35,11 @@ class DatabaseSeeder extends Seeder
             });
         });
 
+
+        \App\Models\Community::factory(10)->create()->each(function($community) {
+            \App\Models\CommunityImage::factory(2)->create(['community_id' => $community->id ]);
+        });
+
         $this->call([
             PermissionTableSeeder::class,
             CreateAdminUserSeeder::class,

@@ -19,21 +19,38 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by')->nullable(true);
 
             $table->string('slug_link')->nullable(true);
-            $table->string('name')->nullable(true);
-            $table->string('description')->nullable(true);
 
-            $table->string('meta_title')->nullable(true);
-            $table->string('meta_description')->nullable(true);
-            $table->string('meta_keywords')->nullable(true);
+            $table->string('title')->nullable(true);
+            $table->string('title_ar')->nullable(true);
 
             $table->string('address')->nullable(true);
+            $table->string('address_ar')->nullable(true);
+
+            $table->string('heading')->nullable(true);
+            $table->string('heading_ar')->nullable(true);
+
+            $table->string('description')->nullable(true);
+            $table->string('description_ar')->nullable(true);
+
+            $table->string('video_link')->nullable(true);
+
+            $table->string('meta_title')->nullable(true);
+            $table->string('meta_title_ar')->nullable(true);
+
+            $table->string('meta_description')->nullable(true);
+            $table->string('meta_description_ar')->nullable(true);
+
+            $table->string('meta_keywords')->nullable(true);
+            $table->string('meta_keywords_ar')->nullable(true);
 
             $table->string('longitude')->nullable(true);
             $table->string('latitude')->nullable(true);
 
-            $table->string('image')->nullable(true);
+            $table->string('header_image')->nullable(true);
 
-            $table->string('escrow')->nullable(true);
+            $table->string('map_image')->nullable(true);
+
+            $table->string('thumbnail')->nullable(true);
 
             $table->timestamps();
 

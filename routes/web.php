@@ -15,6 +15,8 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UnitBrochureController;
 use App\Http\Controllers\UnitImageController;
 use App\Http\Controllers\UnitFloorplanController;
+use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\CommunityController;
 // use App\Http\Controllers\UnitPaymentplanController;
 // use App\Http\Controllers\UnitTranslationController;
 
@@ -54,6 +56,7 @@ Route::get('/financial-admin', [MainController::class, 'financial_admin_login'])
 
 Route::middleware('auth')->group(function () {
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout.get');
+    Route::get('/website', [WebsiteController::class, 'index'])->name('website.index');
 
 
     /**DEFAULT ROUTES */
@@ -81,6 +84,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('bookings', BookingController::class);
     Route::resource('clienteles', ClienteleController::class);
+    Route::resource('communities', CommunityController::class);
     Route::resource('meetings', MeetingController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
@@ -218,6 +222,15 @@ Route::middleware('auth')->group(function () {
 
 
 /** UNITS */
+
+
+
+
+
+/** COMMUNITY */
+    Route::get('community-destroy/{id}', [CommunityController::class, 'destroy_image'])->name('community.destroy.image');
+
+/** COMMUNITY */
 
 
 

@@ -47,8 +47,8 @@
                 @endcan
 
                 @can('meeting-list')
-                <a href="{{ route('meetings.index')}}" class="mr-5 my-auto">
-                    <span class="text-white font-weight-bold  my-auto ">MEETINGS </span>
+                <a href="{{ route('website.index')}}" class="mr-5 my-auto">
+                    <span class="text-white font-weight-bold  my-auto ">WEBSITE</span>
                 </a>
                 @endcan
 
