@@ -22,27 +22,10 @@ class CommunityController extends Controller
     }
 
 
-
-
-
     public function show(string $id)
     {
         $resources = Community::select('id', 'title', 'address', 'slug_link', 'thumbnail')->where('status', '1')->get();
         return response()->json($resources,200);
     }
 
-    public function edit(string $id)
-    {
-        //
-    }
-
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function destroy(string $id)
-    {
-        //
-    }
 }

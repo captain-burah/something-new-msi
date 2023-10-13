@@ -17,6 +17,7 @@ use App\Http\Controllers\UnitImageController;
 use App\Http\Controllers\UnitFloorplanController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\SeoController;
 // use App\Http\Controllers\UnitPaymentplanController;
 // use App\Http\Controllers\UnitTranslationController;
 
@@ -90,6 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('products', ProductController::class);
     Route::resource('languages', Localization::class);
+    Route::resource('landingpageseos', SeoController::class);
 
 
 

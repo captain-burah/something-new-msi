@@ -38,6 +38,7 @@
     </div>
 
     <div class="col-lg-4">
+        <a href="{{ route('landingpageseos.index') }}">
         <div class="card">
             <div class="card-body">
                 <div class="row mx-auto">
@@ -52,6 +53,7 @@
                 </div>
             </div>
         </div>
+        </a>
     </div>
 
 

@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
             PropertyReleaseSeeder::class,
             HonorificSeeder::class,
             CountryCodeSeeder::class,
+            SeoSeeder::class,
         ]);
     }
 }
