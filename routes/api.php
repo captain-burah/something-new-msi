@@ -28,6 +28,8 @@ Route::middleware('authkey')->prefix('v1/esnaad')->namespace('App\Http\Controlle
     Route::post('/booking-payment-failed', 'BookingController@booking_payment_failed');
     Route::get('/communities-index', 'API\CommunityController@index');
     Route::get('/communities-index-admin', 'API\CommunityController@index_admin');
+    Route::get('/communities-details/{slug}', 'API\CommunityController@details');
+    Route::get('/developments-details/{slug}', 'API\DevelopmentController@details');
 });
 
 

@@ -25,7 +25,15 @@ return new class extends Migration
 
             $table->string('slug_link')->nullable(true);
             $table->string('name')->nullable(true);
-            $table->longText('description')->nullable(true);
+
+            $table->longText('heading1')->nullable(true);
+            $table->longText('heading2')->nullable(true);
+            $table->longText('heading3')->nullable(true);
+
+            $table->longText('description1')->nullable(true);
+            $table->longText('description2')->nullable(true);
+            $table->longText('description3')->nullable(true);
+            $table->longText('description4')->nullable(true);
 
             $table->string('ownership')->nullable(true);
             $table->string('handover')->nullable(true);

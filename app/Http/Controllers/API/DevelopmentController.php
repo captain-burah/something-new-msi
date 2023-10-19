@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Community;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log; // send notifications via slack or any other means
 use Illuminate\Support\Str;
@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class CommunityController extends Controller
+
+class DevelopmentController extends Controller
 {
     public function index()
     {
@@ -24,11 +25,7 @@ class CommunityController extends Controller
 
     public function details(string $slug)
     {
-        $resources = Community::where('status', '1')->where('slug_link', $slug)->get();
+        $resources = Project::with('project_brochure', 'project_image', 'project_factsheet', 'project_video', 'project_translations', 'units')->where('status', '1')->where('slug_link', $slug)->get();
         return response()->json($resources,200);
     }
-
-
-    
-
 }
