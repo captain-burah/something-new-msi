@@ -164,6 +164,7 @@ Route::middleware('auth')->group(function () {
     Route::get('units-drafts', [UnitController::class, 'index_drafts'])->name('units.drafts');
     Route::get('units-trash', [UnitController::class, 'index_trash'])->name('units.trash');
     Route::get('units-status-change/{id}/{status}', [UnitController::class, 'status_change'])->name('units.status.change');
+    Route::get('units-state-change/{id}/{status}', [UnitController::class, 'state_change'])->name('units.state.change');
 
     Route::get('project-units-active/{id}', [UnitController::class, 'project_units_active'])->name('project.units.active');
     Route::get('project-units-draft/{id}', [UnitController::class, 'project_units_draft'])->name('project.units.draft');
@@ -186,8 +187,6 @@ Route::middleware('auth')->group(function () {
     /**UNIT - VIDEO CONNECTION ROUTES */
     Route::post('unit/connect-paymentplan', [UnitController::class, 'unit_paymentplan_connect_store'])->name('unit.connect.paymentplan');
     Route::get('unit/paymentplan/disconnect/{id}', [UnitController::class, 'unit_paymentplan_disconnect'])->name('unit.disconnect.paymentplan');
-
-
 
 
 

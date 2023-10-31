@@ -358,8 +358,13 @@ class UnitController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $this->data['results'] = $results = Unit::with('project', 'unit_brochure', 'unit_image', 'unit_paymentplan', 'unit_floorplan')->find($id);
+
+        return view('unit.show.index', $this->data);
     }
+
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -477,6 +482,7 @@ class UnitController extends Controller
                 $payment_milestone = new UnitPaymentplanFile();
                 $payment_milestone->unit_paymentplan_id = $payment->id;
                 $payment_milestone->name = $data['milestone'];
+                $payment_milestone->date = $data['date'];
                 $payment_milestone->percentage = $data['percentage'];
                 $payment_milestone->amount = $data['amount'];
                 $payment_milestone->save();
@@ -568,6 +574,89 @@ class UnitController extends Controller
         }
 
         $this->data['unit'] = $projects;
+        return Redirect::back()->with('message', 'Project status has been changed');
+    }
+
+
+
+
+
+
+
+    public function state_change($id, $state)
+    {
+        try
+        {
+            $units = Unit::findOrFail($id);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            // SLACK UPDATE
+
+                //API Url
+                $url = 'https://hooks.slack.com/services/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';
+
+                //Initiate cURL.
+                $ch = curl_init($url);
+
+                //The JSON data.
+                $payload = array(
+                    'text' => 'ESNAAD - MIS | Unit Update - State Change - Unit Not Found | Searching id: '.$id
+                );
+
+                //Encode the array into JSON.
+                $jsonDataEncoded = json_encode($payload);
+
+                //Tell cURL that we want to send a POST request.
+                curl_setopt($ch, CURLOPT_POST, 1);
+
+                //Attach our encoded JSON string to the POST fields.
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
+
+                //Set the content type to application/json
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+                //Execute the request
+                $result = curl_exec($ch);
+
+            // SLACK UPDATE
+
+            return Redirect::back()->withErrors(['msg' => 'Could not find project. Please contact developer.']);
+        }
+
+        $projects = Unit::findOrFail($id);
+        if($state == '1')
+        {
+            $projects->state = '1';
+            $projects->save();
+            return Redirect::back()->with('message', 'Unit has been transferred to Listed!');
+
+        } elseif ($state == '2') {
+            $projects->state = 2;
+            $projects->save();
+            return Redirect::back()->with('message', 'Unit has been transferred to Booked');
+
+        } elseif($state == '3') {
+            $projects->state = 3;
+            $projects->save();
+            return Redirect::back()->with('message', 'Unit has been transferred to Amortizing');
+
+        } elseif($state == '4') {
+            $projects->state = 4;
+            $projects->save();
+            return Redirect::back()->with('message', 'Unit has been transferred to Sold');
+
+        } elseif($state == '5') {
+            $projects->state = 5;
+            $projects->save();
+            return Redirect::back()->with('message', 'Unit has been transferred to Resale');
+
+        } else {
+            return Redirect::back()->withErrors(['msg' => 'Invalid URL. Please contact developer.']);
+        }
+
+        $this->data['unit'] = $projects;
+
         return Redirect::back()->with('message', 'Project status has been changed');
     }
 

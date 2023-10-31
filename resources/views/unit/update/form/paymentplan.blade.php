@@ -31,13 +31,13 @@
             <form class="repeater" enctype="multipart/form-data">
                 <div data-repeater-list="group-a">
                     @foreach($unit->unit_paymentplan->unit_paymentplan_files as $milestones)
-                        <div data-repeater-item="" class="row">
-                                <div class="mb-3 col-lg-3">
+                        <div data-repeater-item="" class="row my-2">
+                                <div class="mb-3 col-lg-2">
                                     <label for="milestone">Description</label>
                                     <input type="text" id="milestone" name="group-a[0][milestone]" class="form-control form-control-sm" value="{{$milestones->name}}">
                                 </div>
 
-                                <div class="mb-3 col-lg-3">
+                                <div class="mb-3 col-lg-2">
                                     <label for="percentage">Percentage (%)</label>
                                     <input
                                         type="number"
@@ -54,12 +54,17 @@
                                     >
                                 </div>
 
-                                <div class="mb-3 col-lg-3">
+                                <div class="mb-3 col-lg-2">
                                     <label for="amount" id="amnt">Amount</label>
                                     <input type="number" id="amount" name="group-a[0][amount]" class="form-control form-control-sm" value="{{$milestones->amount}}" placeholder="ex: 148500" min=0>
                                 </div>
+
+                                <div class="mb-3 col-lg-2">
+                                    <label for="date" id="date-label">Date</label>
+                                    <input type="date" id="date" name="group-a[0][date]" class="form-control form-control-sm" value="{{$milestones->date}}">
+                                </div>
                                 <input type="hidden" id="amount" name="group-a[0][id]" class="form-control form-control-sm" value="{{$milestones->id}}" placeholder="ex: 148500" min=0>
-                                <div class="mb-3 col-lg-3 my-auto">
+                                <div class="mb-3 col-lg-2 my-auto">
                                     <input data-repeater-delete type="button" class="btn btn-outline-danger btn-sm" value="Delete"/>
                                 </div>
                         </div>
@@ -97,6 +102,7 @@
                             <label for="amount" id="amnt">Amount</label>
                             <input type="number" id="amount" name="group-a[0][amount]" class="form-control form-control-sm"  placeholder="ex: 148500" min=0>
                         </div>
+                        
                         <input type="hidden" id="amount" name="group-a[0][id]" class="form-control form-control-sm"  placeholder="ex: 148500" min=0>
                         <div class="mb-3 col-lg-3 my-auto">
                             <input data-repeater-delete type="button" class="btn btn-outline-danger btn-sm" value="Delete"/>

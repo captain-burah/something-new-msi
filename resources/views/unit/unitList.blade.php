@@ -61,6 +61,14 @@
                                 
                                 {{-- OPERATION --}}
                                 <td>
+                                    <?php
+                                        /**
+                                         * UNIT STATES
+                                         * 1 == ACTIVE
+                                         * 2 == DRAFT
+                                         * 3 == TRASH
+                                        */
+                                    ?>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             @if($value->status == '1')
@@ -92,30 +100,65 @@
 
                                 {{-- STATUS --}}
                                 <td>
+                                    <?php
+                                        /**
+                                         * UNIT STATES
+                                         * 1 == LISTED
+                                         * 2 == BOOKED
+                                         * 3 == AMORTIZING
+                                         * 4 == SOLD
+                                         * 5 == RESALE
+                                        */
+                                    ?>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            @if($value->status == '1')
-                                                <i class="bx bx-check-shield text-success" style="font-size: 20px"></i>
-                                            @elseif($value->status == '2')
-                                                <i class="bx bx-cloud-download text-dark" style="font-size: 20px"></i>
+                                            @if($value->state == '1')
+                                                Listed
+                                            @elseif($value->state == '2')
+                                                Booked
+                                            @elseif($value->state == '3')
+                                                Amortizing
+                                            @elseif($value->state == '4')
+                                                Sold
+                                            @elseif($value->state == '5')
+                                                Resale
                                             @else
-                                                <i class="bx bx-trash text-danger" style="font-size: 20px"></i>
+                                                N/A
                                             @endif
                                         </a>
 
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if($value->status == '1')
-                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/1') }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
-                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/2') }}"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
-                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/3') }}"><i class="bx bx-trash"></i> &nbsp; Trash</a>
-                                            @elseif($value->status == 2)
-                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/1') }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
-                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/2') }}"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
-                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/3') }}"><i class="bx bx-trash"></i> &nbsp; Trash</a>
+                                            @if($value->state == '1')
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/2') }}">Booked</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/3') }}">Amortizing</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/4') }}">Sold</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/5') }}">Resale</a>
+                                            @elseif($value->state == '2')
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/1') }}">Listed</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/3') }}">Amortizing</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/4') }}">Sold</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/5') }}">Resale</a>
+                                            @elseif($value->state == '3')
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/1') }}">Listed</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/2') }}">Booked</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/4') }}">Sold</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/5') }}">Resale</a>
+                                            @elseif($value->state == '4')
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/1') }}">Listed</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/2') }}">Booked</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/3') }}">Amortizing</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/5') }}">Resale</a>
+                                            @elseif($value->state == '5')
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/1') }}">Listed</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/2') }}">Booked</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/3') }}">Amortizing</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/4') }}">Sold</a>
                                             @else
-                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/1') }}"><i class="bx bx-check-shield "></i> &nbsp; Activate</a>
-                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/2') }}"><i class="bx bx-cloud-download"></i> &nbsp; Draft</a>
-                                                <a class="dropdown-item" href="{{ url('units-status-change/'.$value->id.'/3') }}"><i class="bx bx-trash"></i> &nbsp; Trash</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/1') }}">Listed</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/2') }}">Booked</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/3') }}">Amortizing</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/4') }}">Sold</a>
+                                                <a class="dropdown-item border" href="{{ url('units-state-change/'.$value->id.'/5') }}">Resale</a>
                                             @endif
                                         </div>
                                     </div>
@@ -337,6 +380,7 @@
                                             <i class="mdi mdi-dots-horizontal font-size-18"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="{{ route('units.show', ['unit' => $value->id]) }}"><i class="bx bx-spreadsheet text-dark"></i> &nbsp;View</a>
                                             <a class="dropdown-item" href="{{ route('units.edit', ['unit' => $value->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
                                         </div>
                                     </div>
