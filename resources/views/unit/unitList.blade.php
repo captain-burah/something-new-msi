@@ -39,7 +39,7 @@
                         <th style="width: 100px;">Operation</th>
                         <th style="width: 100px;">Unit Status</th>
                         <th >Unit Reference</th>
-                        <th style="width: 150px;">Price</th>
+                        <th style="width: 200px;">Price (AED)</th>
                         <th style="width: 150px;">Area</th>
                         <th style="width: 150px;">Bedrooms</th>
                         <th style="width: 150px;">Bathrooms</th>
@@ -47,7 +47,7 @@
                         <th style="width: 150px;">Brochures</th>
                         <th style="width: 150px;">Floor Plans</th>
                         <th style="width: 150px;">Images</th>
-                        <th>Action</th>
+                        {{-- <th>Action</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -60,7 +60,7 @@
                                 <td>{{$value->id}}</td>
                                 
                                 {{-- OPERATION --}}
-                                <td>
+                                <td class="d-inline-flex">
                                     <?php
                                         /**
                                          * UNIT STATES
@@ -69,14 +69,17 @@
                                          * 3 == TRASH
                                         */
                                     ?>
-                                    <div class="dropdown">
-                                        <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    
+                                    <a class="btn btn-sm btn-outline-light rounded " href="{{ route('units.show', ['unit' => $value->id]) }}"><i class="bx bx-show-alt text-dark font-size-18"></i></a>
+
+                                    <div class="dropdown mx-1">
+                                        <a class="dropdown-toggle btn btn-sm btn-outline-light rounded dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             @if($value->status == '1')
-                                                <i class="bx bx-check-shield text-success" style="font-size: 20px"></i>
+                                                <i class="bx bx-check-shield text-success font-size-18" ></i>
                                             @elseif($value->status == '2')
-                                                <i class="bx bx-cloud-download text-dark" style="font-size: 20px"></i>
+                                                <i class="bx bx-cloud-download text-dark font-size-18" ></i>
                                             @else
-                                                <i class="bx bx-trash text-danger" style="font-size: 20px"></i>
+                                                <i class="bx bx-trash text-danger font-size-18" ></i>
                                             @endif
                                         </a>
 
@@ -96,6 +99,10 @@
                                             @endif
                                         </div>
                                     </div>
+
+                                    <a class="btn btn-sm btn-outline-light rounded" href="{{ route('units.edit', ['unit' => $value->id]) }}"><i class="bx bx-edit text-dark font-size-18"></i></a>
+
+                                    
                                 </td>
 
                                 {{-- STATUS --}}
@@ -166,9 +173,9 @@
 
                                 <td>{{ $value->name }}</td>
 
-                                <td>{{ $value->unit_price }}</td>
+                                <td>{{ number_format($value->unit_price, 1) }}</td>
 
-                                <td>{{ $value->unit_size_range }}</td>
+                                <td>{{ number_format($value->unit_size_range, 0) }}</td>
 
                                 <td>{{ $value->bedroom }}</td>
                                 
@@ -226,8 +233,6 @@
                                         </div>
                                     </div>
                                 </td>
-
-
 
                                 {{-- BROCHURE --}}
                                 <td>
@@ -374,7 +379,7 @@
                                 </td>
 
                                 {{-- ACTION --}}
-                                <td>
+                                {{-- <td>
                                     <div class="dropdown">
                                         <button class="btn btn-sm btn-outline-light rounded dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="mdi mdi-dots-horizontal font-size-18"></i>
@@ -384,14 +389,14 @@
                                             <a class="dropdown-item" href="{{ route('units.edit', ['unit' => $value->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
                                         </div>
                                     </div>
-                                </td>
+                                </td> --}}
 
 
                             </tr>
                         @endforeach
 
-                        <tr>
-                            <td colspan='11' class="text-muted">*** End of the Line ***</td>
+                        <tr class="bg-dark">
+                            <td colspan='12' class="text-white">*** End of the Line ***</td>
                         </tr>
                     @else
                         <tr>

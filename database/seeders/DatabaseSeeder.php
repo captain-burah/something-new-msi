@@ -27,13 +27,13 @@ class DatabaseSeeder extends Seeder
         //     $unit->units()->saveMany(\App\Models\Unit::factory(10)->make());
         // });
 
-        \App\Models\Project::factory(10)->create()->each(function($project) {
-            \App\Models\Unit::factory(2)->create(['project_id' => $project->id ])->each(function($unit) {
-                \App\Models\Unit_paymentplan::factory(1)->create(['unit_id' => $unit->id ])->each(function($plan) {
-                    \App\Models\UnitPaymentplanFile::factory(5)->create(['unit_paymentplan_id' => $plan->id ]);
-                });
-            });
-        });
+        // \App\Models\Project::factory(10)->create()->each(function($project) {
+        //     \App\Models\Unit::factory(2)->create(['project_id' => $project->id ])->each(function($unit) {
+        //         \App\Models\Unit_paymentplan::factory(1)->create(['unit_id' => $unit->id ])->each(function($plan) {
+        //             \App\Models\UnitPaymentplanFile::factory(5)->create(['unit_paymentplan_id' => $plan->id ]);
+        //         });
+        //     });
+        // });
 
 
         \App\Models\Community::factory(10)->create()->each(function($community) {
@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
             EmiratesSeeder::class,
             ProjectTypeSeeder::class,
             ProjectSeeder::class,
+            UnitSeeder::class,
         ]);
     }
 }

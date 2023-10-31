@@ -85,7 +85,7 @@ class UnitBrochureController extends Controller
             return Redirect::back()->withErrors(['message', $e->getMessage() ]);
         }
 
-        return redirect()->route('project-brochures.index');
+        return redirect()->route('unit-brochures.index');
     }
 
     /**

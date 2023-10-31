@@ -12,11 +12,16 @@
 
             <div class="col-lg-4 d-none d-lg-block my-auto">
                 <a class="btn btn-dark float-right" href="{{ route('units.edit', ['unit' => $results->id]) }}"><i class="bx bx-edit"></i> &nbsp;Update Unit</a>
+                <a class="btn btn-outline-dark float-right mr-2" href="{{ URL::previous() }}">Back</a>
             </div>
         </div>
 
         <div class="row">
             <table class="table table-bordered">
+                <tr>
+                    <th>Unit Status</th>
+                    <td colspan="4">{{ $results->unit_state->name }}</td>
+                </tr>
                 <tr>
                     <th>Unit Ref</th>
                     <td>{{$results->name}}</td>
@@ -27,10 +32,10 @@
 
                 <tr>
                     <th>Unit Price</th>
-                    <td>{{$results->unit_price}}</td>
+                    <td><b>AED</b> {{ number_format($results->unit_price, 2)}}</td>
                     <td></td>
                     <th>Project Name</th>
-                    <td>{{$results->building_name}}</td>
+                    <td>{{$results->project->name}}</td>
                 </tr>
 
                 <tr>
@@ -46,23 +51,23 @@
                     <td>{{$results->floor}}</td>
                     <td></td>
                     <th>Unit Area</th>
-                    <td>{{$results->unit_size_range}}</td>
+                    <td> {{ number_format($results->unit_size_range, 0)}} <b>sq.ft.</b></td>
                 </tr>
 
                 <tr>
                     <th>Outdoor Area</th>
-                    <td>{{$results->outdoor_area}}</td>
+                    <td> {{ number_format($results->outdoor_area, 0)}} <b>sq.ft.</b></td>
                     <td></td>
                     <th>Terrace Area</th>
-                    <td>{{$results->terrace_area}}</td>
+                    <td> {{ number_format($results->terrace_area, 0)}} <b>sq.ft.</b></td>
                 </tr>
 
                 <tr>
                     <th>Oqood Fee</th>
-                    <td>{{$results->oqood_amount}}</td>
+                    <td>{{ number_format($results->oqood_amount, 2)}}</td>
                     <td></td>
                     <th>DLD Fee</th>
-                    <td>{{$results->dld_fees}}</td>
+                    <td>{{ number_format($results->dld_fees, 2)}}</td>
                 </tr>
 
                 <tr>

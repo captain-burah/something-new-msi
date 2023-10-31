@@ -27,20 +27,20 @@ class Unit extends Model
     {
         return $this->hasOne(Unit_paymentplan::class);
     }
-
+        
     public function unit_floorplan(): HasOne
     {
         return $this->hasOne(Unit_floorplan::class);
     }
 
-    public function unit_status(): HasOne
+    public function unit_status(): BelongsTo
     {
-        return $this->hasOne(Unit_status::class);
+        return $this->BelongsTo(Unit_status::class, 'status');
     }
 
-    public function unit_state(): HasOne
+    public function unit_state(): BelongsTo
     {
-        return $this->hasOne(UnitState::class);
+        return $this->BelongsTo(UnitState::class, 'state');
     }
 
     public function project(): BelongsTo

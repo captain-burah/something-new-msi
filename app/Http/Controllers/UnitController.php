@@ -200,9 +200,9 @@ class UnitController extends Controller
 
         }
 
-        $projects = Project::where('status', '1')->orWhere('status', '2')->get();
+        $projects = Project::where('status', '!=', '3')->get();
         // dd($projects[0]);
-        $this->data['projects'] = $projects;
+        $this->data['project'] = $projects[0];
         $this->data['brochures'] = Unit_brochure::with('unit_brochure_files')->get();
         $this->data['images'] = Unit_image::with('unit_image_files')->get();
         $this->data['floorplans'] = Unit_floorplan::with('unit_floorplan_files')->get();
@@ -358,7 +358,10 @@ class UnitController extends Controller
      */
     public function show(string $id)
     {
-        $this->data['results'] = $results = Unit::with('project', 'unit_brochure', 'unit_image', 'unit_paymentplan', 'unit_floorplan')->find($id);
+        $this->data['results'] = $results = Unit::with('project', 'unit_brochure', 'unit_image', 'unit_paymentplan', 'unit_floorplan', 'unit_state', 'unit_status')->find($id);
+        // $results = Unit::with("unit_state")->first();
+
+        // dd($results);
 
         return view('unit.show.index', $this->data);
     }
@@ -447,11 +450,19 @@ class UnitController extends Controller
             $unit->status = '2';
             $unit->save();
 
-            /**FETCH THE EXISTING PAYMENT PLAN AND UPDATE IT*/
-            $payment = Unit_paymentplan::with('unit_paymentplan_files')->find($request->paymentplan_id);
-            $payment->unit_id = $unit->id;
-            $payment->name = $request->unit_name;
-            $payment->save();
+            // dd($request->paymentplan_id);
+            if($request->paymentplan_id == null) {
+                $payment = new Unit_paymentplan();
+                $payment->unit_id = $unit->id;
+                $payment->name = $request->unit_name;
+                $payment->save();    
+            } else {
+                /**FETCH THE EXISTING PAYMENT PLAN AND UPDATE IT*/
+                $payment = Unit_paymentplan::with('unit_paymentplan_files')->find($request->paymentplan_id);
+                $payment->unit_id = $id;
+                $payment->name = $request->unit_name;
+                $payment->save();
+            }            
 
 
             /**GET ALL THE INPUTS INTO AN ARRAY
