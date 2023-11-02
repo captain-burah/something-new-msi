@@ -43,6 +43,11 @@ class Unit extends Model
         return $this->BelongsTo(UnitState::class, 'state');
     }
 
+    public function booking(): HasOne
+    {
+        return $this->HasOne(Booking::class);
+    }
+
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);

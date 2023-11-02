@@ -25,6 +25,7 @@ use Cookie;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Response;
 
 class BookingController extends Controller
 {
@@ -47,8 +48,7 @@ class BookingController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
+    public function create(){
         $this->data['results'] = $bookings = Booking::select(['id'])->get();
         $this->data['honorifics'] = $honorifics = Honorific::all();
         $this->data['country'] = $country = CountryCode::all();
@@ -62,11 +62,9 @@ class BookingController extends Controller
 
     public function clientele_store(Request $request) {
         try {
-
             $contact1 = $request->country_code1 . $request->contact1;
             $contact2 = $request->country_code2 . $request->contact2;
             $contact3 = $request->country_code3 . $request->contact3;
-
             $client = new Clientele();
             $client->unit_id = $request->unit_id;
             $client->prefix = $request->title;
@@ -88,10 +86,8 @@ class BookingController extends Controller
             $this->data['request'] = $request;
 
         } catch (\Exception $e) {
-
             return $e->getMessage();
         }
-
         return true;
     }
 
@@ -102,7 +98,7 @@ class BookingController extends Controller
 
     /** BOOKING CREATE SECTION */
         public function store_form0_projects(Request $request) {
-            $units =  Unit::where('project_id', $request->project_id)->where('status', 1)->get();
+            $units =  Unit::where('project_id', $request->project_id)->where('status', 1)->where('state', '1')->get();
             $this->data['units'] = $units;
             $this->data['project'] = Project::find($request->project_id);
             $this->data['form_type'] = 'form0_units';
@@ -140,11 +136,10 @@ class BookingController extends Controller
 
             // dd($unit->unit_paymentplan->unit_paymentplan_files);
 
-
-
             $this->data['results'] = $bookings = Booking::select(['id'])->get();
             $this->data['honorifics'] = $honorifics = Honorific::all();
             $this->data['country'] = $country = CountryCode::all();
+            $this->data['clients'] = $clients = Clientele::all();
             $this->data['form_type'] = 'form1';
             $this->data['booking_id'] = $booking->id;
 
@@ -157,6 +152,25 @@ class BookingController extends Controller
 
 
         public function store_form1(Request $request) {
+            dd($request);
+            $fileInputs = $request->file('items');
+
+            ss($fileInputs);
+
+            foreach ($fileInputs as $item) {
+                $file = $item['file'];
+
+                if ($file) {
+                    // Process and store the file for each item
+                    $file->store('/files');
+                    $file_path = public_path('files/'.$file);
+                    return response()->download($file_path);
+                }
+
+                // Handle other fields within each repeater item
+            }
+
+            
 
             $contact1 = $request->country_code1 . $request->contact1;
             $contact2 = $request->country_code2 . $request->contact2;
@@ -186,9 +200,9 @@ class BookingController extends Controller
             $booking_client->booking_id = $booking_id;
             $booking_client->save();
 
-            $this->data['form_type'] = 'form2';
+            $this->data['form_type'] = 'form3';
             $this->data['client_id'] = $client->id;
-            $this->data['request'] = $request;
+            $this->data['booking_id'] = $request->booking_id;
 
             //REDIRECT TO CLIENT DOCUMENTS
             return view('booking.create.index', $this->data );
@@ -331,14 +345,21 @@ class BookingController extends Controller
                 }
             }
 
-            $this->data['client'] = $client = Clientele::find($request->client_id);
+            // $this->data['client'] = $client = Clientele::find($request->client_id);
             $this->data['form_type'] = 'form3';
-            $this->data['request'] = $request;
+            $this->data['booking_id'] = $booking_id;
 
             //REDIRECT TO RESERVATION AGREEMENT
             return view('booking.create.index', $this->data );
         }
 
+
+        public function show_form3($booking_id){
+            $this->data['form_type'] = 'form2';
+            $this->data['booking_id'] = $booking_id;
+            //REDIRECT TO CLIENT DOCUMENTS
+            return view('booking.create.index', $this->data );
+        }
 
 
         public function store_form3(Request $request) {

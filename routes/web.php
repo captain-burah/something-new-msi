@@ -240,10 +240,21 @@ Route::middleware('auth')->group(function () {
     Route::post('booking-form-one-projects', [BookingController::class, 'store_form0_projects'])->name('bookings.store.form0.projects');
     Route::post('booking-form-one-units', [BookingController::class, 'store_form0_units'])->name('bookings.store.form0.units');
     Route::post('booking-form-two', [BookingController::class, 'store_form1'])->name('bookings.store.form1');
+    Route::get('booking-form-three/{client_id}', [BookingController::class, 'show_form3'])->name('bookings.show.form3');
     Route::post('booking-form-three', [BookingController::class, 'store_form2'])->name('bookings.store.form2');
     Route::post('booking-form-four', [BookingController::class, 'store_form3'])->name('bookings.store.form3');
 
 /**BOOKINGS */
+
+
+
+
+
+
+
+/**CLIENTELLE */
+    // Route::post('clientellee-create', [ClienteleController::class, 'create'])->name('bookings.store.form3');
+/**CLIENTELLE */
 
 });
 
