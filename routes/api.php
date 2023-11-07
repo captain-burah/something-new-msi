@@ -7,6 +7,8 @@ use App\Http\Middleware\AuthKey;
 use App\Http\Controllers\BookingController;
 
 use App\Http\Controllers\API\CommunityController;
+use App\Http\Controllers\API\ConstructionController;
+use App\Http\Controllers\API\NewsController;
 use App\Http\Controllers\API\UnitController;
 use App\Http\Controllers\API\Unit_paymentplan;
 use App\Http\Controllers\API\SEOController;
@@ -38,6 +40,10 @@ Route::middleware('authkey')->prefix('v1/esnaad')->namespace('App\Http\Controlle
     Route::get('/units-details/{slug}', 'API\UnitController@details');
     Route::get('/units-paymentplan-details/{unit_id}', 'API\UnitController@paymentplan_details');
     Route::get('/seo/{seo_id}', 'API\SEOController@index');
+    Route::get('/constructions', 'API\ConstructionController@index');
+    Route::get('/constructions/{id}', 'API\ConstructionController@show');
+    Route::get('/news', 'API\NewsController@index');
+    Route::get('/news/{id}', 'API\NewsController@show');
 });
 
 
