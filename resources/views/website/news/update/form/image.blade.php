@@ -6,25 +6,26 @@
             </label>
 
             <div class="row p-4">
-                @foreach($resources->community_images as $data)
-                    <div class="grid grid-rows-3 grid-flow-col gap-4">
-                        <div class="inline-block align-baseline my-4 text-center">
-                            <a href="{{ url('community-destroy/'.$data->id) }}" class="btn btn-outline-dark btn-sm">
-                                Delete
-                            </a>
+                @if(isset($images))
+                    @foreach($resources->website_news_images as $data)
+                        <div class="grid grid-rows-3 grid-flow-col gap-4">
+                            <div class="inline-block align-baseline my-4 text-center">
+                                <a href="{{ url('website-news-image-destroy/'.$data->id) }}" class="btn btn-outline-dark btn-sm">
+                                    Delete
+                                </a>
+                            </div>
+                            <div class="">
+                                <img src="{{ url('storage/news/'.$resources->id.'/images/'.$data->name) }}" width="100%" height="200">
+                            </div>
                         </div>
-                        <div class="">
-                            <img src="{{ url('storage/communities/'.$resources->id.'/images/'.$data->name) }}" width="100%" height="200">
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="m-4">
+                        <div class="row justify-content-center">
+                            <div class="m-4">
 
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
-
         </div>
     </div>
 </div>
@@ -96,26 +97,4 @@
             @enderror
         </div>
     </div>
-</div>
-
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="mb-3">
-            <label for="basicpill-video_link-input">Video link</label>
-            <input
-                type="text"
-                name="video_link"
-                class="form-control
-                @error('video_link') border border-solid border-danger  @enderror"
-                id="basicpill-video_link-input"
-                placeholder=""
-                value="{{ $resources->video_link }}"
-            >
-            @error('video_link')
-                <div class="text-danger text-xs">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-
 </div>

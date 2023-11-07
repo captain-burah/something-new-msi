@@ -6,7 +6,8 @@
             </label>
 
             <div class="row p-4">
-                @foreach($resources->community_images as $data)
+                @if(isset($images))
+                @foreach($resources->website_construction_images as $data)
                     <div class="grid grid-rows-3 grid-flow-col gap-4">
                         <div class="inline-block align-baseline my-4 text-center">
                             <a href="{{ url('community-destroy/'.$data->id) }}" class="btn btn-outline-dark btn-sm">
@@ -23,6 +24,7 @@
                         </div>
                     </div>
                 @endforeach
+                @endif
             </div>
 
         </div>
@@ -98,24 +100,3 @@
     </div>
 </div>
 
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="mb-3">
-            <label for="basicpill-video_link-input">Video link</label>
-            <input
-                type="text"
-                name="video_link"
-                class="form-control
-                @error('video_link') border border-solid border-danger  @enderror"
-                id="basicpill-video_link-input"
-                placeholder=""
-                value="{{ $resources->video_link }}"
-            >
-            @error('video_link')
-                <div class="text-danger text-xs">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-
-</div>

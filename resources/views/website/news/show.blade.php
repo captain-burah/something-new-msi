@@ -54,7 +54,12 @@
                                             <i class="mdi mdi-dots-horizontal font-size-18"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="{{ route('communities.edit', ['community' => $value->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
+                                            <a class="dropdown-item" href="{{ route('website-news.edit', ['website_news' => $value->id]) }}"><i class="bx bx-edit text-dark"></i> &nbsp;Update</a>
+                                            <form action="{{ route('website-news.destroy', ['website_news' => $value->id]) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-outline-danger rounded-0 btn-block">Delete</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </td>

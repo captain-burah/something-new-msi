@@ -12,6 +12,6 @@ class WebsiteNew extends Model
 
     public function website_news_images(): HasMany
     {
-        return $this->hasMany(WebsiteNewsImage::class);
+        return $this->hasMany(WebsiteNewsImage::class, 'news_id');
     }
 }

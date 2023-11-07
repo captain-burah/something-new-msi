@@ -11,7 +11,7 @@
 
 <div style="padding-top: 150px;">
 
-    @include('website.community.update.form')
+    @include('website.news.update.form')
 
     {{-- @include('project.activeProjectsTable') --}}
 </div>

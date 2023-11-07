@@ -23,26 +23,20 @@ class WebsiteNewsController extends Controller
     //      $this->middleware('permission:news-delete', ['only' => ['destroy']]);
     // }
 
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $this->data['resources'] = $resources = WebsiteNew::where('status', '1')->get();
         return view('news', $this->data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
         return view('website.news.create.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {
         $bool=0;
@@ -149,35 +143,137 @@ class WebsiteNewsController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
     public function edit(string $id)
     {
-        //
+        $this->data['resources'] = $resources = WebsiteNew::with('website_news_images')->find($id);
+        $image = 0;
+        if($resources->website_news_images->count() > 0) {
+            $this->data['image'] = $image = 1;
+        }
+        return view('website.news.update.index', $this->data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, string $id)
     {
-        //
+        $bool=0;
+
+
+        if($bool==0)
+        {
+            $resource = WebsiteNew::find($id);
+            $resource->status = '1';
+            $resource->slug_link = Str::slug($request->title);
+            $resource->title = $request->title;
+            $resource->title_ar = $request->title_ar;
+
+            $resource->description = $request->description;
+            $resource->description_ar = $request->description_ar;
+
+            $resource->meta_title = $request->meta_title;
+            $resource->meta_title_ar = $request->meta_title_ar;
+
+            $resource->meta_description = $request->meta_description;
+            $resource->meta_description_ar = $request->meta_description_ar;
+
+            $resource->meta_keywords = $request->meta_keywords;
+            $resource->meta_keywords_ar = $request->meta_keywords_ar;
+
+            $resource->map_image = $request->map_image;
+            $resource->save();
+
+            $resource_id = $resource->id;
+
+            if($request->hasfile('header_images'))
+            {
+                $files = [];
+
+                foreach($request->file('header_images') as $key => $image)
+                {
+                    $image_name = $image->hashName();
+                    $image->storeAs('news/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
+                    $resource_segment_file = WebsiteNew::find($resource_id);
+                    $resource_segment_file->header_image = $image_name;
+                    $resource_segment_file->save();
+                }
+            }
+
+
+            if($request->hasfile('thumbnails'))
+            {
+                $files = [];
+
+                foreach($request->file('thumbnails') as $key => $image)
+                {
+                    $image_name = $image->hashName();
+                    $image->storeAs('news/'.$resource_id.'/thumbnail/', $image_name, 'public'); //nonsecured storage - has public access
+                    $resource_segment_file = WebsiteNew::find($resource_id);
+                    $resource_segment_file->thumbnail = $image_name;
+                    $resource_segment_file->save();
+
+                }
+            }
+
+
+            if($request->hasfile('map_image'))
+            {
+                $files = [];
+
+                foreach($request->file('map_image') as $key => $image)
+                {
+                    $image_name = $image->hashName();
+                    $image->storeAs('news/'.$resource_id.'/map/', $image_name, 'public'); //nonsecured storage - has public access
+                    $resource_segment_file = WebsiteNew::find($resource_id);
+                    $resource_segment_file->thumbnail = $image_name;
+                    $resource_segment_file->save();
+
+                }
+            }
+
+
+            try {
+                if($request->hasfile('files'))
+                {
+                    $files = [];
+
+                    foreach($request->file('files') as $key => $image)
+                    {
+                        $image_name = $image->hashName();
+                        $image->storeAs('news/'.$resource_id.'/images/', $image_name, 'public'); //nonsecured storage - has public access
+                        $resource_segment_file = new WebsiteNewsImage();
+                        $resource_segment_file->community_id = $resource_id;
+                        $resource_segment_file->name = $image_name;
+                        $resource_segment_file->save();
+
+                    }
+                }
+            } catch (\Exception $e) {
+                return Redirect::back()->withErrors(['message', $e->getMessage() ]);
+            }
+
+
+            return $this->index();
+        }
+        else
+        {   dd('fail');
+            return Redirect::back()->withErrors('Record is already Exist');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
-    {
-        //
+    {       
+        $post = WebsiteNew::find($id);
+
+        $post->delete();
+        
+        return $this->index();    
     }
 }
