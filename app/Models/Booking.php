@@ -14,7 +14,7 @@ class Booking extends Model
 
     public function bookingclients(): HasMany
     {
-        return $this->hasMany(BookingClients::class);
+        return $this->hasMany(BookingClient::class);
     }
 
     public function unit(): BelongsTo

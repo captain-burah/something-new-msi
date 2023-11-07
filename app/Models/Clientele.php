@@ -20,5 +20,10 @@ class Clientele extends Model
     {
         return $this->hasMany(BookingClient::class);
     }
+    
+    public function unit(): BelongsTo
+    {
+        return $this->BelongsTo(Unit::class, 'unit_id');
+    }
 
 }

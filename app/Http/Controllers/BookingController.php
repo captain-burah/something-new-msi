@@ -354,6 +354,22 @@ class BookingController extends Controller
         }
 
 
+        public function store_form3_clients(Request $request) {
+            $booking_id = $request->booking_id;
+            $this->data['booking'] = $booking = Booking::with('unit')->find($booking_id);
+            $unit_id = $booking->unit_id;
+
+            foreach($request->clients as $client) {
+                $cliente_record = Clientele::find($client);
+                $cliente_record->unit_id = $unit_id;
+                $cliente_record->save();
+            }
+            $this->data['unit'] = $unit = Unit::with('clienteles')->find($unit_id);
+            $this->data['form_type'] = 'form2';
+            return view('booking.create.index', $this->data );            
+        }
+
+
         public function show_form3($booking_id){
             $this->data['form_type'] = 'form2';
             $this->data['booking_id'] = $booking_id;
@@ -398,5 +414,10 @@ class BookingController extends Controller
 
         public function booking_payment_failed(Request $request){
             dd('hello it works');
+        }
+
+
+        public function print_booking_form($booking_id){
+            
         }
 }

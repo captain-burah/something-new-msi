@@ -48,6 +48,11 @@ class Unit extends Model
         return $this->HasOne(Booking::class);
     }
 
+    public function clienteles(): HasMany
+    {
+        return $this->HasMany(Clientele::class);
+    }
+
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);

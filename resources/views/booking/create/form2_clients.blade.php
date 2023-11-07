@@ -13,77 +13,79 @@
 
 <div class="card shadow-sm">
     <div class="card-body">
-        <div class="row my-4">
-            <div class="col-8">
-                <label class="form-label">Client Selection</label>
+        <form id="form1" action="{{ route('bookings.store.form3.clients') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="row my-2">
+                <div class="col-8">
+                    <h3 class="form-label">Client Selection</h3>
+                </div>
+                <div class="col-4">
+                    
+                    
+                    <a href="#" class="btn btn-dark float-right" data-toggle="modal" data-target="#exampleModalFullscreen">
+                        Add a new Client
+                    </a>
+
+                    <button type="submit" class="btn btn-outline-dark float-right mx-3"  >
+                        Submit and Next
+                    </button>
+                </div>
             </div>
-            <div class="col-4">
-                <button class="btn btn-dark float-right" data-toggle="modal" data-target="#exampleModalFullscreen">
-                    Add a new Client
-                </button>
-            </div>
-        </div>
 
 
-        <div class="row">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Selection</th>
-                            <th>Client Name</th>
-                            <th>Email</th>
-                            <th>Contact</th>
-                            <th>Address</th>
-                            <th>Nationality</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if(isset($clients))
-                            @foreach($clients as $data)
+            <div class="row">
+                <div class="table-responsive">
+                    <input type="hidden" name="booking_id" value="{{$booking_id}}">
+                    <table class="table table-hover mb-0">
+                        <thead>
                             <tr>
-                                <form class="" method="post" action="{{ route('bookings.store.form0.units') }}">
-                                    @csrf
-                                    <td>{{ $loop->index }}</td>
-                                    <td>
-                                        <input type="checkbox" class="form-control">
+                                <th></th>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Address</th>
+                                <th>Nationality</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(isset($clients))
+                                @foreach($clients as $data)
+                                <tr>
+                                        <td width="25px">{{ $loop->index }}</td>
+                                        <td width="50px">
+                                            <input type="checkbox" name="clients[]" value="{{$data->id}}" class="form-control-sm" form="form1">
+                                        </td>
+                                        <td>{{ $data->name }}</td>
+                                        <td>{{ $data->email }}</td>
+                                        <td>{{ $data->contact1 }}</td>
+                                        <td>{{ $data->address1 }}</td>
+                                        <td>{{ $data->nationality }}</td>
+
+                                </tr>
+                                @endforeach
+                                <tr>    
+                                    <td colspan="8" class="text-center my-auto bg-dark text-white">
+                                        **** End of the line ****
                                     </td>
-                                    <td>{{ $data->name }}</td>
-                                    <td>{{ $data->email }}</td>
-                                    <td>{{ $data->contact1 }}</td>
-                                    <td>{{ $data->address1 }}</td>
-                                    <td>{{ $data->nationality }}</td>
-                                    <td>
-                                        <button type="submit" class="btn rounded-0 btn-outline-dark btn-sm">
-                                            Select
-                                        </button>
+                                </tr>
+                            @else
+                                <tr>    
+                                    <td colspan="8" class="text-center my-auto text-secondary">
+                                        No Client Records Found in Database
                                     </td>
-                                </form>
-                            </tr>
-                            @endforeach
-                            <tr>    
-                                <td colspan="8" class="text-center my-auto bg-dark text-white">
-                                    **** End of the line ****
-                                </td>
-                            </tr>
-                        @else
-                            <tr>    
-                                <td colspan="8" class="text-center my-auto text-secondary">
-                                    No Client Records Found in Database
-                                </td>
-                            </tr>
-                            <tr>    
-                                <td colspan="8" class="text-center my-auto bg-dark text-white">
-                                    **** End of the line ****
-                                </td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
+                                </tr>
+                                <tr>    
+                                    <td colspan="8" class="text-center my-auto bg-dark text-white">
+                                        **** End of the line ****
+                                    </td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 

@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Response;
-
+use Route;
 class ClienteleController extends Controller
 {
     /**
@@ -57,15 +57,14 @@ class ClienteleController extends Controller
          */
         $this->data['booking'] = $booking = Booking::with('unit')->find($request->booking_id);
         $project_id = $booking->unit->project->id;
+        $unit_id = $booking->unit->id;
         
-        // dd($project_id);
-
         $contact1 = $request->country_code1 . $request->contact1;
         $contact2 = $request->country_code2 . $request->contact2;
         $contact3 = $request->country_code3 . $request->contact3;
 
         $client = new Clientele();
-        $client->unit_id = $request->unit_id;
+        // $client->unit_id = $request->unit_id;
         $client->prefix = $request->title;
         $client->name = $request->name;
         $client->email = $request->email;
@@ -79,15 +78,16 @@ class ClienteleController extends Controller
         $client->passport = $request->passport;
         $client->passport_expiry = $request->pp_expiry;
         $client->save();
-
         
         $client_id = $client->id;
         $this->data['project'] = $project = Project::find($project_id);
         $this->data['client'] = $client = Clientele::find($client_id);
         $this->data['form_type'] = 'form3';
         $this->data['request'] = $request;
-
-
+        $this->data['form_type'] = 'form1';
+        $this->data['clients'] = $clients = Clientele::all();
+        $this->data['booking_id'] = $booking->id;
+        
         /** EMIRATES ID  */
         if($request->hasfile('eids'))
         {
@@ -95,7 +95,7 @@ class ClienteleController extends Controller
              * loop accessing the request helper function
              */
             $client_id = $client_id;
-            $unit_id = $request->unit_id;
+            $unit_id = $unit_id;
             foreach($request->file('eids') as $key => $image)
             {
                 /**assign the name and path */
@@ -118,13 +118,11 @@ class ClienteleController extends Controller
                 /**store the information in the database */
                 $segment = new Clientele_document();
                 $segment->name = 'eid';
-                $segment->unit_id = $request->unit_id;
-                $segment->client_id = $request->client_id;
+                $segment->client_id = $client_id;
                 $segment->filename = $image_name;
                 $segment->save();
             }
         }
-
 
         /** PASSPORT  */
         if($request->hasfile('passports'))
@@ -133,7 +131,7 @@ class ClienteleController extends Controller
              * loop accessing the request helper function
              */
             $client_id = $client_id;
-            $unit_id = $request->unit_id;
+            $unit_id = $unit_id;
 
             foreach($request->file('passports') as $key => $image)
             {
@@ -157,13 +155,11 @@ class ClienteleController extends Controller
                 /**store the information in the database */
                 $segment = new Clientele_document();
                 $segment->name = 'pp';
-                $segment->unit_id = $request->unit_id;
-                $segment->client_id = $request->client_id;
+                $segment->client_id = $client_id;
                 $segment->filename = $image_name;
                 $segment->save();
             }
         }
-
 
         /** VISA  */
         if($request->hasfile('visas'))
@@ -172,7 +168,7 @@ class ClienteleController extends Controller
              * loop accessing the request helper function
              */
             $client_id = $client_id;
-            $unit_id = $request->unit_id;
+            $unit_id = $unit_id;
 
             foreach($request->file('visas') as $key => $image)
             {
@@ -196,12 +192,31 @@ class ClienteleController extends Controller
                 /**store the information in the database */
                 $segment = new Clientele_document();
                 $segment->name = 'pp';
-                $segment->unit_id = $request->unit_id;
-                $segment->client_id = $request->client_id;
+                $segment->client_id = $client_id;
                 $segment->filename = $image_name;
                 $segment->save();
             }
         }
+
+        return view('booking.create.index', $this->data );
+
+    }
+
+
+
+    public function remove_client($id, $booking_id) {
+
+        $client = Clientele::find($id);
+        // dd($client);
+        $client->unit_id =   null;
+        $client->save();
+
+        $booking_id = $booking_id;
+        $this->data['booking'] = $booking = Booking::with('unit')->find($booking_id);
+        $unit_id = $booking->unit_id;        
+        $this->data['unit'] = $unit = Unit::with('clienteles')->find($unit_id);
+        $this->data['form_type'] = 'form2';
+        return view('booking.create.index', $this->data );
     }
 
     /**
