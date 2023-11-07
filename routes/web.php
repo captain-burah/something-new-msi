@@ -18,8 +18,8 @@ use App\Http\Controllers\UnitFloorplanController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\SeoController;
-// use App\Http\Controllers\UnitPaymentplanController;
-// use App\Http\Controllers\UnitTranslationController;
+use App\Http\Controllers\WebsiteNewsController;
+use App\Http\Controllers\WebsiteConstructionsController;
 
 use App\Http\Controllers\Localization;
 use App\Http\Controllers\ProductController;
@@ -228,11 +228,19 @@ Route::middleware('auth')->group(function () {
 
 
 
+/** WEBSITE CONTENT MANAGEMENT */
+    /** COMMUNITY */
+        Route::get('community-destroy/{id}', [CommunityController::class, 'destroy_image'])->name('community.destroy.image');
+    /** COMMUNITY */
 
-/** COMMUNITY */
-    Route::get('community-destroy/{id}', [CommunityController::class, 'destroy_image'])->name('community.destroy.image');
+    /** CONSTRUCTION */
+        Route::resource('website-constructions', WebsiteConstructionsController::class);
+    /** CONSTRUCTION */
 
-/** COMMUNITY */
+    /** NEWS */
+        Route::resource('website-news', WebsiteNewsController::class);
+    /** NEWS */
+/** WEBSITE CONTENT MANAGEMENT */
 
 
 
