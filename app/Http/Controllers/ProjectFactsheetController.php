@@ -15,6 +15,8 @@ use App\Models\Project_factsheet;
 use App\Models\Project_factsheet_file;
 class ProjectFactsheetController extends Controller
 {
+    private $uploadPath = "uploads/projects/factsheets/";
+
     public function index()
     {
         $images = Project_factsheet::with('project_factsheet_files')->get();
@@ -78,7 +80,11 @@ class ProjectFactsheetController extends Controller
                 foreach($request->file('files') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('projects/factsheets/'.$project_segment_id, $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$project_segment_id/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('projects/factsheets/'.$project_segment_id, $image_name, 'public'); //nonsecured storage - has public access
 
                     $project_segment_file = new Project_factsheet_file();
                     $project_segment_file->project_factsheet_id = $project_segment_id;
@@ -156,7 +162,11 @@ class ProjectFactsheetController extends Controller
                 foreach($request->file('files') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('projects/factsheets/'.$project_segment_id, $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$project_segment_id/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('projects/factsheets/'.$project_segment_id, $image_name, 'public'); //nonsecured storage - has public access
 
                     $project_segment_file = new Project_factsheet_file();
                     $project_segment_file->project_factsheet_id = $project_segment_id;

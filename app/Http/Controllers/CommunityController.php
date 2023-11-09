@@ -17,6 +17,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class CommunityController extends Controller
 {
 
+    private $uploadPath = "uploads/communities/";
 
 
     public function index() {
@@ -110,7 +111,11 @@ class CommunityController extends Controller
                 foreach($request->file('header_images') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('communities/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/header_image/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('communities/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = Community::find($resource_id);
                     $resource_segment_file->header_image = $image_name;
                     $resource_segment_file->save();
@@ -125,7 +130,11 @@ class CommunityController extends Controller
                 foreach($request->file('thumbnails') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('communities/'.$resource_id.'/thumbnail/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/thumbnail/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('communities/'.$resource_id.'/thumbnail/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = Community::find($resource_id);
                     $resource_segment_file->thumbnail = $image_name;
                     $resource_segment_file->save();
@@ -141,7 +150,11 @@ class CommunityController extends Controller
                 foreach($request->file('map_image') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('communities/'.$resource_id.'/map/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/map/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('communities/'.$resource_id.'/map/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = Community::find($resource_id);
                     $resource_segment_file->thumbnail = $image_name;
                     $resource_segment_file->save();
@@ -158,7 +171,10 @@ class CommunityController extends Controller
                     foreach($request->file('files') as $key => $image)
                     {
                         $image_name = $image->hashName();
-                        $image->storeAs('communities/'.$resource_id.'/images/', $image_name, 'public'); //nonsecured storage - has public access
+                        $path = $this->uploadPath;
+                        $image->move($path."$resource_id/images/", $image_name);
+                        // $image_name = $image->hashName();
+                        // $image->storeAs('communities/'.$resource_id.'/images/', $image_name, 'public'); //nonsecured storage - has public access
                         $resource_segment_file = new CommunityImage();
                         $resource_segment_file->community_id = $resource_id;
                         $resource_segment_file->name = $image_name;
@@ -287,7 +303,11 @@ class CommunityController extends Controller
                 foreach($request->file('header_images') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('communities/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/header_image/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('communities/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = Community::find($resource_id);
                     $resource_segment_file->header_image = $image_name;
                     $resource_segment_file->save();
@@ -302,7 +322,11 @@ class CommunityController extends Controller
                 foreach($request->file('thumbnails') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('communities/'.$resource_id.'/thumbnail/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/thumbnail/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('communities/'.$resource_id.'/thumbnail/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = Community::find($resource_id);
                     $resource_segment_file->thumbnail = $image_name;
                     $resource_segment_file->save();
@@ -318,7 +342,11 @@ class CommunityController extends Controller
                 foreach($request->file('map_image') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('communities/'.$resource_id.'/map/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/map/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('communities/'.$resource_id.'/map/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = Community::find($resource_id);
                     $resource_segment_file->thumbnail = $image_name;
                     $resource_segment_file->save();
@@ -335,7 +363,11 @@ class CommunityController extends Controller
                     foreach($request->file('files') as $key => $image)
                     {
                         $image_name = $image->hashName();
-                        $image->storeAs('communities/'.$resource_id.'/images/', $image_name, 'public'); //nonsecured storage - has public access
+                        $path = $this->uploadPath;
+                        $image->move($path."$resource_id/images/", $image_name);
+
+                        // $image_name = $image->hashName();
+                        // $image->storeAs('communities/'.$resource_id.'/images/', $image_name, 'public'); //nonsecured storage - has public access
                         $resource_segment_file = new CommunityImage();
                         $resource_segment_file->community_id = $resource_id;
                         $resource_segment_file->name = $image_name;

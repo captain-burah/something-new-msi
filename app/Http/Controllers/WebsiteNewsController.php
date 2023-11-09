@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\WebsiteNew;
+use App\Models\WebsiteNewsImage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log; // send notifications via slack or any other means
 use Illuminate\Support\Str;
@@ -15,6 +16,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class WebsiteNewsController extends Controller
 {
+    private $uploadPath = "uploads/news/";
+
     // function __construct()
     // {
     //      $this->middleware('permission:news-list|news-create|news-edit|news-delete', ['only' => ['index','show']]);
@@ -75,7 +78,11 @@ class WebsiteNewsController extends Controller
                 foreach($request->file('header_images') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('website-news/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/header_image/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('website-news/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = WebsiteNew::find($resource_id);
                     $resource_segment_file->header_image = $image_name;
                     $resource_segment_file->save();
@@ -90,7 +97,11 @@ class WebsiteNewsController extends Controller
                 foreach($request->file('thumbnails') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('website-news/'.$resource_id.'/thumbnail/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/thumbnail/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('website-news/'.$resource_id.'/thumbnail/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = WebsiteNew::find($resource_id);
                     $resource_segment_file->thumbnail = $image_name;
                     $resource_segment_file->save();
@@ -106,7 +117,11 @@ class WebsiteNewsController extends Controller
                 foreach($request->file('map_image') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('website-news/'.$resource_id.'/map/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/map/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('website-news/'.$resource_id.'/map/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = WebsiteNew::find($resource_id);
                     $resource_segment_file->thumbnail = $image_name;
                     $resource_segment_file->save();
@@ -122,8 +137,12 @@ class WebsiteNewsController extends Controller
                     foreach($request->file('files') as $key => $image)
                     {
                         $image_name = $image->hashName();
-                        $image->storeAs('website-news/'.$resource_id.'/images/', $image_name, 'public'); //nonsecured storage - has public access
-                        $resource_segment_file = new WebsiteNewImage();
+                        $path = $this->uploadPath;
+                        $image->move($path."$resource_id/images/", $image_name);
+                        
+                        // $image_name = $image->hashName();
+                        // $image->storeAs('website-news/'.$resource_id.'/images/', $image_name, 'public'); //nonsecured storage - has public access
+                        $resource_segment_file = new WebsiteNewsImage();
                         $resource_segment_file->news_id = $resource_id;
                         $resource_segment_file->name = $image_name;
                         $resource_segment_file->save();
@@ -154,7 +173,7 @@ class WebsiteNewsController extends Controller
     {
         $this->data['resources'] = $resources = WebsiteNew::with('website_news_images')->find($id);
         $image = 0;
-        if($resources->website_news_images->count() > 0) {
+        if(count($resources->website_news_images) > 0) {
             $this->data['image'] = $image = 1;
         }
         return view('website.news.update.index', $this->data);
@@ -198,7 +217,11 @@ class WebsiteNewsController extends Controller
                 foreach($request->file('header_images') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('news/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/header_image/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('news/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = WebsiteNew::find($resource_id);
                     $resource_segment_file->header_image = $image_name;
                     $resource_segment_file->save();
@@ -213,7 +236,11 @@ class WebsiteNewsController extends Controller
                 foreach($request->file('thumbnails') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('news/'.$resource_id.'/thumbnail/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/thumbnail/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('news/'.$resource_id.'/thumbnail/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = WebsiteNew::find($resource_id);
                     $resource_segment_file->thumbnail = $image_name;
                     $resource_segment_file->save();
@@ -229,7 +256,11 @@ class WebsiteNewsController extends Controller
                 foreach($request->file('map_image') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('news/'.$resource_id.'/map/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/map/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('news/'.$resource_id.'/map/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = WebsiteNew::find($resource_id);
                     $resource_segment_file->thumbnail = $image_name;
                     $resource_segment_file->save();
@@ -246,7 +277,11 @@ class WebsiteNewsController extends Controller
                     foreach($request->file('files') as $key => $image)
                     {
                         $image_name = $image->hashName();
-                        $image->storeAs('news/'.$resource_id.'/images/', $image_name, 'public'); //nonsecured storage - has public access
+                        $path = $this->uploadPath;
+                        $image->move($path."$resource_id/images/", $image_name); 
+
+                        // $image_name = $image->hashName();
+                        // $image->storeAs('news/'.$resource_id.'/images/', $image_name, 'public'); //nonsecured storage - has public access
                         $resource_segment_file = new WebsiteNewsImage();
                         $resource_segment_file->community_id = $resource_id;
                         $resource_segment_file->name = $image_name;

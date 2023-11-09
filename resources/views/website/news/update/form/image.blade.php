@@ -6,7 +6,7 @@
             </label>
 
             <div class="row p-4">
-                @if(isset($images))
+                @if(isset($image))
                     @foreach($resources->website_news_images as $data)
                         <div class="grid grid-rows-3 grid-flow-col gap-4">
                             <div class="inline-block align-baseline my-4 text-center">
@@ -15,7 +15,7 @@
                                 </a>
                             </div>
                             <div class="">
-                                <img src="{{ url('storage/news/'.$resources->id.'/images/'.$data->name) }}" width="100%" height="200">
+                                <img src="{{ asset('uploads/news/'.$resources->id.'/images/'.$data->name) }}" width="100%" height="200">
                             </div>
                         </div>
                         <div class="row justify-content-center">

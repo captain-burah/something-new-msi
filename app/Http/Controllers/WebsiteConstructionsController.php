@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\WebsiteConstruction;
+use App\Models\WebsiteConstructionImage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log; // send notifications via slack or any other means
 use Illuminate\Support\Str;
@@ -14,6 +15,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class WebsiteConstructionsController extends Controller
 {
+    private $uploadPath = "uploads/construction/";
+
     // function __construct()
     // {
     //      $this->middleware('permission:construction-list|construction-create|construction-edit|construction-delete', ['only' => ['index','show']]);
@@ -66,6 +69,7 @@ class WebsiteConstructionsController extends Controller
 
             $resource_id = $resource->id;
 
+
             if($request->hasfile('header_images'))
             {
                 $files = [];
@@ -73,7 +77,9 @@ class WebsiteConstructionsController extends Controller
                 foreach($request->file('header_images') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('website-construction/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path.'/'.$resource_id.'/header_image/', $image_name);
+                    // $image->storeAs('website-construction/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = WebsiteConstruction::find($resource_id);
                     $resource_segment_file->header_image = $image_name;
                     $resource_segment_file->save();
@@ -191,11 +197,15 @@ class WebsiteConstructionsController extends Controller
             if($request->hasfile('header_images'))
             {
                 $files = [];
-
+                
                 foreach($request->file('header_images') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('constructions/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/header_image/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('constructions/'.$resource_id.'/header_image/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = WebsiteConstruction::find($resource_id);
                     $resource_segment_file->header_image = $image_name;
                     $resource_segment_file->save();
@@ -210,7 +220,12 @@ class WebsiteConstructionsController extends Controller
                 foreach($request->file('thumbnails') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('constructions/'.$resource_id.'/thumbnail/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/thumbnail/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // Storage::disk('public')->put('test', $fileContents);
+                    // $image->storeAs('constructions/'.$resource_id.'/thumbnail/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = WebsiteConstruction::find($resource_id);
                     $resource_segment_file->thumbnail = $image_name;
                     $resource_segment_file->save();
@@ -226,7 +241,11 @@ class WebsiteConstructionsController extends Controller
                 foreach($request->file('map_image') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('constructions/'.$resource_id.'/map/', $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$resource_id/map/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('constructions/'.$resource_id.'/map/', $image_name, 'public'); //nonsecured storage - has public access
                     $resource_segment_file = WebsiteConstruction::find($resource_id);
                     $resource_segment_file->thumbnail = $image_name;
                     $resource_segment_file->save();
@@ -243,9 +262,13 @@ class WebsiteConstructionsController extends Controller
                     foreach($request->file('files') as $key => $image)
                     {
                         $image_name = $image->hashName();
-                        $image->storeAs('constructions/'.$resource_id.'/images/', $image_name, 'public'); //nonsecured storage - has public access
-                        $resource_segment_file = new WebsiteConstructionsImage();
-                        $resource_segment_file->community_id = $resource_id;
+                        $path = $this->uploadPath;
+                        $image->move($path."$resource_id/images/", $image_name);
+                        
+                        // $image_name = $image->hashName();
+                        // $image->storeAs('constructions/'.$resource_id.'/images/', $image_name, 'public'); //nonsecured storage - has public access
+                        $resource_segment_file = new WebsiteConstructionImage();
+                        $resource_segment_file->construction_id = $resource_id;
                         $resource_segment_file->name = $image_name;
                         $resource_segment_file->save();
 

@@ -15,9 +15,7 @@ use Illuminate\Support\Str;
 
 class ProjectBrochureController extends Controller
 {
-
-    private $uploadPath = "uploads/projects/images/";
-
+    private $uploadPath = "uploads/projects/brochures/";
     /**
      * Display a listing of the resource.
      */
@@ -76,7 +74,11 @@ class ProjectBrochureController extends Controller
                 foreach($request->file('files') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('projects/brochures/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$project_brochure_id/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('projects/brochures/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
 
                     $project_brochure_file = new Project_brochure_file();
                     $project_brochure_file->project_brochure_id = $project_brochure_id;
@@ -145,7 +147,11 @@ class ProjectBrochureController extends Controller
                 foreach($request->file('files') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('projects/brochures/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$project_brochure_id/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('projects/brochures/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
 
                     $project_brochure_file = new Project_brochure_file();
                     $project_brochure_file->project_brochure_id = $request->brochure_id;

@@ -375,7 +375,10 @@ class UnitController extends Controller
     public function edit(string $id)
     {
         $this->data['projects'] = $projects = Project::select(['id', 'name'])->where('status', '2')->orWhere('status', '1')->get();
-        $this->data['unit'] = $unit = Unit::with('unit_paymentplan')->where('status', '2')->find($id);
+        $this->data['unit'] = $unit = Unit::with('unit_paymentplan')->find($id);
+        if($unit->status == '1'){
+            return Redirect::back()->withErrors('Sorry! You cannot edit Active units. Please transfer the unit into "Drafts" to proceed.');
+        }
         // dd($unit->unit_paymentplan->unit_paymentplan_files[0]->);
 
         // dd($unit);

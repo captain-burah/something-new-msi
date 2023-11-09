@@ -16,6 +16,10 @@ use Illuminate\Support\Str;
 
 class UnitImageController extends Controller
 {
+
+    private $uploadPath = "uploads/units/images/";
+
+
     public function index()
     {
         $brochures = Unit_image::with('unit_image_files')->get();
@@ -68,7 +72,11 @@ class UnitImageController extends Controller
                 foreach($request->file('files') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('units/images/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$project_brochure_id/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('units/images/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
 
                     $project_brochure_file = new UnitImageFile();
                     $project_brochure_file->unit_image_id = $project_brochure_id;
@@ -81,7 +89,7 @@ class UnitImageController extends Controller
             return Redirect::back()->withErrors(['message', $e->getMessage() ]);
         }
 
-        return redirect()->route('unit-brochures.index');
+        return redirect()->route('unit-images.index');
     }
 
     /**
@@ -136,7 +144,11 @@ class UnitImageController extends Controller
                 foreach($request->file('files') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('units/images/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$project_brochure_id/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('units/images/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
 
                     $project_brochure_file = new UnitImageFile();
                     $project_brochure_file->unit_image_id = $request->segment_id;

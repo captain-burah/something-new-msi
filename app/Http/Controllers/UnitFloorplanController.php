@@ -15,7 +15,8 @@ use Illuminate\Support\Str;
 
 class UnitFloorplanController extends Controller
 {
-    private $uploadPath = "uploads/floorplans/images/";
+    private $uploadPath = "uploads/units/floorplans/";
+    
 
 
     public function index()
@@ -73,7 +74,11 @@ class UnitFloorplanController extends Controller
                 foreach($request->file('files') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('units/floorplans/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$project_brochure_id/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('units/floorplans/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
 
                     $project_brochure_file = new UnitFloorplanFile();
                     $project_brochure_file->unit_floorplan_id = $project_brochure_id;
@@ -141,7 +146,11 @@ class UnitFloorplanController extends Controller
                 foreach($request->file('files') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('units/floorplans/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$project_brochure_id/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('units/floorplans/'.$project_brochure_id, $image_name, 'public'); //nonsecured storage - has public access
 
                     // dd($project_brochure_id);
 

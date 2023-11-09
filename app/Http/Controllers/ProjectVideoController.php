@@ -16,6 +16,9 @@ use App\Models\Project_video_file;
 
 class ProjectVideoController extends Controller
 {
+    private $uploadPath = "uploads/projects/videos/";
+
+
     public function index()
     {
         $images = Project_video::with('project_video_files')->get();

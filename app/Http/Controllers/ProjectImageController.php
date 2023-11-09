@@ -15,6 +15,8 @@ use App\Models\Project_image;
 use App\Models\Project_image_file;
 class ProjectImageController extends Controller
 {
+    private $uploadPath = "uploads/projects/images/";
+
     public function index()
     {
         $images = Project_image::with('project_image_files')->get();
@@ -88,7 +90,11 @@ class ProjectImageController extends Controller
                 foreach($request->file('files') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('projects/images/'.$project_segment_id, $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$project_segment_id/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('projects/images/'.$project_segment_id, $image_name, 'public'); //nonsecured storage - has public access
                     $project_segment_file = new Project_image_file();
                     $project_segment_file->project_image_id = $project_segment_id;
                     $project_segment_file->name = $image_name;
@@ -167,7 +173,11 @@ class ProjectImageController extends Controller
                 foreach($request->file('files') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $image->storeAs('projects/images/'.$project_segment_id, $image_name, 'public'); //nonsecured storage - has public access
+                    $path = $this->uploadPath;
+                    $image->move($path."$project_segment_id/", $image_name);
+
+                    // $image_name = $image->hashName();
+                    // $image->storeAs('projects/images/'.$project_segment_id, $image_name, 'public'); //nonsecured storage - has public access
 
                     $project_segment_file = new Project_image_file();
                     $project_segment_file->project_image_id = $request->segment_id;
