@@ -58,7 +58,7 @@
                 
             </div>
             <div class="">
-                <a href="#print" class="btn btn-dark btn-block">
+                <a href="{{ url('print_booking/'.$request->booking_id) }}" class="btn btn-dark btn-block">
                     Print Booking Form
                 </a>
             </div>

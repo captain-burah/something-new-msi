@@ -366,6 +366,8 @@ class BookingController extends Controller
             }
             $this->data['unit'] = $unit = Unit::with('clienteles')->find($unit_id);
             $this->data['form_type'] = 'form2';
+            $this->data['request'] = $request;
+
             return view('booking.create.index', $this->data );            
         }
 
@@ -418,6 +420,15 @@ class BookingController extends Controller
 
 
         public function print_booking_form($booking_id){
-            
+
+            $this->data['booking'] = $booking = Booking::with('unit')->find($booking_id);
+            $unit_id = $booking->unit_id;
+
+            $this->data['unit'] = $unit = Unit::with('clienteles')->find($unit_id);
+            $this->data['form_type'] = 'form2';
+
+            // $pdf = PDF::loadView('booking.reservationAgreement', $this->data);
+            return view('booking.booking_form_print', $this->data);
+            // return $pdf->setPaper('a4', 'portrait')->download('reservation-agreement.pdf');
         }
 }
