@@ -371,6 +371,20 @@ class BookingController extends Controller
             return view('booking.create.index', $this->data );            
         }
 
+        public function store_form4_agency(Request $request) {
+            $booking_id = $request->booking_id;
+            $this->data['booking'] = $booking = Booking::with('unit')->find($booking_id);
+            $unit_id = $booking->unit_id;
+
+            
+                        
+            $this->data['unit'] = $unit = Unit::with('clienteles')->find($unit_id);
+            $this->data['form_type'] = 'form2';
+            $this->data['request'] = $request;
+
+            return view('booking.create.index', $this->data );            
+        }
+
 
         public function show_form3($booking_id){
             $this->data['form_type'] = 'form2';

@@ -20,9 +20,9 @@
         @elseif($form_type == 'form1')
             @include('booking.create.form2_clients')
         @elseif($form_type == 'form2')
-            @include('booking.create.form3_offer')
+            @include('booking.create.form3_agency')
         @elseif($form_type == 'form3')
-            @include('booking.create.form3')
+            @include('booking.create.form4_offer')
         @elseif($form_type == 'form4')
             @include('booking.create.form4')
         @endif

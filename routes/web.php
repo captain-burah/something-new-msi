@@ -252,7 +252,6 @@ Route::middleware('auth')->group(function () {
 /** WEBSITE CONTENT MANAGEMENT */
 
 
-
 /**BOOKINGS */
     Route::post('booking-form-one', [BookingController::class, 'store_form0'])->name('bookings.store.form0');
     Route::post('booking-form-one-projects', [BookingController::class, 'store_form0_projects'])->name('bookings.store.form0.projects');
