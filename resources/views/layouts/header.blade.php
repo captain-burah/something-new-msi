@@ -24,15 +24,39 @@
             </button>
 
             <div class="d-flex flex-row ">
-                <a href="{{ route('dashboard')}}" class="mr-5 my-auto">
+                <a href="{{ route('dashboard')}}" class="mr-5 my-auto MX-AUTO">
                     <span class="text-white font-weight-bold  my-auto ">HOME </span>
                 </a>
-
+                
                 @can('project-list')
+                <div class="dropdown d-inline-block mr-5">
+                    <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="d-none d-xl-inline-block ml-1 text-white font-weight-bold">INVENTORY </span>
+                        <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                    </button>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="{{ route('projects.index')}}" class="dropdown-item">
+                            <span class="font-weight-bold  my-auto ">PROJECT MGT</span>
+                        </a>
+                        <a href="{{ route('units.index')}}" class="dropdown-item">
+                            <span class="font-weight-bold  my-auto ">UNIT MGT</span>
+                        </a>
+                    </div>
+                </div>
+                @endcan
+
+                {{-- @can('project-list')
                 <a href="{{ route('projects.index')}}" class="mr-5 my-auto">
-                    <span class="text-white font-weight-bold  my-auto ">DEVELOPMENTS </span>
+                    <span class="text-white font-weight-bold  my-auto ">PROJECTS</span>
                 </a>
                 @endcan
+
+                @can('listing-list')
+                <a href="{{ route('units.index')}}" class="mr-5 my-auto">
+                    <span class="text-white font-weight-bold  my-auto ">UNITS </span>
+                </a>
+                @endcan --}}
 
                 @can('booking-list')
                 <a href="{{ route('bookings.index')}}" class="mr-5 my-auto">
@@ -40,9 +64,14 @@
                 </a>
                 @endcan
 
-                @can('listing-list')
-                <a href="{{ route('units.index')}}" class="mr-5 my-auto">
-                    <span class="text-white font-weight-bold  my-auto ">UNITS </span>
+                @can('clientele-list')
+                <a href="{{ route('clienteles.index')}}" class="mr-5 my-auto">
+                    <span class="text-white font-weight-bold  my-auto ">CLIENTS</span>
+                </a>
+
+                @can('meeting-list')
+                <a href="{{ route('leads.index')}}" class="mr-5 my-auto">
+                    <span class="text-white font-weight-bold  my-auto ">LEADS</span>
                 </a>
                 @endcan
 
@@ -52,16 +81,14 @@
                 </a>
                 @endcan
 
-                @can('clientele-list')
-                <a href="{{ route('clienteles.index')}}" class="mr-3 my-auto">
-                    <span class="text-white font-weight-bold  my-auto ">CLIENTELE </span>
-                </a>
+                
                 @endcan
 
             </div>
 
 
-            @include('layouts.megaMenu')
+            {{-- @include('layouts.megaMenu') --}}
+
         </div>
 
         <div class="d-flex">

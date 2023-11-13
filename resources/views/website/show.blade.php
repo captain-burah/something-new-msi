@@ -76,23 +76,6 @@
 
 
     <div class="col-lg-4">
-        <div class="card">
-            <div class="card-body">
-                <div class="row mx-auto">
-
-                    <div class="d-flex">
-                        <div class="flex-grow-1 align-self-center">
-                            <div class="text-muted">
-                                <h3 class="mb-1"><i class="bx bx-briefcase text-dark font-size-24"></i> SEO</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4">
         <a href="{{ route('website-news.index') }}">
         <div class="card">
             <div class="card-body">

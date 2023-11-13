@@ -5,6 +5,7 @@ use App\Http\Controllers\RoleController;
 
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectBrochureController;
+use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\ProjectImageController;
 use App\Http\Controllers\ProjectFactsheetController;
 use App\Http\Controllers\ProjectVideoController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\WebsiteNewsController;
 use App\Http\Controllers\WebsiteConstructionsController;
+use App\Http\Controllers\LeadController;
 
 use App\Http\Controllers\Localization;
 use App\Http\Controllers\ProductController;
@@ -58,6 +60,8 @@ Route::get('/financial-admin', [MainController::class, 'financial_admin_login'])
 Route::middleware('auth')->group(function () {
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout.get');
     Route::get('/website', [WebsiteController::class, 'index'])->name('website.index');
+    Route::get('/website', [WebsiteController::class, 'index'])->name('website.index');
+    
 
     Route::get('purchaser/remove_unit/{$id}', [ClienteleController::class, 'purchaser_remove_from_unit'])->name('clientele_disengage_unit');
 
@@ -82,6 +86,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('unit-images', UnitImageController::class);
     // Route::resource('unit-payment-plan', UnitPaymentplanController::class);
     Route::resource('unit-floor-plan', UnitFloorplanController::class);
+
+
+    /**LEADS ROUTES */
+    Route::resource('leads', LeadController::class);
+
 
 
     Route::resource('bookings', BookingController::class);
@@ -267,6 +276,8 @@ Route::middleware('auth')->group(function () {
 /**CLIENTELLE */
 /**CLIENTELLE */
 
+
+    
 });
 
 

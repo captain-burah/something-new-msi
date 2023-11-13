@@ -220,7 +220,7 @@ class WebsiteConstructionsController extends Controller
                 foreach($request->file('thumbnails') as $key => $image)
                 {
                     $image_name = $image->hashName();
-                    $path = $this->uploadPath;
+                    $path = $this->uploadPath;  
                     $image->move($path."$resource_id/thumbnail/", $image_name);
 
                     // $image_name = $image->hashName();
