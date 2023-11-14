@@ -64,11 +64,6 @@
                 </a>
                 @endcan
 
-                @can('clientele-list')
-                <a href="{{ route('clienteles.index')}}" class="mr-5 my-auto">
-                    <span class="text-white font-weight-bold  my-auto ">CLIENTS</span>
-                </a>
-
                 @can('meeting-list')
                 <a href="{{ route('leads.index')}}" class="mr-5 my-auto">
                     <span class="text-white font-weight-bold  my-auto ">LEADS</span>
@@ -81,7 +76,17 @@
                 </a>
                 @endcan
 
-                
+
+                @can('clientele-list')
+                <a href="{{ route('clienteles.index')}}" class="mr-5 my-auto">
+                    <span class="text-white font-weight-bold  my-auto ">CLIENTS</span>
+                </a>
+                @endcan
+
+                @can('broker-list')
+                <a href="{{ route('brokers.index') }}" class="mr-5 my-auto">
+                    <span class="text-white font-weight-bold  my-auto ">BROKERS</span>
+                </a>
                 @endcan
 
             </div>

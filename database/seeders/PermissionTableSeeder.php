@@ -70,6 +70,18 @@ class PermissionTableSeeder extends Seeder
             'media-create',
             'media-edit',
             'media-delete',
+            'broker-list',
+            'broker-create',
+            'broker-edit',
+            'broker-delete',
+            'lead-list',
+            'lead-create',
+            'lead-edit',
+            'lead-delete',
+            'webcontent-list',
+            'webcontent-create',
+            'webcontent-edit',
+            'webcontent-delete',
         ];
 
         foreach ($permissions as $permission) {

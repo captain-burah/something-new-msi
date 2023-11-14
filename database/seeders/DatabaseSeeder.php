@@ -54,6 +54,7 @@ class DatabaseSeeder extends Seeder
             ProjectTypeSeeder::class,
             ProjectSeeder::class,
             UnitSeeder::class,
+            BrokerSeeder::class,
         ]);
     }
 }

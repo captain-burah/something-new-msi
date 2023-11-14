@@ -23,6 +23,9 @@ use App\Http\Controllers\WebsiteNewsController;
 use App\Http\Controllers\WebsiteConstructionsController;
 use App\Http\Controllers\LeadController;
 
+use App\Http\Controllers\BrokerController;
+
+
 use App\Http\Controllers\Localization;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BookingController;
@@ -272,8 +275,10 @@ Route::middleware('auth')->group(function () {
 
 
 
-/**CLIENTELLE */
-/**CLIENTELLE */
+/**BROKER */
+    Route::get('brokers', [BrokerController::class, 'index'])->name('brokers.index');
+    Route::get('brokers-view/{id}', [BrokerController::class, 'show'])->name('brokers.show');
+/**BROKER */
 
 
     
