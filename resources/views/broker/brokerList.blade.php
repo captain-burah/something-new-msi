@@ -48,12 +48,15 @@
                     @if(!isset($count_status))
                         @foreach($resource as $key => $value)
                             <?php $status = $value->status; ?>
+                            
                             @if($value->status == '0')                            
                             <tr class="bg-warning text-white">
                             @else
                             <tr>
                             @endif
+
                                 <td>{{$value->id}}</td>
+
                                 <td>
                                     <a class="btn btn-outline-dark" href="{{ route('brokers.show', ['id' => $value->id]) }}"><i class="bx bx-edit"></i></a>
                                 </td>
@@ -71,6 +74,7 @@
                                 <td>
                                     {{ $value->authorized_p_contact}}    
                                 </td>
+
                             </tr>
                         @endforeach
 

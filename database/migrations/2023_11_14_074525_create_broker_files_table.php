@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('broker_files', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('broker_id')->nullable(true);
-            $table->longText('name')->nullable(true);
+            $table->string('name')->nullable(true);
+            $table->longText('filename')->nullable(true);
             $table->timestamps();
             $table->foreign('broker_id')->references('id')->on('brokers')->onDelete('cascade');
         });
