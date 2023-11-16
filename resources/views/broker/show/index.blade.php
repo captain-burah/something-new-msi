@@ -10,6 +10,14 @@
         h4 {
             text-decoration: underline;
         }
+
+        .modal-backdrop {
+            z-index: 1;
+        }
+
+        .modal-content {
+            z-index: 2;
+        }
     </style>
 @endsection
 

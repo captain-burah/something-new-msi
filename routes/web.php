@@ -52,6 +52,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/email-test', function () {
+    return view('emails.broker.denial');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -278,6 +282,8 @@ Route::middleware('auth')->group(function () {
 /**BROKER */
     Route::get('brokers', [BrokerController::class, 'index'])->name('brokers.index');
     Route::get('brokers-view/{id}', [BrokerController::class, 'show'])->name('brokers.show');
+    Route::post('brokers/verification-denied', [BrokerController::class, 'verification_denied'])->name('brokers.verification.deny');
+    Route::post('brokers/verification-accepted', [BrokerController::class, 'verification_accepted'])->name('brokers.verification.accept');
 /**BROKER */
 
 

@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Log; // send notifications via slack or any other
 use Illuminate\Support\Str;
 
 use App\Models\Broker;
-
+use Mail;
+use App\Mail\DemoEmail;
+use App\Mail\BrokerDenial;
+use App\Mail\BrokerAccepted;
 
 class BrokerController extends Controller
 {
@@ -52,5 +55,55 @@ class BrokerController extends Controller
         // dd($resource);
 
         return view('broker.show.index', $this->data);
+    }
+
+
+    public function verification_denied(Request $request) {
+        
+        /**CHANGE THE BROKERAGE STATUS */
+        $result = Broker::find($request->broker_id);
+        $result->status = 2;
+        $result->save();
+
+        /**SEND NOTIFICATION TO BROKER VIA EMAIL */
+        try{
+            $data = [
+                'messages' => $request->message,
+                'name' => $result->company_name,
+            ];
+            Mail::mailer('noreply')->to('web@edgerealty.ae')->send(new BrokerDenial($data));
+
+            // if($request->message != ''){
+            //     $data = [
+            //         'messages' => $request->message,
+            //         'name' => $request->result->copmany_name,
+            //     ];
+            //     Mail::mailer('noreply')->to('as@edgerealty.ae')->send(new BrokerDenial($data));
+            // } else {
+            //     Mail::mailer('noreply')->to('as@edgerealty.ae')->send(new BrokerDenial());
+            // }
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+        return $this->index();
+    }
+
+
+    public function verification_accepted(Request $request) {
+
+        $result = Broker::find($request->broker_id);
+        $result->status = 1;
+        $result->save();
+
+        try{
+            $data = [
+                'name' => $result->company_name,
+            ];
+            Mail::mailer('noreply')->to('web@edgerealty.ae')->send(new BrokerAccepted($data));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        return $this->index();
     }
 }

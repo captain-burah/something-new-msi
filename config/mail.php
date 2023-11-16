@@ -56,6 +56,18 @@ return [
             // 'auth_mode' => null,
         ],
 
+        'noreply' => [
+            'transport' => 'smtp',
+            'url' => env('MAIL_URL'),
+            'host' => env('MAIL_2_HOST', 'notifications.esnaad.com'),
+            'port' => env('MAIL_2_PORT', 587),
+            'encryption' => env('MAIL_2_ENCRYPTION', 'tls'),
+            'username' => env('MAIL_2_USERNAME'),
+            'password' => env('MAIL_2_PASSWORD'),
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],
@@ -109,8 +121,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@edgerealty.ae'),
-        'name' => env('MAIL_FROM_NAME', 'Luxe Properties Dubai'),
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@notifications.esnaad.com'),
+        'name' => env('MAIL_FROM_NAME', 'ESNAAD Real Estate Developers'),
     ],
 
     /*

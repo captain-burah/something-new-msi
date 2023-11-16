@@ -1,6 +1,6 @@
 <h4 class="card-title">Company Information</h4>
 <div class="my-4">
-    <div class="table-responsive table-hover">
+    <div class="table-responsive table-hover table-bordered">
         <table class="table mb-0">
             <tbody>
                 <tr>
