@@ -52,13 +52,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/email-test', function () {
-    return view('emails.broker.denial');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('agency-registration', [BrokerController::class, 'create'])->name('broker.create');
+
 
 Route::get('/listing-admin', [MainController::class, 'listing_admin_login'])->middleware(['auth', 'verified'])->name('listing.admin.login');
 

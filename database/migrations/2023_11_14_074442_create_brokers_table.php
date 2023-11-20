@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('authorized_p_address')->nullable(true);
             $table->string('authorized_p_city')->nullable(true);
 
-            $table->string('power_of_atty_or_moa_id')->nullable(true);
+            $table->string('power_of_atty_or_moa_id')->nu0llable(true);
             $table->string('valid_trade_license_id')->nullable(true);
 
             $table->string('rera_certificate_id')->nullable(true);

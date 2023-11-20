@@ -52,8 +52,6 @@ class BrokerController extends Controller
 
         $this->data['resource'] = $resource = Broker::with('broker_files')->find($id);
 
-        // dd($resource);
-
         return view('broker.show.index', $this->data);
     }
 
@@ -103,7 +101,10 @@ class BrokerController extends Controller
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
-
         return $this->index();
+    }
+
+    public function create() {
+        return view('broker.create.index');
     }
 }

@@ -40,19 +40,19 @@
 
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active p-4" id="general" role="tabpanel" aria-labelledby="home-tab">
-                    @include('project.create.form.general')
+                    @include('broker.create.form.general')
                 </div>
 
                 <div class="tab-pane fade p-4" id="details" role="tabpanel" aria-labelledby="details-tab">
-                    @include('project.create.form.details')
+                    @include('broker.create.form.details')
                 </div>
 
                 <div class="tab-pane fade p-4" id="description" role="tabpanel" aria-labelledby="description-tab">
-                    @include('project.create.form.description')
+                    @include('broker.create.form.description')
                 </div>
 
                 <div class="tab-pane fade p-4" id="seo" role="tabpanel" aria-labelledby="seo-tab">
-                    @include('project.create.form.seo')
+                    @include('broker.create.form.seo')
                 </div>
             </div>
         </form>

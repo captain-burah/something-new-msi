@@ -12,6 +12,7 @@ use App\Http\Controllers\API\NewsController;
 use App\Http\Controllers\API\UnitController;
 use App\Http\Controllers\API\Unit_paymentplan;
 use App\Http\Controllers\API\SEOController;
+use App\Http\Controllers\API\BrokerController;
 use App\Http\Controllers\API\FormSubmissionController;
 
 /*
@@ -44,7 +45,10 @@ Route::middleware('authkey')->prefix('v1/esnaad')->namespace('App\Http\Controlle
     Route::get('/constructions/{id}', 'API\ConstructionController@show');
     Route::get('/news', 'API\NewsController@index');
     Route::get('/news/{id}', 'API\NewsController@show');
+    Route::post('/agency-registration', 'API\BrokerController@store');
+
 });
+
 
 
 Route::group([
