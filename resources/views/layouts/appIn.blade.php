@@ -7,7 +7,7 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'ESNAAD') }}</title>
+        <title>{{ config('app.name', 'ESNAAD Real Estate Development') }}</title>
 
         <!-- App favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">

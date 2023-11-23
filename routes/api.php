@@ -45,9 +45,14 @@ Route::middleware('authkey')->prefix('v1/esnaad')->namespace('App\Http\Controlle
     Route::get('/constructions/{id}', 'API\ConstructionController@show');
     Route::get('/news', 'API\NewsController@index');
     Route::get('/news/{id}', 'API\NewsController@show');
-    Route::post('/agency-registration', 'API\BrokerController@store');
+    Route::post('/agency-registration', 'API\BrokerController@store')->middleware('api', 'cors');
 
 });
+
+
+
+// Route::post('/agency-registration', 'YourController@yourMethod')->middleware('web');
+
 
 
 
